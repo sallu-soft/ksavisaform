@@ -246,6 +246,26 @@ class UserController extends Controller
         }
         
     }
+    public function embassy_report(){
+        if (Session::has('user')) {
+            $userEmail = Session::get('user');
+            $user = User::where('email', $userEmail)->first();
+    
+            $records = DB::table('visa_record')
+                ->select(DB::raw('DISTINCT DATE(date) as distinct_date'))
+                ->where('user', $userEmail)
+                ->get();
+    
+            // For debugging purposes (can be removed in production)
+            // dd($records, $user);
+    
+            return view('user.embassy_record', compact('records', 'user'));
+        } 
+        else{
+            return redirect(url('/'));
+        }
+        
+    }
 
     public function edit($id, Request $request){
         if(Session::get('user')){

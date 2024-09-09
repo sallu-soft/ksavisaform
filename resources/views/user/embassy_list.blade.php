@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Embassy List | KSA Form Print Solution</title>
     <style>
         @media print {
@@ -80,7 +82,8 @@
             </datalist>
 
 
-            <button class="btn btn-primary" onclick="printtable()">Print</button>
+            <button class="btn btn-primary mr-2" onclick="printtable()">Print</button>
+            <button class="btn btn-primary" id="saveAndPrintBtn">Save & Print</button>
         </div>
 
         <div class="bg-white space-y-2 pt-[15px] max-w-[1050px] container-fluid" id="printable">
@@ -216,26 +219,30 @@
             // } );
                         
             function toggleInputBox() {
-                const radioSelection = document.querySelector('input[name="emb_list"]:checked').value;
+                const radioSelection = document.querySelector('input[name="emb_list"]:checked')?.value;
                 const inputNew = document.getElementById('candidate');
                 const inputCancel = document.getElementById('cancelInput');
 
+                // Check if radioSelection is not undefined
                 if (radioSelection === 'New') {
                     inputNew.style.display = 'block';
                     inputCancel.style.display = 'none';
 
-                    // document.getElementById('candidate').setAttribute('onchange', 'getdata()');
+                    // Optional: Add event listener if needed
+                    // inputNew.addEventListener('change', getdata);
                 } else if (radioSelection === 'Cancel') {
                     inputNew.style.display = 'none';
                     inputCancel.style.display = 'block';
 
-                    // document.getElementById('candidate').setAttribute('onchange', 'getCanceldata()');
+                    // Optional: Add event listener if needed
+                    // inputCancel.addEventListener('change', getCanceldata);
                 } else {
-                    // Handle the default case if needed
+                    // Handle case when no valid selection is made or defaults
                     inputNew.style.display = 'block';
                     inputCancel.style.display = 'none';
                 }
             }
+
 
             var sl = 1;
             var rowsData = [];
@@ -515,6 +522,96 @@
                 });
             }
         </script>
+
+
+    <script>
+        // Function to extract table data
+        function extractTableData(tableId) {
+            let tableData = [];
+            let rows = document.querySelectorAll(`#${tableId} tr`);
+
+            rows.forEach(row => {
+                let rowData = {};
+                let cells = row.querySelectorAll('td, th');  // Select table cells
+                if (cells.length > 0) {
+                    rowData.profession = cells[0]?.innerText.trim();    // Profession
+                    rowData.year = cells[1]?.innerText.trim();          // Year
+                    rowData.visaNumber = cells[2]?.innerText.trim();    // Visa Number
+                    rowData.sponsorName = cells[3]?.innerText.trim();   // Sponsor Name
+                    rowData.passportNo = cells[4]?.innerText.trim();    // Passport No
+                    rowData.sl = cells[5]?.innerText.trim();            // SL
+                    tableData.push(rowData);
+                }
+            });
+            return tableData;
+        }
+
+        // Function to save the data to the database
+        async function saveDataToDB(tableData, cancelData) {
+            try {
+                const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
+                const csrfToken = csrfTokenMeta ? csrfTokenMeta.getAttribute('content') : null;
+
+                if (!csrfToken) {
+                    throw new Error('CSRF token not found.');
+                }
+
+                let response = await fetch('/save-table-data', {  // Laravel route to handle data saving
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken  // CSRF token for Laravel
+                    },
+                    body: JSON.stringify({
+                        table_body: tableData,
+                        table_cancel_body: cancelData
+                    })
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    alert("Data saved successfully!", result);
+                } else {
+                   alert("Failed to save data!");
+                }
+            } catch (error) {
+               alert("Error:", error);
+            }
+        }
+
+
+        // Function to handle print
+        function handlePrint() {
+            window.print(); // This will open the browser print dialog
+        }
+
+        // Button Click Event
+        document.getElementById('saveAndPrintBtn').addEventListener('click', () => {
+            // console.log('Save and print');
+            let tableBodyData = extractTableData('table_body');         // Extract table body data
+            let tableCancelBodyData = extractTableData('table_cancel_body'); // Extract cancel body data
+
+            saveDataToDB(tableBodyData, tableCancelBodyData);           // Save the data to DB
+            printtable();                                              // Trigger print
+        });
+    //     document.getElementById('saveAndPrintBtn').addEventListener('click', () => {
+    // console.log('Save and print button clicked');
+    
+    // let tableBodyData = extractTableData('table_body'); // Extract table body data
+    // let tableCancelBodyData = extractTableData('table_cancel_body'); // Extract cancel body data
+
+   
+    
+    // saveDataToDB(tableBodyData, tableCancelBodyData)
+    //     .then(response => {
+    //         console.log('Data saved successfully:', response);
+    //         printtable(); // Trigger print
+    //     })
+    //     .catch(error => {
+    //         console.error('Error saving data:', error);
+    //     });
+    //     });
+    </script>
 
 
 </body>

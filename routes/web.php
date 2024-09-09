@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmbassyController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\TableController;
 use App\Http\Controllers\BkashTokenizePaymentController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,7 @@ Route::any('/user/personal_edit/{id}', [UserController::class, 'personal_edit'])
 Route::any('/user/delete/{id}', [UserController::class, 'delete'])->name('user/delete');
 Route::any('/user/visa_edit/{id}', [UserController::class, 'visa_edit'])->name('user/visa_edit');
 Route::any('/user/embassy_list', [UserController::class, 'embassy_list'])->name('user/embassy_list');
+Route::any('/user/embassy_report', [UserController::class, 'embassy_report'])->name('user/embassy_report');
 Route::any('/user/update', [UserController::class, 'update'])->name('user/update');
 Route::any('/user/print/{id}', [UserController::class, 'printer'])->name('user/print');
 Route::any('/user/get', [UserController::class, 'get'])->name('getpassport');
@@ -76,3 +78,6 @@ Route::any('/payment/index', [PaymentController::class, 'index']);
 //refund payment routes
 //Route::get('/bkash/refund', [App\Http\Controllers\BkashTokenizePaymentController::class,'refund'])->name('bkash-refund');
 //Route::get('/bkash/refund/status', [App\Http\Controllers\BkashTokenizePaymentController::class,'refundStatus'])->name('bkash-refund-status');
+
+Route::post('/save-table-data', [TableController::class, 'saveTableData']);
+Route::get('/embassy_report_datewise/print', [TableController::class, 'printReport'])->name('embassy_report_datewise/print');

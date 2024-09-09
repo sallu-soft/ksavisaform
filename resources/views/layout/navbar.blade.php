@@ -4,9 +4,13 @@
       <a href="{{ route('user/index') }}" class="text-lg font-semibold text-white hover:text-blue-200 mr-4">
         KSA Embassy File Solution
       </a>
-      <a href="{{ route('user/embassy_list') }}" class="text-lg font-semibold text-white hover:text-blue-200 flex items-center">
+      <a href="{{ route('user/embassy_list') }}" class="text-lg font-semibold text-white hover:text-blue-200 mr-4 flex items-center">
         <i class="fas fa-list-alt text-xl mr-2"></i>
         <span class="hidden md:block">Create Embassy List</span>
+      </a>
+      <a href="{{ route('user/embassy_report') }}" class="text-lg font-semibold text-white hover:text-blue-200 flex items-center">
+        <i class="fas fa-list-alt text-xl mr-2"></i>
+        <span class="hidden md:block">Embassy Report</span>
       </a>
     </div>
     <div class="flex items-center">
