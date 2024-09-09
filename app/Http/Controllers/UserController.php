@@ -433,7 +433,7 @@ class UserController extends Controller
                 $visa->spon_id = $request->input('spon_id');
                 $visa->spon_name_arabic = $request->input('spon_name_arabic');
                 $visa->salary = $request->input('salary');
-                // $visa->spon_name_english = $request->input('spon_name_english');
+                $visa->spon_name_english = $request->input('spon_name_english');
                 $visa->prof_name_arabic = $request->input('prof_name_arabic');
                 $visa->prof_name_english = $request->input('prof_name_english');
                 $visa->mofa_no = $request->input('mofa_no');
