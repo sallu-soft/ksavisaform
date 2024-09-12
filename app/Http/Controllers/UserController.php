@@ -256,27 +256,57 @@ class UserController extends Controller
         }
         
     }
-    public function embassy_report(){
+    
+    // public function embassy_report() {
+    //     if (Session::has('user')) {
+    //         $userEmail = Session::get('user');
+    //         $user = User::where('email', $userEmail)->first();
+    
+    //         // Get the total records grouped by date for the specific user
+    //         $records = DB::table('visa_record')
+    //             ->select(DB::raw('DATE(date) as record_date'), DB::raw('COUNT(*) as total_records'))
+    //             ->where('user', $userEmail)  // Filter by user
+    //             ->groupBy('record_date')  // Group by date
+    //             ->get();
+    
+    //         // For debugging purposes (can be removed in production)
+    //         // dd($records, $user);
+    
+    //         return view('user.embassy_record', compact('records', 'user'));
+    //     } else {
+    //         return redirect(url('/'));
+    //     }
+    // }
+
+    public function embassy_report(Request $request) {
         if (Session::has('user')) {
             $userEmail = Session::get('user');
             $user = User::where('email', $userEmail)->first();
     
-            $records = DB::table('visa_record')
-                ->select(DB::raw('DISTINCT DATE(date) as distinct_date'))
+            // Get the search date from the request
+            $searchDate = $request->query('search_date');
+    
+            // Build the query to get total records grouped by date
+            $query = DB::table('visa_record')
+                ->select(DB::raw('DATE(date) as record_date'), DB::raw('COUNT(*) as total_records'))
                 ->where('user', $userEmail)
-                ->get();
+                ->groupBy('record_date');
     
-            // For debugging purposes (can be removed in production)
-            // dd($records, $user);
+            // If a search date is provided, filter by the search date
+            if ($searchDate) {
+                $query->whereDate('date', $searchDate);
+            }
     
+            // Execute the query
+            $records = $query->get();
+    
+            // Return the view with the records and user information
             return view('user.embassy_record', compact('records', 'user'));
-        } 
-        else{
+        } else {
             return redirect(url('/'));
         }
-        
     }
-
+    
     public function edit($id, Request $request){
         if(Session::get('user')){
             if($request->isMethod('GET')){

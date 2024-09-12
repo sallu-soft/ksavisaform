@@ -603,7 +603,7 @@
             <a href="{{ route('agents') }}" data-toggle="tooltip" data-placement="bottom" title="Agents">
               <button type="button"
                   class="bg-yellow-500 mr-2 text-white font-semibold text-xl px-14 py-2 rounded-md mb-2">
-                  Agents
+                  Agents List
               </button>
           </a>
             <a href="{{ route('agent_candidate') }}" data-toggle="tooltip" data-placement="bottom" title="Report">

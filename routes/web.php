@@ -61,6 +61,8 @@ Route::any('/user/delete/{id}', [UserController::class, 'delete'])->name('user/d
 Route::any('/user/visa_edit/{id}', [UserController::class, 'visa_edit'])->name('user/visa_edit');
 Route::any('/user/embassy_list', [UserController::class, 'embassy_list'])->name('user/embassy_list');
 Route::any('/user/embassy_report', [UserController::class, 'embassy_report'])->name('user/embassy_report');
+Route::get('/embassy_report_datewise/delete/{date}', [TableController::class, 'deleteByDate'])->name('embassy_report_datewise.delete');
+
 Route::any('/user/update', [UserController::class, 'update'])->name('user/update');
 Route::any('/user/print/{id}', [UserController::class, 'printer'])->name('user/print');
 Route::any('/user/get', [UserController::class, 'get'])->name('getpassport');

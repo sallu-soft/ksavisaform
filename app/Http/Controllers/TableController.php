@@ -56,7 +56,22 @@ use Illuminate\Support\Facades\View;
           return response()->json(['message' => 'Data saved successfully!'], 200);
       }
 
-
+      public function deleteByDate($date) {
+        if (Session::has('user')) {
+            $userEmail = Session::get('user');
+    
+            // Delete records for the specified date and user
+            DB::table('visa_record')
+                ->whereDate('date', $date)
+                ->where('user', $userEmail)
+                ->delete();
+    
+            // Redirect back with success message
+            return redirect()->route('user/index')->with('success', 'Records deleted successfully.');
+        } else {
+            return redirect(url('/'));
+        }
+    }
       public function printReport(Request $request)
       {
           $date = $request->query('date');

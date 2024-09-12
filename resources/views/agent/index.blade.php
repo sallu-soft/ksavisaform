@@ -31,8 +31,10 @@
 </head>
 
 <body class="">
-    @include('layout.navbar')
+    @include('layout.navbar');
+    <h2 class=" w-[70%] mx-auto font-semibold py-2 text-2xl">Agents List</h2>
     <div class="w-[70%] mx-auto shadow-lg p-4 mt-4">
+      
       <div class="table-responsive main-datatable ">
         {{-- <form method="GET" action="{{ route('user/index') }}">
             <div class="flex w-[50%] mx-auto gap-4">

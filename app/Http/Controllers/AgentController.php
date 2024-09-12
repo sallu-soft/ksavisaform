@@ -120,7 +120,7 @@ class AgentController extends Controller
                     // Handle case where user is not found
                     return redirect()->back()->with('error', 'User not found.');
                 }
-                $agents = Agents::paginate(10);
+                // $agents = Agents::paginate(10);
                 $query->orderBy('candidates.created_at', 'desc');
         
                 $candidates = $query->paginate(10);
