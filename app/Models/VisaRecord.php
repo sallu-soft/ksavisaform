@@ -13,6 +13,7 @@ class VisaRecord extends Model
 
 
     protected $fillable = [
+        'id',
         'profession',
         'year',
         'visa_number',

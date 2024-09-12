@@ -4,11 +4,13 @@
 use App\Http\Controllers\ViewController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AgentController;
 use App\Http\Controllers\EmbassyController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\BkashTokenizePaymentController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +37,18 @@ Route::any('/send-mail', [Mailcontroller::class, 'index'])->name('send-mail');
 Route::get('/check-email', [ViewController::class, 'checkEmail'])->name('checkEmail');
 Route::post('/password-reset', [ViewController::class, 'setnewpassword'])->name('password_reset');
 #user routes
+
+//agent routes
+Route::get('/agent/edit/{id}', [AgentController::class, 'edit'])->name('agent.edit');
+Route::post('/agent/update', [AgentController::class, 'update'])->name('agent.update');
+Route::get('/agent/view/{id}', [AgentController::class, 'view'])->name('agent.view');
+Route::delete('/agent/delete/{id}', [AgentController::class, 'destroy'])->name('agent.delete');
+
+//reporter routes
+Route::any('/agent/index', [AgentController::class, 'agent_add'])->name('agent/index');
+Route::any('/agents', [AgentController::class, 'agents'])->name('agents');
+Route::get('/agent-candidate', [ReportController::class, 'agentCandidate'])->name('agent_candidate');
+Route::post('/agent_candidate_report', [ReportController::class, 'agent_candidate_report'])->name('agent_candidate_report');
 Route::any('/user/index', [UserController::class, 'index'])->name('user/index');
 Route::any('/user/visaadd/{id}', [UserController::class, 'visa_add'])->name('user/visaadd');
 

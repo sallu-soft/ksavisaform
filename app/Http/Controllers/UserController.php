@@ -31,6 +31,15 @@ class UserController extends Controller
             ->select('candidates.*', 'visas.visa_no', 'visas.mofa_no', 'visas.spon_id','visas.prof_name_english')
             ->where('candidates.agency', '=', Session::get('user'));
 
+            $agents = DB::table('agents')
+                ->select('*')
+                ->where('user', '=', Session::get('user'))
+                ->where('is_delete', '=', 0)
+                ->paginate(10);
+            $agentsform = DB::table('agents')
+                ->select('*')
+                ->where('user', '=', Session::get('user'))
+                ->where('is_delete', '=', 0)->get();
         // Add search functionality
         if ($request->has('search')) {
             $searchTerm = $request->input('search');
@@ -46,7 +55,7 @@ class UserController extends Controller
         $candidates = $query->paginate(10);
         $user = DB::table('user')->select('*')->where('email', '=', Session::get('user'))->first();
 
-        return view('user.index', compact('candidates', 'user'));
+        return view('user.index', compact('candidates','agentsform','agents','user'));
         }
     
         else {
@@ -58,6 +67,7 @@ class UserController extends Controller
             try {
                 $candidate = new Candidates();
                 $candidate->name = strtoupper($request->pname);
+                $candidate->agent = $request->agent_id;
                 $candidate->passport_number = strtoupper($request->pnumber);
                 // $candidate->passport_issue_date = date('Y-m-d', strtotime($request->pass_issue_date));
                 // $candidate->passport_expire_date = date('Y-m-d', strtotime($request->pass_expire_date));

@@ -7,7 +7,8 @@ namespace App\Http\Controllers;
   use App\Models\VisaRecord;
   use Illuminate\Support\Facades\Session;
   use Carbon\Carbon;  // For handling date
-  use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 
   
   class TableController extends Controller
@@ -61,12 +62,25 @@ namespace App\Http\Controllers;
           $date = $request->query('date');
   
           // Validate the date format
-          if (!Carbon::createFromFormat('Y-m-d', $date, 'UTC')->isValid()) {
-              return redirect()->back()->with('error', 'Invalid date format.');
-          }
-  
-          $records = VisaRecord::whereDate('date', $date)
-                  ->get();
+           // Get the user from the session
+    $user = DB::table('user')->where('email', Session::get('user'))->first();
+
+    // If the user is not found, redirect with an error
+    if (!$user) {
+        return redirect()->back()->with('error', 'User not found.');
+    }
+
+    // Validate the date format
+    try {
+        $parsedDate = Carbon::createFromFormat('Y-m-d', $date, 'UTC');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Invalid date format.');
+    }
+
+    // Fetch the records associated with the authenticated user and the provided date
+    $records = VisaRecord::where('user', $user) // Filter by user_id
+                ->whereDate('date', $date) // Filter by date
+                ->get();
 
           // dd($records);
   

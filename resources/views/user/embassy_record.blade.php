@@ -68,7 +68,7 @@
               </td>
               <td class="p-2">
                 <div class="md:text-lg text-md">
-                  <a href="{{ route('embassy_report_datewise/print', ['date' => $record->distinct_date]) }}" class="fw-semibold text-warning">
+                  <a class="bg-red-700 px-5 py-2 rounded-lg text-white" href="{{ route('embassy_report_datewise/print', ['date' => $record->distinct_date]) }}" class="fw-semibold text-warning">
                     <i class="bi bi-printer-fill mr-1"></i>Print
                   </a>
                 </div>
