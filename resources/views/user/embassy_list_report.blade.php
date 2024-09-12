@@ -86,11 +86,11 @@
                     <p>المهنة</p>
                     <p>Profession</p>
                 </th>
-                <th class="w-[90px]">
+                <th class="w-[65px]">
                     <p>التاريخ</p>
                     <p>Year</p>
                 </th>
-                <th class="w-[140px]">
+                <th class="w-[120px]">
                     <p>رقم التأشيرة</p>
                     <p>Visa Number</p>
                 </th>
@@ -98,11 +98,11 @@
                     <p>اسم الكفيل</p>
                     <p>Sponsor Name</p>
                 </th>
-                <th class="w-[140px]">
+                <th class="w-[120px]">
                     <p>أرقام الجوازات</p>
                     <p>Passport No.</p>
                 </th>
-                <th>
+                <th class="w-[20px]">
                     <p>ت</p>
                     <p>SL</p>
                 </th>
@@ -127,7 +127,7 @@
         <tbody id="table_body">
             @foreach($records as $record)
                 @if($record->is_cancelled == 0)
-                    <tr class="[&>td]:border [&>td]:border-black [&>td]:p-0 text-[13px] text-center relative group">
+                    <tr class="[&>td]:border [&>td]:border-black [&>td]:p-0 text-[17px] text-center relative group">
                         <td>{{ $record->profession }}</td>
                         <td>{{ $record->year }}</td>
                         <td>{{ $record->visa_number }}</td>
@@ -151,7 +151,7 @@
         <tbody id="table_cancel_body">
             @foreach($records as $record)
                 @if($record->is_cancelled == 1)
-                    <tr class="[&>td]:border [&>td]:border-black [&>td]:p-0 text-[13px] text-center relative group">
+                    <tr class="[&>td]:border [&>td]:border-black [&>td]:p-0 text-[17px] text-center relative group">
                         <td>{{ $record->profession }}</td>
                         <td>{{ $record->year }}</td>
                         <td>{{ $record->visa_number }}</td>
