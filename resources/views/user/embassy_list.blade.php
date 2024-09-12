@@ -132,11 +132,11 @@
                             <p>المهنة</p>
                             <p>Profession</p>
                         </th>
-                        <th class="w-[90px]">
+                        <th class="w-[65px]">
                             <p>التاريخ</p>
                             <p>Year</p>
                         </th>
-                        <th class="w-[140px]">
+                        <th class="w-[120px]">
                             <p>رقم التأشيرة</p>
                             <p>Visa Number</p>
                         </th>
@@ -144,11 +144,11 @@
                             <p>اسم الكفيل</p>
                             <p>Sponsor Name</p>
                         </th>
-                        <th class="w-[140px]">
+                        <th class="w-[120px]">
                             <p>أرقام الجوازات</p>
                             <p>Passport No.</p>
                         </th>
-                        <th>
+                        <th class="w-[20px]">
                             <p>ت</p>
                             <p>SL</p>
                         </th>
