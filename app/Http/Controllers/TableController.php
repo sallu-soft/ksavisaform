@@ -63,8 +63,8 @@ use Illuminate\Support\Facades\View;
   
           // Validate the date format
            // Get the user from the session
-    $user = DB::table('user')->where('email', Session::get('user'))->first();
-
+   
+    $user = Session::get('user');
     // If the user is not found, redirect with an error
     if (!$user) {
         return redirect()->back()->with('error', 'User not found.');
