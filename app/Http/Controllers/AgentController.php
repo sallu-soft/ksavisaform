@@ -110,6 +110,16 @@ class AgentController extends Controller
                             ->orWhere('candidates.passport_number', 'like', '%' . $searchTerm . '%');
                     });
                 }
+                $user = Session::get('user');
+
+                // If the user exists, fetch agents associated with that user
+                if ($user) {
+                    $agents = Agents::where('user', $user) // Assuming 'user_id' column links agents to users
+                                    ->paginate(10); // Paginate the results
+                } else {
+                    // Handle case where user is not found
+                    return redirect()->back()->with('error', 'User not found.');
+                }
                 $agents = Agents::paginate(10);
                 $query->orderBy('candidates.created_at', 'desc');
         
