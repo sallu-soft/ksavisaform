@@ -127,11 +127,11 @@
         <tbody id="table_body">
             @foreach($records as $record)
                 @if($record->is_cancelled == 0)
-                    <tr class="[&>td]:border [&>td]:border-black [&>td]:p-0 text-[17px] text-center relative group">
+                    <tr class="[&>td]:border [&>td]:border-black [&>td]:p-1 text-sm text-center relative group">
                         <td>{{ $record->profession }}</td>
                         <td>{{ $record->year }}</td>
                         <td>{{ $record->visa_number }}</td>
-                        <td class="text-[15px]">{{ $record->sponsor_name }}</td>
+                        <td class="">{{ $record->sponsor_name }}</td>
                         <td>{{ $record->passport_no }}</td>
                         <td>{{ $slNo++ }}</td>
                         {{-- 
@@ -151,11 +151,11 @@
         <tbody id="table_cancel_body">
             @foreach($records as $record)
                 @if($record->is_cancelled == 1)
-                    <tr class="[&>td]:border [&>td]:border-black [&>td]:p-0 text-[17px] text-center relative group">
+                    <tr class="[&>td]:border [&>td]:border-black [&>td]:p-1 text-sm text-center relative group">
                         <td>{{ $record->profession }}</td>
                         <td>{{ $record->year }}</td>
                         <td>{{ $record->visa_number }}</td>
-                        <td class="text-[15px]">{{ $record->sponsor_name }}</td>
+                        <td class="">{{ $record->sponsor_name }}</td>
                         <td>{{ $record->passport_no }}</td>
                         <td>{{ $slNo++ }}</td>
                         {{-- <td>{{ $record->sl }}</td>
