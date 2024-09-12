@@ -45,7 +45,7 @@
         بيان بالجوازات المقدمة
     </h2>
 
-    <div class="flex text-lg pt-[30px]">
+    <div class="flex text-lg pt-[15px]">
         <div class="flex-1 space-y-1">
             <h3 class="flex">
                 <span class="font-semibold text-lg w-[130px]">
@@ -117,7 +117,7 @@
                 class=" [&>th]:border [&>th]:border-black [&>th]:py-0 text-md font-semibold text-center [&>th]:font-bold">
 
 
-                <th colspan="6" class="border border-black"> جديد / New</th>
+                <th colspan="7" class="border border-black"> جديد / New</th>
 
             </tr>
         </thead>
@@ -127,7 +127,7 @@
         <tbody id="table_body">
             @foreach($records as $record)
                 @if($record->is_cancelled == 0)
-                    <tr class="[&>td]:border [&>td]:border-black [&>td]:p-0 text-lg text-center relative group">
+                    <tr class="[&>td]:border [&>td]:border-black [&>td]:p-0 text-[18px] text-center relative group">
                         <td>{{ $record->profession }}</td>
                         <td>{{ $record->year }}</td>
                         <td>{{ $record->visa_number }}</td>
@@ -145,13 +145,13 @@
         </tbody>
         <thead id="cancel_head" class="">
             <tr class=" [&>th]:border [&>th]:border-black [&>th]:py-0 text-md font-semibold text-center [&>th]:font-bold">
-                <th colspan="6" class="border border-black">إلغاء / Cancellation</th>
+                <th colspan="7" class="border border-black">إلغاء / Cancellation</th>
             </tr>
         </thead>
         <tbody id="table_cancel_body">
             @foreach($records as $record)
                 @if($record->is_cancelled == 1)
-                    <tr class="[&>td]:border [&>td]:border-black [&>td]:p-0 text-lg text-center relative group">
+                    <tr class="[&>td]:border [&>td]:border-black [&>td]:p-0 text-[18px] text-center relative group">
                         <td>{{ $record->profession }}</td>
                         <td>{{ $record->year }}</td>
                         <td>{{ $record->visa_number }}</td>
