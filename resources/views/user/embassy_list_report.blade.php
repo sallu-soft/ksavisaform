@@ -102,10 +102,10 @@
                     <p>أرقام الجوازات</p>
                     <p>Passport No.</p>
                 </th>
-                {{-- <th>
+                <th>
                     <p>ت</p>
                     <p>SL</p>
-                </th> --}}
+                </th>
                 {{-- <th id="hide">
                     <p>Options</p>
                 </th> --}}
@@ -117,11 +117,13 @@
                 class=" [&>th]:border [&>th]:border-black [&>th]:py-0 text-md font-semibold text-center [&>th]:font-bold">
 
 
-                <th colspan="5" class="border border-black"> جديد / New</th>
+                <th colspan="6" class="border border-black"> جديد / New</th>
 
             </tr>
         </thead>
-
+        @php
+            $slNo = 1; // Initialize the serial number counter
+        @endphp
         <tbody id="table_body">
             @foreach($records as $record)
                 @if($record->is_cancelled == 0)
@@ -131,7 +133,8 @@
                         <td>{{ $record->visa_number }}</td>
                         <td>{{ $record->sponsor_name }}</td>
                         <td>{{ $record->passport_no }}</td>
-                        {{-- <td>{{ $record->sl }}</td>
+                        <td>{{ $slNo++ }}</td>
+                        {{-- 
                         <td class="p-2">
                             <a href="{{ route('edit', ['id' => $record->id]) }}" class="text-blue-500 hover:underline">Edit</a>
                             <a href="{{ route('delete', ['id' => $record->id]) }}" class="text-red-500 hover:underline">Delete</a>
@@ -142,7 +145,7 @@
         </tbody>
         <thead id="cancel_head" class="">
             <tr class=" [&>th]:border [&>th]:border-black [&>th]:py-0 text-md font-semibold text-center [&>th]:font-bold">
-                <th colspan="5" class="border border-black">إلغاء / Cancellation</th>
+                <th colspan="6" class="border border-black">إلغاء / Cancellation</th>
             </tr>
         </thead>
         <tbody id="table_cancel_body">
@@ -154,6 +157,7 @@
                         <td>{{ $record->visa_number }}</td>
                         <td>{{ $record->sponsor_name }}</td>
                         <td>{{ $record->passport_no }}</td>
+                        <td>{{ $slNo++ }}</td>
                         {{-- <td>{{ $record->sl }}</td>
                         <td class="p-2">No actions available</td> --}}
                     </tr>
@@ -162,7 +166,7 @@
         </tbody>
         <tbody>
             <tr class="[&>td]:border [&>td]:border-black [&>td]:p-0 text-lg text-center relative group">
-                <td colspan="4" contentEditable class="font-bold text-xl text-end px-5" id="totalCancel">
+                <td colspan="5" contentEditable class="font-bold text-xl text-end px-5" id="totalCancel">
                     {{$records->count()}}
                 </td>
                 <td>المجموع</td>
