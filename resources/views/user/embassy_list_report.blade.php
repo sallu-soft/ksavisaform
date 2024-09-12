@@ -127,7 +127,7 @@
         <tbody id="table_body">
             @foreach($records as $record)
                 @if($record->is_cancelled == 0)
-                    <tr class="[&>td]:border [&>td]:border-black [&>td]:p-0 text-[18px] text-center relative group">
+                    <tr class="[&>td]:border [&>td]:border-black [&>td]:p-0 text-[13px] text-center relative group">
                         <td>{{ $record->profession }}</td>
                         <td>{{ $record->year }}</td>
                         <td>{{ $record->visa_number }}</td>
@@ -151,7 +151,7 @@
         <tbody id="table_cancel_body">
             @foreach($records as $record)
                 @if($record->is_cancelled == 1)
-                    <tr class="[&>td]:border [&>td]:border-black [&>td]:p-0 text-[18px] text-center relative group">
+                    <tr class="[&>td]:border [&>td]:border-black [&>td]:p-0 text-[13px] text-center relative group">
                         <td>{{ $record->profession }}</td>
                         <td>{{ $record->year }}</td>
                         <td>{{ $record->visa_number }}</td>
