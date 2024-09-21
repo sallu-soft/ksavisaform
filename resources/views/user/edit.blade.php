@@ -214,9 +214,10 @@
                         <div class="py-1">
                           <div class="font-semibold text-lg">Agent <span class="text-red-500">*</span></div>
                           <select class="form-control select2" id="agent_id" name="agent_id" required>
-                              <option value="" disabled selected>Select Agent</option>
+                            <option value="" disabled {{ is_null($candidate->agent) ? 'selected' : '' }}>Select Agent</option>
                               @foreach ($agentsform as $agent)
-                                  <option value="{{ $agent->id }}">{{ $agent->agent_name }}</option>
+                                  
+                                  <option value="{{ $agent->id }}" {{ $agent->id == $candidate->agent ? 'selected' : '' }}>{{ $agent->agent_name }}</option>
                               @endforeach
                               <!-- Add more options as needed -->
                           </select>
