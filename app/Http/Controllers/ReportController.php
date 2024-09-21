@@ -73,6 +73,10 @@ class ReportController extends Controller
                 $agent = $request->agent;
                 $query->where('candidates.agent', $agent);
             }
+            if ($request->visa_no != null ) {
+                $visa_no = $request->visa_no;
+                $query->where('visas.visa_no', $visa_no);
+            }
         
             // Execute the query
             $candidates = $query->get();

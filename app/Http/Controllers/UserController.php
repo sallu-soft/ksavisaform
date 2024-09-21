@@ -314,9 +314,13 @@ class UserController extends Controller
                         ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
                         ->select('candidates.*', 'visas.*')->where('candidates.id', '=', $id)
                         ->get();
+                $agentsform = DB::table('agents')
+                ->select('*')
+                ->where('user', '=', Session::get('user'))
+                ->where('is_delete', '=', 0)->get();
                 // dd($candidates); 
                 $user = DB::table('user')->select('*')->where('email', '=', Session::get('user'))->first();
-                return view('user.edit', compact('id', 'candidates','user'));
+                return view('user.edit', compact('id', 'candidates','user','agentsform'));
             }
         }
         else{
@@ -395,6 +399,7 @@ class UserController extends Controller
             $candidate = Candidates::where('id', $id)->first();
             if($candidate){
             $candidate->name = strtoupper($request->pname);
+            $candidate->agent = $request->agent_id;
             $candidate->passport_number = strtoupper($request->pnumber);
             $issueDate = \DateTime::createFromFormat('d/m/Y', $request->pass_issue_date);
             if ($issueDate !== false) {

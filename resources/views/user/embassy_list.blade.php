@@ -462,8 +462,9 @@
                 overwriteButton.forEach(function(button) {
                     var overwriteparent = button.parentNode; // Get the parent <td> element
                     overwriteparent.classList.remove('no-print'); // Add the no-print class to the parent <td>
-                });            }
-
+                });            
+            }
+            
 
             const today = new Date();
 
@@ -585,7 +586,7 @@
             window.print(); // This will open the browser print dialog
         }
 
-        // Button Click Event
+        Button Click Event
         document.getElementById('saveAndPrintBtn').addEventListener('click', () => {
             // console.log('Save and print');
             let tableBodyData = extractTableData('table_body');         // Extract table body data
@@ -594,23 +595,11 @@
             saveDataToDB(tableBodyData, tableCancelBodyData);           // Save the data to DB
             printtable();                                              // Trigger print
         });
-    //     document.getElementById('saveAndPrintBtn').addEventListener('click', () => {
-    // console.log('Save and print button clicked');
-    
-    // let tableBodyData = extractTableData('table_body'); // Extract table body data
-    // let tableCancelBodyData = extractTableData('table_cancel_body'); // Extract cancel body data
+        
 
    
     
-    // saveDataToDB(tableBodyData, tableCancelBodyData)
-    //     .then(response => {
-    //         console.log('Data saved successfully:', response);
-    //         printtable(); // Trigger print
-    //     })
-    //     .catch(error => {
-    //         console.error('Error saving data:', error);
-    //     });
-    //     });
+ 
     </script>
 
 

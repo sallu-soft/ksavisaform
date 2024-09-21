@@ -212,6 +212,16 @@
                     <form  class="bg-[#DBF4F1] pb-4" id="addcandidate"  method="post">
                       <div class="px-10 gap-x-10 grid md:grid-cols-2">
                         <div class="py-1">
+                          <div class="font-semibold text-lg">Agent <span class="text-red-500">*</span></div>
+                          <select class="form-control select2" id="agent_id" name="agent_id" required>
+                              <option value="" disabled selected>Select Agent</option>
+                              @foreach ($agentsform as $agent)
+                                  <option value="{{ $agent->id }}">{{ $agent->agent_name }}</option>
+                              @endforeach
+                              <!-- Add more options as needed -->
+                          </select>
+                      </div>
+                        <div class="py-1">
                         <div class="font-bold text-lg">Candidate Name</div>
                         <input type="text" class="p-2 rounded-lg w-full uppercase form-control" name="pname" id="pname" value="{{$candidate->name}}"/>
                       </div>

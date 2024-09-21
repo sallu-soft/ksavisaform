@@ -87,28 +87,28 @@
             
             <div class="px-10 gap-x-10 grid md:grid-cols-2">
                 <div class="py-1">
-                    <div class="font-semibold text-lg">Agent's Name</div>
+                    <div class="font-semibold text-lg">Agent Name</div>
                     <input type="text" class="form-control uppercase" required id="agent_name" name="agent_name" placeholder="" value="{{$agent->agent_name}}">
                     <input type="hidden" class="form-control uppercase" required id="id" name="id" placeholder="" value="{{$agent->id}}">
                 </div>
                 <div class="py-1">
-                    <div class="font-semibold text-lg">Agent's Phone Number</div>
+                    <div class="font-semibold text-lg">Phone Number</div>
                     <input type="number" class="form-control uppercase" required id="agent_phone" name="agent_phone" placeholder="" value="{{$agent->agent_phone}}">
                 </div>
                 <div class="py-1">
-                    <div class="font-semibold text-lg">Agent's Email</div>
-                    <input type="email" class="form-control" required id="agent_email" name="agent_email" placeholder="" value="{{$agent->agent_email}}">
+                    <div class="font-semibold text-lg">Email Address</div>
+                    <input type="email" class="form-control" id="agent_email" name="agent_email" placeholder="" value="{{$agent->agent_email}}">
                 </div>
                 <div class="py-1">
-                    <div class="font-semibold text-lg">Agent's Address</div>
+                    <div class="font-semibold text-lg">Agent Address</div>
                     <input type="text" class="form-control uppercase" id="agent_address" name="agent_address" placeholder="" value="{!!$agent->agent_address!!}">
                 </div>
                 <div class="py-1">
-                    <div class="font-semibold text-lg">Agent's Emergency Phone No</div>
+                    <div class="font-semibold text-lg">Emergency Phone No</div>
                     <input type="text" class="form-control uppercase" id="agent_e_phone" name="agent_e_phone" placeholder="" value="{{$agent->agent_e_phone}}">
                 </div>
                 <div class="py-1">
-                    <div class="font-semibold text-lg">Agent's Picture</div>
+                    <div class="font-semibold text-lg">Picture</div>
                     <input type="file" class="form-control" id="agent_picture" name="agent_picture">
                     <img id="current-picture" src="{{ asset($agent->agent_picture) }}" alt="Agent's Picture" class="mt-2 w-32 h-32 object-cover">
                     <img id="preview-picture" src="#" alt="New Picture Preview" class="mt-2 w-32 h-32 object-cover hidden">

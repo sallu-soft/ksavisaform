@@ -114,7 +114,8 @@ class AgentController extends Controller
 
                 // If the user exists, fetch agents associated with that user
                 if ($user) {
-                    $agents = Agents::where('user', $user) // Assuming 'user_id' column links agents to users
+                    $agents = Agents::where('user', $user)
+                                    ->where('is_delete', 0)
                                     ->paginate(10); // Paginate the results
                 } else {
                     // Handle case where user is not found

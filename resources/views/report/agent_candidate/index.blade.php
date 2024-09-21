@@ -1,6 +1,6 @@
 {{-- <x-app-layout> --}}
     @include('layout.head')
-    <div class=" bg-white px-4 rounded-lg flex items-center justify-between mt-3 py-3 mx-6 shadow-lg">
+    <div class=" bg-white px-4 rounded-lg flex items-center justify-between mt-3 py-2 mx-6 shadow-lg">
         {{-- <h3>fsdsdf</h3> --}}
         <form id="reportForm" action="{{ route('agent_candidate_report') }}" method="POST">
           @csrf
@@ -15,6 +15,12 @@
                       @endforeach
                   </select>
               </div>
+              <div class="py-2 flex w-[30%] gap-2 cols-md-2 ml-6 items-center">
+                <div class="font-semibold text-[16px] w-[100px]">Visa No</div>
+                <input type="text" id="visa_no" name="visa_no"
+                    class="form-control p-2 rounded-lg w-full uppercase"
+                    placeholder="Ex- 1303044456" />
+            </div>
               <div class="flex items-center gap-4 mx-6">
                 <label for="start_date" class='font-semibold text-[14px] text-[#22262e]'>From</label>
                 <div class="w-[100%] date">
@@ -30,22 +36,9 @@
                 </div>
             </div>
              
-              <div class="form-group px-6 flex items-center ">
-                  <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="profit" name="show_profit">
-                      <label class="form-check-label font-semibold text-green-600 text-[14px] text-[#22262e]" for="inlineCheckbox1">Profit</label>
-                  </div>
-                  {{-- <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="supplier" name="show_supplier">
-                      <label class="form-check-label font-semibold text-blue-700 text-[14px] text-[#22262e]" for="inlineCheckbox2">Supplier</label>
-                  </div> --}}
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="agent" name="show_agent">
-                    <label class="form-check-label font-semibold text-pink-800 text-[14px] text-[#22262e]" for="inlineCheckbox3">Agent</label>
-                  </div>
-              </div>
               
-              <div class="flex items-center mb-2">
+              
+              <div class="flex items-center ml-2">
                   <button type="submit" class="bg-black border-blue-500 text-white py-2 px-5 rounded-lg ">Submit</button>
               </div>
           </div>
