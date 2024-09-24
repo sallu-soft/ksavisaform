@@ -15,6 +15,7 @@
             }
         }
     </style>
+    
       <style>
         /* Custom CSS for the tooltip */
         .tooltip {
@@ -121,7 +122,40 @@
                     </h3>
                 </div>
             </div>
-
+            
+            <div id="candidateModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display:none;">
+                <div class="bg-white w-full max-w-md rounded-lg shadow-lg overflow-hidden transform transition-all duration-300">
+                    <!-- Modal Header -->
+                    <div class="px-6 py-4 bg-blue-500 text-white text-xl font-bold">
+                        <h4>Select a Candidate</h4>
+                    </div>
+            
+                    <!-- Modal Body -->
+                    <div class="px-6 py-4">
+                        <label for="candidateSelect" class="block text-gray-700 font-semibold mb-2">Search by Candidate ID or Passport Number:</label>
+                        <input 
+                            list="candidates" 
+                            id="candidateSelect" 
+                            name="candidate" 
+                            placeholder="Type or select a candidate" 
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        >
+                        
+                        <datalist id="candidates">
+                            @foreach ($candidates as $candidate)
+                                <option value="{{ $candidate->candidate_id }}">{{ $candidate->passport_number }} - {{ $candidate->name }}</option>
+                            @endforeach
+                        </datalist>
+                    </div>
+            
+                    <!-- Modal Footer -->
+                    <div class="px-6 py-4 bg-gray-100 flex justify-end space-x-4">
+                        <button onclick="closeModal()" class="text-red-600 text-lg font-bold hover:text-red-800 transition duration-200">Cancel</button>
+                        <button onclick="selectCandidate()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200">Select</button>
+                    </div>
+                </div>
+            </div>
+            
             <table class="w-full table-bordered" id="embassy_list">
                 <thead>
                     <tr
@@ -337,60 +371,128 @@
 
 
             // Function to handle overwrite button click
+            // function overwriteRow(btn) {
+            //     var row = btn.parentNode.parentNode;
+            //     var index = Array.from(row.parentNode.children).indexOf(row);
+
+            //     // Prompt user to select candidate from the datalist
+            //     var selectedCandidate = prompt('Select a candidate from the list by entering candidate ID:');
+
+            //     // Validate input
+            //     if (!selectedCandidate) return; // Handle if user cancels
+
+            //     // Example: Simulate fetching new data based on selected candidate ID
+            //     fetch('/user/embassy/' + selectedCandidate, {
+            //         method: 'GET',
+            //         headers: {
+            //             'Content-Type': 'application/json'
+            //         },
+            //     })
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         console.log(data[0]);
+            //         // Example: Replace row with new data
+            //         row.children[0].innerHTML = data[0].prof_name_arabic;
+            //         row.children[1].innerHTML = data[0].visa_date2.substr(0, 4);
+            //         row.children[2].innerHTML = data[0].visa_no;
+            //         row.children[3].innerHTML = data[0].spon_name_arabic;
+            //         row.children[4].innerHTML = data[0].passport_number;
+
+            //         // Update rowsData or cancelRowsData based on tbody ID
+            //         if (row.parentNode.id === 'table_cancel_body') {
+            //             cancelRowsData[index] = row;
+            //         } else {
+            //             rowsData[index] = row;
+            //         }
+
+            //         // Trigger getdata() or getCanceldata() with the updated passport number or name
+            //         var passportNumber = data[0].passport_number; // Adjust this based on your data structure
+
+            //         if (row.parentNode.id === 'table_cancel_body') {
+            //             document.getElementById('cancelInput').value = passportNumber; // Adjust this if you use name instead
+            //             getCanceldata();
+            //         } else {
+            //             document.getElementById('candidate').value = passportNumber; // Adjust this if you use name instead
+            //             getdata();
+            //         }
+
+            //         updateTable();
+            //     })
+            //     .catch(error => {
+            //         // Handle any errors that occurred during the request
+            //         console.error('Error fetching candidate data:', error);
+            //     });
+            // }
+            var selectedCandidate = null; // Store the selected candidate globally
+
             function overwriteRow(btn) {
                 var row = btn.parentNode.parentNode;
                 var index = Array.from(row.parentNode.children).indexOf(row);
 
-                // Prompt user to select candidate from the datalist
-                var selectedCandidate = prompt('Select a candidate from the list by entering candidate ID:');
+                // Open the modal
+                openModal();
 
-                // Validate input
-                if (!selectedCandidate) return; // Handle if user cancels
+                // When the user selects a candidate and confirms:
+                window.selectCandidate = function() {
+                    selectedCandidate = document.getElementById('candidateSelect').value;
 
-                // Example: Simulate fetching new data based on selected candidate ID
-                fetch('/user/embassy/' + selectedCandidate, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data[0]);
-                    // Example: Replace row with new data
-                    row.children[0].innerHTML = data[0].prof_name_arabic;
-                    row.children[1].innerHTML = data[0].visa_date2.substr(0, 4);
-                    row.children[2].innerHTML = data[0].visa_no;
-                    row.children[3].innerHTML = data[0].spon_name_arabic;
-                    row.children[4].innerHTML = data[0].passport_number;
-
-                    // Update rowsData or cancelRowsData based on tbody ID
-                    if (row.parentNode.id === 'table_cancel_body') {
-                        cancelRowsData[index] = row;
-                    } else {
-                        rowsData[index] = row;
+                    if (!selectedCandidate) {
+                        closeModal(); // Handle if the user cancels
+                        return;
                     }
 
-                    // Trigger getdata() or getCanceldata() with the updated passport number or name
-                    var passportNumber = data[0].passport_number; // Adjust this based on your data structure
+                    // Fetch the new data for the selected candidate
+                    fetch('/user/embassy/' + selectedCandidate, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data[0]);
+                        // Replace row with new data
+                        row.children[0].innerHTML = data[0].prof_name_arabic;
+                        row.children[1].innerHTML = data[0].visa_date2.substr(0, 4);
+                        row.children[2].innerHTML = data[0].visa_no;
+                        row.children[3].innerHTML = data[0].spon_name_arabic;
+                        row.children[4].innerHTML = data[0].passport_number;
 
-                    if (row.parentNode.id === 'table_cancel_body') {
-                        document.getElementById('cancelInput').value = passportNumber; // Adjust this if you use name instead
-                        getCanceldata();
-                    } else {
-                        document.getElementById('candidate').value = passportNumber; // Adjust this if you use name instead
-                        getdata();
-                    }
+                        // Update rowsData or cancelRowsData based on tbody ID
+                        if (row.parentNode.id === 'table_cancel_body') {
+                            cancelRowsData[index] = row;
+                        } else {
+                            rowsData[index] = row;
+                        }
 
-                    updateTable();
-                })
-                .catch(error => {
-                    // Handle any errors that occurred during the request
-                    console.error('Error fetching candidate data:', error);
-                });
+                        // Trigger getdata() or getCanceldata() with the updated passport number
+                        var passportNumber = data[0].passport_number;
+
+                        if (row.parentNode.id === 'table_cancel_body') {
+                            document.getElementById('cancelInput').value = passportNumber;
+                            getCanceldata();
+                        } else {
+                            document.getElementById('candidate').value = passportNumber;
+                            getdata();
+                        }
+
+                        updateTable();
+                        closeModal(); // Close the modal after selection
+                    })
+                    .catch(error => {
+                        console.error('Error fetching candidate data:', error);
+                        closeModal();
+                    });
+                };
             }
 
+            function openModal() {
+                document.getElementById('candidateModal').style.display = 'flex';
+            }
 
+            function closeModal() {
+                document.getElementById('candidateModal').style.display = 'none';
+            }
             function deleteRow(btn) {
                 var row = btn.parentNode.parentNode;
                 var index = Array.from(row.parentNode.children).indexOf(row);
