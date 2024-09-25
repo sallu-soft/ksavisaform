@@ -282,46 +282,169 @@
             var rowsData = [];
             var cancelRowsData = [];
 
-            function getdata() {
-                var id = document.getElementById('candidate').value;
+            // function getdata(id=null) {
+            //     if(id==null){
+            //         var id = document.getElementById('candidate').value;
 
-                fetch('/user/embassy/' + id, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        addRowToTable(data[0]);
-                        document.getElementById('candidate').value = null;
-                        updateTotalCount();
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            }
+            //     fetch('/user/embassy/' + id, {
+            //             method: 'GET',
+            //             headers: {
+            //                 'Content-Type': 'application/json'
+            //             },
+            //         })
+            //         .then(response => response.json())
+            //         .then(data => {
+            //             addRowToTable(data[0]);
+            //             document.getElementById('candidate').value = null;
+            //             updateTotalCount();
+            //         })
+            //         .catch(error => {
+            //             console.error(error);
+            //         });
+            //     }else{
+            //         // var id = document.getElementById('candidate').value;
+
+            //     fetch('/user/embassy/' + id, {
+            //             method: 'GET',
+            //             headers: {
+            //                 'Content-Type': 'application/json'
+            //             },
+            //         })
+            //         .then(response => response.json())
+            //         .then(data => {
+            //             addRowToTable(data[0]);
+            //             document.getElementById('candidate').value = null;
+            //             updateTotalCount();
+            //         })
+            //         .catch(error => {
+            //             console.error(error);
+            //         });
+            //     }
+                
+            // }
 
 
-            function getCanceldata() {
-                var id = document.getElementById('cancelInput').value;
+            // function getCanceldata(id=null) {
+            //     if(id == null){
+            //         var id = document.getElementById('cancelInput').value;
+                
+            //     fetch('/user/embassy/' + id, {
+            //             method: 'GET',
+            //             headers: {
+            //                 'Content-Type': 'application/json'
+            //             },
+            //         })
+            //         .then(response => response.json())
+            //         .then(data => {
+            //             addRowToTable(data[0], true); // Pass true to highlight row
+            //             document.getElementById('cancelInput').value = null;
+            //             updateTotalCount();
+            //         })
+            //         .catch(error => {
+            //             console.error(error);
+            //         });
+            //     }else{
+            //         // var id = document.getElementById('cancelInput').value;
+                
+            //     fetch('/user/embassy/' + id, {
+            //             method: 'GET',
+            //             headers: {
+            //                 'Content-Type': 'application/json'
+            //             },
+            //         })
+            //         .then(response => response.json())
+            //         .then(data => {
+            //             addRowToTable(data[0], true); // Pass true to highlight row
+            //             document.getElementById('cancelInput').value = null;
+            //             updateTotalCount();
+            //         })
+            //         .catch(error => {
+            //             console.error(error);
+            //         });
+            //     }
+            // }
 
-                fetch('/user/embassy/' + id, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        addRowToTable(data[0], true); // Pass true to highlight row
-                        document.getElementById('cancelInput').value = null;
-                        updateTotalCount();
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            }
+            function getdata(id = null) {
+    if (id == null) {
+        var id = document.getElementById('candidate').value;
+    }
+
+    fetch('/user/embassy/' + id, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        var existingRow = findRowById(data[0].passport_number, 'table_body');
+
+        if (existingRow) {
+            // Overwrite the existing row
+            overwriteRowData(existingRow, data[0]);
+        } else {
+            // Add new row only if it doesn't exist
+            addRowToTable(data[0]);
+        }
+
+        document.getElementById('candidate').value = null;
+        updateTotalCount();
+    })
+    .catch(error => {
+        console.error(error);
+    });
+}
+
+
+function getCanceldata(id = null) {
+    if (id == null) {
+        var id = document.getElementById('cancelInput').value;
+    }
+
+    fetch('/user/embassy/' + id, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        var existingRow = findRowById(data[0].passport_number, 'table_cancel_body');
+
+        if (existingRow) {
+            // Overwrite the existing row in the cancel table
+            overwriteRowData(existingRow, data[0]);
+        } else {
+            // Add new row only if it doesn't exist
+            addRowToTable(data[0], true); // Pass true to highlight row
+        }
+
+        document.getElementById('cancelInput').value = null;
+        updateTotalCount();
+    })
+    .catch(error => {
+        console.error(error);
+    });
+}
+
+function findRowById(passportNumber, tableBodyId) {
+    var rows = document.getElementById(tableBodyId).getElementsByTagName('tr');
+    for (var i = 0; i < rows.length; i++) {
+        if (rows[i].children[4].textContent === passportNumber) {
+            return rows[i];
+        }
+    }
+    return null;
+}
+
+function overwriteRowData(row, data) {
+    row.children[0].textContent = data.prof_name_arabic;
+    row.children[1].textContent = data.visa_date2.substr(0, 4);
+    row.children[2].textContent = data.visa_no;
+    row.children[3].textContent = data.spon_name_arabic;
+    row.children[4].textContent = data.passport_number;
+}
+
 
 
             function addRowToTable(data, highlight = false) {
@@ -425,66 +548,133 @@
             // }
             var selectedCandidate = null; // Store the selected candidate globally
 
+            // function overwriteRow(btn) {
+            //     var row = btn.parentNode.parentNode;
+            //     var index = Array.from(row.parentNode.children).indexOf(row);
+
+            //     // Open the modal
+            //     openModal();
+
+            //     // When the user selects a candidate and confirms:
+            //     window.selectCandidate = function() {
+            //         selectedCandidate = document.getElementById('candidateSelect').value;
+
+            //         if (!selectedCandidate) {
+            //             closeModal(); // Handle if the user cancels
+            //             return;
+            //         }
+
+            //         // Fetch the new data for the selected candidate
+            //         fetch('/user/embassy/' + selectedCandidate, {
+            //             method: 'GET',
+            //             headers: {
+            //                 'Content-Type': 'application/json'
+            //             },
+            //         })
+            //         .then(response => response.json())
+            //         .then(data => {
+            //             console.log(data[0]);
+            //             // Replace row with new data
+            //             row.children[0].innerHTML = data[0].prof_name_arabic;
+            //             row.children[1].innerHTML = data[0].visa_date2.substr(0, 4);
+            //             row.children[2].innerHTML = data[0].visa_no;
+            //             row.children[3].innerHTML = data[0].spon_name_arabic;
+            //             row.children[4].innerHTML = data[0].passport_number;
+
+            //             // Update rowsData or cancelRowsData based on tbody ID
+            //             if (row.parentNode.id === 'table_cancel_body') {
+            //                 cancelRowsData[index] = row;
+            //             } else {
+            //                 rowsData[index] = row;
+            //             }
+
+            //             // Trigger getdata() or getCanceldata() with the updated passport number
+            //             var passportNumber = data[0].passport_number;
+
+            //             if (row.parentNode.id === 'table_cancel_body') {
+            //                 document.getElementById('cancelInput').value = passportNumber;
+            //                 getCanceldata(selectedCandidate);
+            //             } else {
+            //                 document.getElementById('candidate').value = passportNumber;
+            //                 getdata(selectedCandidate);
+            //             }
+            //             console.log("candidate");
+                        
+            //             // updateTable();
+            //             document.getElementById('candidateSelect').value="";
+            //             closeModal(); // Close the modal after selection
+            //         })
+            //         .catch(error => {
+            //             console.error('Error fetching candidate data:', error);
+            //             closeModal();
+            //         });
+            //     };
+            // }
             function overwriteRow(btn) {
-                var row = btn.parentNode.parentNode;
-                var index = Array.from(row.parentNode.children).indexOf(row);
+    var row = btn.parentNode.parentNode;
+    var index = Array.from(row.parentNode.children).indexOf(row);
+    // console.log(index , row);
+    // Open the modal
+    openModal();
 
-                // Open the modal
-                openModal();
+    // When the user selects a candidate and confirms:
+    window.selectCandidate = function() {
+        selectedCandidate = document.getElementById('candidateSelect').value;
 
-                // When the user selects a candidate and confirms:
-                window.selectCandidate = function() {
-                    selectedCandidate = document.getElementById('candidateSelect').value;
+        if (!selectedCandidate) {
+            closeModal(); // Handle if the user cancels
+            return;
+        }
 
-                    if (!selectedCandidate) {
-                        closeModal(); // Handle if the user cancels
-                        return;
-                    }
+        // Fetch the new data for the selected candidate
+        fetch('/user/embassy/' + selectedCandidate, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            // console.log(data[0],  row.children[0].textContent);
+            
+            // Overwrite the row's data instead of adding a new one
+            
+            row.children[0].textContent = data[0].prof_name_arabic;
+            row.children[1].textContent = data[0].visa_date2.substr(0, 4);
+            row.children[2].textContent = data[0].visa_no;
+            row.children[3].textContent = data[0].spon_name_arabic;
+            row.children[4].textContent = data[0].passport_number;
 
-                    // Fetch the new data for the selected candidate
-                    fetch('/user/embassy/' + selectedCandidate, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data[0]);
-                        // Replace row with new data
-                        row.children[0].innerHTML = data[0].prof_name_arabic;
-                        row.children[1].innerHTML = data[0].visa_date2.substr(0, 4);
-                        row.children[2].innerHTML = data[0].visa_no;
-                        row.children[3].innerHTML = data[0].spon_name_arabic;
-                        row.children[4].innerHTML = data[0].passport_number;
-
-                        // Update rowsData or cancelRowsData based on tbody ID
-                        if (row.parentNode.id === 'table_cancel_body') {
-                            cancelRowsData[index] = row;
-                        } else {
-                            rowsData[index] = row;
-                        }
-
-                        // Trigger getdata() or getCanceldata() with the updated passport number
-                        var passportNumber = data[0].passport_number;
-
-                        if (row.parentNode.id === 'table_cancel_body') {
-                            document.getElementById('cancelInput').value = passportNumber;
-                            getCanceldata();
-                        } else {
-                            document.getElementById('candidate').value = passportNumber;
-                            getdata();
-                        }
-
-                        updateTable();
-                        closeModal(); // Close the modal after selection
-                    })
-                    .catch(error => {
-                        console.error('Error fetching candidate data:', error);
-                        closeModal();
-                    });
-                };
+            // Update the correct data array
+            if (row.parentNode.id === 'table_cancel_body') {
+                cancelRowsData[index] = { ...cancelRowsData[index], ...data[0] };
+            } else {
+                rowsData[index] = { ...rowsData[index], ...data[0] };
             }
+
+            // Trigger getdata() or getCanceldata() with the updated passport number
+            var passportNumber = data[0].passport_number;
+
+            if (row.parentNode.id === 'table_cancel_body') {
+                document.getElementById('cancelInput').value = passportNumber;
+                getCanceldata(selectedCandidate);
+            } else {
+                document.getElementById('candidate').value = passportNumber;
+                getdata(selectedCandidate);
+            }
+
+            console.log("Candidate updated");
+
+            // Clear the select input and close the modal
+            document.getElementById('candidateSelect').value = "";
+            closeModal();
+        })
+        .catch(error => {
+            console.error('Error fetching candidate data:', error);
+            closeModal();
+        });
+    };
+}
 
             function openModal() {
                 document.getElementById('candidateModal').style.display = 'flex';
