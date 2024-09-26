@@ -878,9 +878,9 @@ function overwriteRowData(row, data) {
             window.print(); // This will open the browser print dialog
         }
 
-        Button Click Event
+        // Button Click Event
         document.getElementById('saveAndPrintBtn').addEventListener('click', () => {
-            // console.log('Save and print');
+            console.log('Save and print');
             let tableBodyData = extractTableData('table_body');         // Extract table body data
             let tableCancelBodyData = extractTableData('table_cancel_body'); // Extract cancel body data
 
