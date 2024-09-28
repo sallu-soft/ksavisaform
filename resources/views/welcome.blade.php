@@ -79,11 +79,11 @@
                 aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                     <div class="modal-content mx-10 my-8 md:m-0">
-                        <div class="modal-header">
+                        <div class="modal-header bg-[#00959F] text-white">
                             <h5 class="modal-title" id="exampleModalLongTitle">Register Account</h5>
                             <button type="button" class="close text-2xl" data-bs-dismiss="modal" id="closeModal"
                                 aria-label="Close">
-                                <span aria-hidden="true" class="text-xl">&times;</span>
+                                <span aria-hidden="true" class="text-3xl">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body ">
@@ -126,12 +126,6 @@
 
                                         </div>
                                     </div>
-                                    <div class="form-outline mb-3 mb-4 w-full">
-                                        <label class="form-label" for="form6Example5">Office Address </label>
-                                        <textarea class="form-control" id="form6Example7" required placeholder="Type Your Office Address" name="address"
-                                            rows="3"></textarea>
-
-                                    </div>
                                     <div class=" grid md:grid-cols-2 grid-cols-1 gap-3 w-full ">
                                         <div class="form-outline mb-3 ">
                                             <label class="form-label" for="form6Example6">Password</label>
@@ -149,6 +143,21 @@
 
                                         </div>
                                     </div>
+                                    <div class="grid md:grid-cols-2 grid-cols-1 gap-3 w-full">
+                                        <div class="form-outline mb-3 ">
+                                        <label class="form-label" for="form6Example5">Office Address </label>
+                                        <textarea class="form-control" id="form6Example7" required placeholder="Type Your Office Address" name="address"
+                                            rows="3"></textarea>
+                                        </div>
+                                        <div class="form-outline mb-3">
+                                            <label class="form-label" for="form6Example7">Software User Phone Number</label>
+                                            <input type="text" id="phone" required
+                                                placeholder="Enter Confirm Phone" class="form-control"
+                                                name="phone" />
+
+                                        </div>
+                                    </div>
+                                
 
 
 
@@ -171,7 +180,7 @@
                                     <!-- Submit button -->
 
                                     <button type="submit"
-                                        class="btn btn-primary btn-block mb-4 text-blue-800 hover:text-white text-xl text-center">Sign
+                                        class="px-4 py-2 rounded-md btn-block mb-4 bg-[#00959F] text-white text-lg text-center">Sign
                                         Up</button>
 
                                 </form>

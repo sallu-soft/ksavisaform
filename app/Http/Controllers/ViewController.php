@@ -153,6 +153,7 @@ class ViewController extends Controller
             $arabic_name = request('arabic_name');
             $rno = request('rl_no');
             $email = request('email');
+            $phone = request('phone');
            
             $address = request('address');
             $pass = request('pass');
@@ -168,7 +169,7 @@ class ViewController extends Controller
                 $user->arabic_name = $arabic_name;
                 $user->rl_no = $rno;
                 $user->email = $email;
-                $user->phone = "";
+                $user->phone = $phone;
                 $user->office_address = $address;
                 $user->password = $pass;
                 $user->embassy_man_name = "";
