@@ -377,7 +377,7 @@
                       <div class="py-1">
                       <div class="font-semibold text-lg">Address</div>
                       <div class="input-group">
-                      <input type="text" class="form-control uppercase" id="address" placeholder="" name="address">
+                      <input type="text" class="form-control uppercase" value="<?php echo $candidate->address?>" id="address" placeholder="" name="address">
                       </div>
                     </div>
                       <div class="py-1">
@@ -386,7 +386,7 @@
                       </div>
                       <div class="py-1">
                         <div class="font-bold text-lg">Medical Issue Date</div>
-                        <input type="text" class="p-2 rounded-lg w-full uppercase form-control" id="medical_issue_date" name="medical_issue_date" value=" <?php
+                        <input type="text" class="p-2 rounded-lg w-full uppercase form-control" id="medical_issue_date" name="medical_issue_date" value="<?php
                         $inputDate = $candidate->medical_issue_date;
                         
                         // Check if $inputDate is not null

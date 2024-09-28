@@ -394,7 +394,7 @@ class UserController extends Controller
     }
 
     public function personal_edit($id, Request $request){
-        // dd(1, $id, 2, $request->all());
+        // dd( $request->all());
         if(Session::get('user')){
             $candidate = Candidates::where('id', $id)->first();
             if($candidate){
@@ -434,8 +434,8 @@ class UserController extends Controller
             if ($issueDate !== false && $issueDate !== null) {
                 $candidate->medical_issue_date = $issueDate->format('Y-m-d');
             } else {
-                // Handle the case when the date format is invalid or empty
-                $candidate->medical_issue_date = null; // Assigning null in case of empty or invalid date
+               
+                // $candidate->medical_issue_date = null; 
             }
 
             $expireDate = !empty($request->medical_expire_date) ? \DateTime::createFromFormat('d/m/Y', $request->medical_expire_date) : null;
@@ -443,10 +443,11 @@ class UserController extends Controller
             if ($expireDate !== false && $expireDate !== null) {
                 $candidate->medical_expire_date = $expireDate->format('Y-m-d');
             } else {
-                // Handle the case when the date format is invalid or empty
-                $candidate->medical_expire_date = null; // Assigning null in case of empty or invalid date
+               
+                // $candidate->medical_expire_date = null; 
             }
             $candidate->police = strtoupper($request->police_licence);
+            $candidate->address = strtoupper($request->address);
             $candidate->driving_licence = strtoupper($request->driving_licence);
             $candidate->is_delete = 0;
             $candidate->gender = strtoupper($request->gender);
