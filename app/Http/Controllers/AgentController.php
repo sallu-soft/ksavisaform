@@ -167,63 +167,104 @@ class AgentController extends Controller
         }
     }
 
+    // public function update(Request $request){
+    //     if(Session::get('user')){
+    //        try{
+
+           
+            
+    //         $agent = Agents::findOrFail($request->id);
+    //                 // dd($request->all(), $request->file('agent_picture'));
+    //                 $agent->agent_name = strtoupper($request->input('agent_name'));
+    //                 $agent->agent_phone = strtoupper($request->input('agent_phone'));
+    //                 $agent->agent_email = $request->input('agent_email');
+    //                 $agent->agent_address = strtoupper($request->input('agent_address'));
+    //                 $agent->agent_e_phone = strtoupper($request->input('agent_e_phone'));
+    //                 $agent->user = Session::get('user');
+    //                 if ($request->hasFile('agent_picture')) {
+    //                     $logo = $request->file('agent_picture');
+    //                     $filename = time() . '_' . $logo->getClientOriginalName();
+    //                     $logo->move(public_path('agent_picture'), $filename);
+    //                     $agent->agent_picture = 'agent_picture/' . $filename;
+    //                 }
+    //                 $response = [
+    //                     'redirect_url' => 'user/index',
+    //                 ];
+            
+    //         if ($agent->save()) {
+    //             DB::commit();
+    //             $response['title'] = 'Success';
+    //             $response['success'] = true;
+    //             $response['icon'] = 'success';
+    //             $response['message'] = 'Successfully Updated the agent';
+    //         } else {
+    //             $response['title'] = 'Error';
+    //             $response['success'] = false;
+    //             $response['icon'] = 'error';
+    //             $response['message'] = 'Failed Agent Update';
+    //         }
+    //         }catch (\Exception $e) {
+    //             DB::rollback();
+    //             $response['title'] = 'Error';
+    //             $response['success'] = false;
+    //             $response['icon'] = 'error';
+    //             $response['message'] = $e->getMessage(); // Get the actual error message
+    //         }   
+    //         return response()->json($response, 200);
+        
+    //     }
+    //     else{
+    //         return redirect()->route('login');  // Redirect to the login route
+    //     }
+    // }
     public function update(Request $request){
         if(Session::get('user')){
-           
-            // dd($request->all());
-            $validatedData = $request->validate([
-                'agent_name' => 'required|string|max:255',
-                'agent_phone' => 'required|string|max:255',
-                'agent_email' => 'required|string|email|max:255',
-                'agent_address' => 'sometimes|string|max:255',
-                'agent_e_phone' => 'sometimes|string|max:255',
-                'agent_picture' => 'sometimes|file|image|max:1024', // Ensure it's an image and limit size to 1MB
-            ]);
-        
-            // Find the agent or fail with a 404 error
-            $agent = Agents::findOrFail($request->id);
-        
-            // Update the agent's details
-            $agent->agent_name = strtoupper($validatedData['agent_name']);
-            $agent->agent_phone = strtoupper($validatedData['agent_phone']);
-            $agent->agent_email = $validatedData['agent_email'];
-            $agent->agent_address = strtoupper($validatedData['agent_address']);
-            $agent->agent_e_phone = strtoupper($validatedData['agent_e_phone']);
-            $agent->user = Session::get('user');
-        
-            // Handle the file upload
-            if ($request->hasFile('agent_picture')) {
-                $logo = $request->file('agent_picture');
-                $filename = time() . '_' . $logo->getClientOriginalName();
-                $logo->move(public_path('agent_picture'), $filename);
-                $agent->agent_picture = 'agent_picture/' . $filename;
-            }
-        
-            $response = [
-                'redirect_url' => 'user/index',
-            ];
-            // Save the updated agent
-            if ($agent->save()) {
-                $response = [
-                    'title' => 'Success',
-                    'success' => true,
-                    'icon' => 'success',
-                    'message' => 'Successfully updated the agent',
-                    'agent' => $agent
-                ];
-            } else {
+            try{
+                $agent = Agents::findOrFail($request->id);
+                
+                $agent->agent_name = strtoupper($request->input('agent_name'));
+                $agent->agent_phone = strtoupper($request->input('agent_phone'));
+                $agent->agent_email = $request->input('agent_email');
+                $agent->agent_address = strtoupper($request->input('agent_address'));
+                $agent->agent_e_phone = strtoupper($request->input('agent_e_phone'));
+                $agent->user = Session::get('user');
+    
+                if ($request->hasFile('agent_picture')) {
+                    $logo = $request->file('agent_picture');
+                    $filename = time() . '_' . $logo->getClientOriginalName();
+                    $logo->move(public_path('agent_picture'), $filename);
+                    $agent->agent_picture = 'agent_picture/' . $filename;
+                }
+    
+                if ($agent->save()) {
+                    $response = [
+                        'title' => 'Success',
+                        'success' => true,
+                        'icon' => 'success',
+                        'message' => 'Successfully Updated the agent',
+                        'redirect_url' => 'user/index'
+                    ];
+                    return redirect(url('/agents'));
+                } else {
+                    $response = [
+                        'title' => 'Error',
+                        'success' => false,
+                        'icon' => 'error',
+                        'message' => 'Failed Agent Update'
+                    ];
+                }
+            } catch (\Exception $e) {
                 $response = [
                     'title' => 'Error',
                     'success' => false,
                     'icon' => 'error',
-                    'message' => 'Failed to update the agent'
+                    'message' => $e->getMessage()
                 ];
             }
-        
+    
             return response()->json($response, 200);
-        
-        }
-        else{
+    
+        } else {
             return redirect()->route('login');  // Redirect to the login route
         }
     }
