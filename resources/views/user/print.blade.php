@@ -93,10 +93,10 @@
             <div class="">
               <div class="h-[180px] w-[170px] border-1 border border-black " ></div>
             </div>
-            <div  class="flex flex-col justify-start items-end ml-[170px]">
+            <div  class="flex flex-col justify-start items-end ml-[290px]">
             
            
-              <svg id="barcode1" class="w-[300px]">
+              <svg id="barcode1" class="w-[270px]">
                   <!--<span class=' w-[190px] absolute bottom-[-10px] left-8 text-center'>    Visa Date:  {{$candidates[0]->visa_date2}}</span>-->
               </svg>
               
