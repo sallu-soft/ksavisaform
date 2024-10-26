@@ -426,7 +426,13 @@
                       </div>
                       <div class="py-1">
                         <div class="font-bold text-lg">Police Clearence No</div>
+                        <div class="input-group">
                         <input type="text" class="p-2 rounded-lg w-full form-control uppercase" id="police_licence" name="police_licence" value="{{$candidate->police}}"  >
+                        <button type="button"
+                              class="rounded-lg bg-indigo-500 text-white p-2 text-md font-semibold"
+                              onclick="SearchPC()">Search
+                        </button>
+                      </div>
                       </div>
                     </div>
                       {{-- <div class=" px-10 my-2">
@@ -540,6 +546,13 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     
 <script>
+  function SearchPC() {
+            var PCInput = document.getElementById("police_licence").value.toUpperCase();
+            var url = `https://pcc.police.gov.bd/ords/f?p=500:50::::RP:P50_TOKEN_ID:${PCInput}`;
+
+            // Open the link in a new tab
+            window.open(url, "_blank");
+        }
     $(document).ready(function() {
 
 //       var apiUrl = window.location.origin + '/user/get';
@@ -710,6 +723,7 @@ $('#pnumber').on('change', function () {
                 }
             });
         });
+        
         $('#visaedit').submit(function(event) {
             event.preventDefault(); 
             var formData = $(this).serialize();
