@@ -1311,7 +1311,7 @@
               <td class="uppercase"></td>
               <td class="uppercase"></td>
               <td class="uppercase font-bold text-xl arb" contentEditable="true">
-                {{$candidates[0]->prof_name_arabic}}
+                {{$candidates[0]->prof_name_english}}
               </td>
               <td class=" font-bold text-xl text-end"> Profession/<span class="arb">المهنة </span></td>
             </tr>

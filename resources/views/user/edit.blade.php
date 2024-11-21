@@ -475,10 +475,7 @@
                             <div class="font-bold text-lg">Visa Date (Hijri)</div>
                             <input type="text" name="visa_date" id="visa_date" value="{{$candidate->visa_date2}}" class="p-2 rounded-lg w-full uppercase form-control" >
                           </div>
-                          <div class="py-1">
-                            <div class="font-bold text-lg">Salary</div>
-                            <input type="text" class="p-2 rounded-lg w-full uppercase form-control" id="salary" name="salary" value="{{$candidate->salary}}">
-                          </div>
+                        
                           <div class="py-1">
                             <div class="font-bold text-lg">Sponsor Name (Arabic)</div>
                             <input type="text" class="p-2 rounded-lg w-full uppercase form-control" id="spon_name_arabic" name="spon_name_arabic" value="{{$candidate->spon_name_arabic}}">
@@ -500,8 +497,8 @@
                             <input type="text" class="p-2 rounded-lg w-full uppercase form-control" id="mofa_no" name="mofa_no" value="{{$candidate->mofa_no}}">
                           </div>
                           <div class="py-1">
-                            <div class="font-bold text-lg">Mofa Date</div>
-                            <input type="text" name="mofa_date" value="{{$candidate->mofa_date}}" id="mofa_date" class="p-2 rounded-lg w-full uppercase form-control">
+                            <div class="font-bold text-lg">Salary</div>
+                            <input type="text" class="p-2 rounded-lg w-full uppercase form-control" id="salary" name="salary" value="{{$candidate->salary}}">
                           </div>
                           <div class="py-1">
                             <div class="font-bold text-lg">Okala No</div>
