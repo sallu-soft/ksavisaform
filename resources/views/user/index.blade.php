@@ -599,35 +599,35 @@
     <!-- End Hero -->
     <div class="w-[90%] mx-auto my-5 hello">
 
-        <div class="flex justify-end gap-3">
+        <div class="flex justify-end gap-2 md:gap-3">
             <button type="button" data-toggle="tooltip" data-placement="bottom" title="Add Agent"
-                class="bg-indigo-500 text-white font-semibold text-xl px-14 mr-2 py-2 rounded-md mb-2"
+                class="bg-indigo-500 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 mr-2 py-2 rounded-md mb-2"
                 data-bs-toggle="modal" data-bs-target="#agentModal">
                 Add Agent
             </button>
             
 
             <button type="button" data-toggle="tooltip" data-placement="bottom" title="Add Canddidates Passport"
-                class="bg-indigo-500 text-white font-semibold mr-2 text-xl px-14 py-2 rounded-md mb-2"
+                class="bg-indigo-500 text-white font-semibold mr-2 text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2"
                 data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Add candidate
             </button>
             <a href="{{ route('agents') }}" data-toggle="tooltip" data-placement="bottom" title="Agents">
               <button type="button"
-                  class="bg-yellow-500 mr-2 text-white font-semibold text-xl px-14 py-2 rounded-md mb-2">
+                  class="bg-yellow-500 mr-2 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2">
                   Agents List
               </button>
           </a>
             <a href="{{ route('agent_candidate') }}" data-toggle="tooltip" data-placement="bottom" title="Report">
                 <button type="button"
-                    class="bg-yellow-500 text-white font-semibold text-xl px-14 py-2 rounded-md mb-2">
+                    class="bg-yellow-500 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2">
                     Report
                 </button>
             </a>
 
             <!-- Dropdown Button -->
             <div class="relative">
-                <button class="bg-blue-500 text-white font-semibold text-xl px-14 py-2 rounded-md mb-2"
+                <button class="bg-blue-500 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2"
                     id="dropdownButton" aria-expanded="false" data-toggle="tooltip" data-placement="bottom"
                     title="More Actions">
                     Manpower Forms
@@ -671,7 +671,7 @@
                     <th scope="col" class="text-lg">Profession</th>
 
                     <th scope="col">Application (MOFA) <br /> Number</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col" class="w-[120px]">Actions</th>
                 </tr>
             </thead>
             <tbody class="bg-gray-400">
@@ -750,31 +750,31 @@
                         </td>
                         <td>{{ $candidate->prof_name_english }}</td>
                         <td>{{ $candidate->mofa_no }}</td>
-                        <td class="p-2">
+                        <td scope="col" class="p-1">
                             @if (!$candidate->visa_no)
-                                <div class="md:text-lg text-md cursor-pointer">
+                                <div class="2xl:text-lg text-sm cursor-pointer">
                                     <a href="{{ route('user/visaadd', ['id' => $candidate->id]) }}"
                                         class="fw-semibold text-primary"><i
                                             class="bi bi-file-earmark-plus mr-1"></i>Visa</a>
                                 </div>
                             @endif
                             @if (!$candidate->manpower_id)
-                                <div class="md:text-lg text-md cursor-pointer">
+                                <div class="2xl:text-lg text-sm cursor-pointer">
                                     <a href="{{ route('user/manpoweradd', ['id' => $candidate->id]) }}"
                                         class="fw-semibold text-primary"><i
                                             class="bi bi-file-earmark-plus mr-1"></i>Manpower</a>
                                 </div>
                             @endif
-                            <div class="md:text-lg text-md">
+                            <div class="2xl:text-lg text-sm">
                                 <a href="{{ route('user/edit', ['id' => $candidate->id]) }}"
                                     class="fw-semibold text-success"><i class="bi bi-pencil-square mr-1"></i>Edit</a>
                             </div>
-                            <div class="md:text-lg text-md">
+                            <div class="2xl:text-lg text-sm">
                                 <a href="#" onclick="return surity('{{ $candidate->id }}')"
                                     class="fw-semibold text-danger"><i class="bi bi-trash mr-1"></i>Delete</a>
                             </div>
                             @if (!$candidate->visa_no)
-                                <div class="md:text-lg text-md fw-semibold text-warning cursor-pointer"
+                                <div class="2xl:text-lg text-sm fw-semibold text-warning cursor-pointer"
                                     data-bs-toggle="modal" data-bs-target="#printModal">
                                     <i class="bi bi-printer-fill mr-1"></i>Print
                                 </div>
@@ -807,7 +807,7 @@
                                     </div>
                                 </div>
                             @else
-                                <div class="md:text-lg text-md">
+                                <div class="2xl:text-lg text-sm">
                                     <a href="{{ route('user/print', ['id' => $candidate->id]) }}"
                                         class="fw-semibold text-warning"><i
                                             class="bi bi-printer-fill mr-1"></i>Print</a>

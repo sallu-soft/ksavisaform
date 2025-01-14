@@ -313,8 +313,8 @@
     <div class="selection:bg-red-500 selection:text-white hero-pattern banner bg-center bg-cover h-full">
         <div class=" h-full inset-0 bg-black bg-opacity-75">
             <div
-                class="min-h-[90vh] md:gap-x-14 sm:flex md:justify-between items-center w-[95%] mx-auto flex-wrap md:w-[75%] md:items-center py-8 md:py-0">
-                <div class="md:w-[48%] w-[90%] mx-auto md:mx-0 md:py-0 py-8 hidden md:block">
+                class="min-h-[90vh] 2xl:gap-x-14 sm:flex md:justify-between items-center w-[95%] mx-auto flex-wrap 2xl:w-[80%] md:items-center py-8 md:py-0">
+                <div class="xl:w-[48%] w-[90%] mx-auto md:mx-0 md:py-0 py-8 hidden md:block">
                     <h2 class='font-extrabold text-yellow-400 w-fit md:text-4xl  rounded-lg text-4xl mb-5'>KSA Visa Application Form Platform</h2>
                     <h2 class='font-extrabold text-white md:text-5xl text-3xl mt-8'>KSA 4 Page Form Download Software
                         Solution</h2>
@@ -324,7 +324,7 @@
                         class="border-2 border-white text-gray-50 py-2 px-5 hover:bg-white duration-300 hover:text-black font-semibold text-lg mt-3 rounded-lg w-fit"
                         data-bs-toggle="modal" data-bs-target="#contactModal">Contact</button>
                 </div>
-                <div class=" md:w-[48%] w-[100%] flex items-center md:justify-end justify-center">
+                <div class=" xl:w-[48%] w-[100%] flex items-center md:justify-end justify-center">
                     <div class="mt-3 bg-white shadow-2xl border-2 border-black rounded-2xl py-9 px-7">
                         <form class="" id="loginform" action="{{ route('login') }}" method="post">
                             <!-- Email input -->
