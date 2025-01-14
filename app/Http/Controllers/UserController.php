@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Candidates;
+use App\Models\Manpower;
 use App\Models\Visa;
 use App\Models\User;
+use DateTime;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
@@ -307,27 +310,34 @@ class UserController extends Controller
         }
     }
     
-    public function edit($id, Request $request){
-        if(Session::get('user')){
-            if($request->isMethod('GET')){
-                $candidates = DB::table('candidates')
-                        ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
-                        ->select('candidates.*', 'visas.*')->where('candidates.id', '=', $id)
-                        ->get();
-                $agentsform = DB::table('agents')
+    public function edit($id, Request $request)
+{
+    if (Session::get('user')) {
+        if ($request->isMethod('GET')) {
+            $candidates = DB::table('candidates')
+                ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
+                ->select('candidates.*', 'visas.*')
+                ->where('candidates.id', '=', $id)
+                ->get();
+            $agentsform = DB::table('agents')->where('user', Session::get('user'))->get();
+            $manpower = DB::table('manpower')
+                ->where('candidate_id', $id)
+                ->first();
+
+            Log::info('Retrieved manpower:', ['manpower' => $manpower]);
+
+            $user = DB::table('user')
                 ->select('*')
-                ->where('user', '=', Session::get('user'))
-                ->where('is_delete', '=', 0)->get();
-                // dd($candidates); 
-                $user = DB::table('user')->select('*')->where('email', '=', Session::get('user'))->first();
-                return view('user.edit', compact('id', 'candidates','user','agentsform'));
-            }
+                ->where('email', '=', Session::get('user'))
+                ->first();
+
+            return view('user.edit', compact('id', 'candidates','agentsform', 'user', 'manpower'));
         }
-        else{
-            return redirect(url('/'));
-        }
-        
+    } else {
+        return redirect(url('/'));
     }
+}
+
     public function view($id, Request $request){
         if(Session::get('user')){
             if($request->isMethod('GET')){
@@ -486,6 +496,155 @@ class UserController extends Controller
             return redirect(url('/'));
         }
         
+    }
+    public function manpower_add(Request $request, $id) {
+        if (Session::get('user')) {
+            if ($request->isMethod('GET')) {
+                $candidate = DB::table('candidates')
+                    ->where('candidates.id', '=', $id)
+                    ->first();
+      
+                $user = DB::table('user')->select('*')
+                    ->where('email', '=', Session::get('user'))
+                    ->first();
+                    
+                return view('user.manpoweradd', ['id' => $id], compact('id', 'candidate', 'user'));
+            } else {
+                // Wrap in a transaction
+                DB::beginTransaction();
+                
+                try {
+                    // dd($request->all());
+                    // Check if a manpower record for the candidate already exists
+                    $flag = Manpower::where('candidate_id', $id)->exists();
+    
+                    if ($flag) {
+                        return response()->json([
+                            'title' => 'Error',
+                            'success' => false,
+                            'icon' => 'error',
+                            'message' => 'This candidate already has a manpower record',
+                            'redirect_url' => 'user/index'
+                        ]);
+                    }
+    
+                    // Create new manpower entry
+                    $manpower = new Manpower();
+                    $manpower->passenger_no = strtoupper($request->input('passenger_no'));
+                    $manpower->company_name = strtoupper($request->input('company_name'));
+                    $manpower->certificate_no = strtoupper($request->input('certificate_no'));
+                    $manpower->ffc_name = strtoupper($request->input('ffc_name'));
+                    $manpower->reg_id = strtoupper($request->input('reg_id'));
+                    $manpower->visa_no = strtoupper($request->input('visa_no'));
+                    $manpower->candidate_id = $id;
+    
+                    // Check if visa_issued_date is provided and valid
+                    if ($request->has('visa_issued_date') && $request->input('visa_issued_date')) {
+                        $visaIssuedDate = (new DateTime($request->input('visa_issued_date')))->format('Y-m-d');
+                        $manpower->visa_issued_date = $visaIssuedDate;
+
+                        // Calculate visa_exp_date as 90 days after visa_issued_date
+                        $visaExpDate = (new DateTime($visaIssuedDate))->modify('+90 days')->format('Y-m-d');
+                        $manpower->visa_exp_date = $visaExpDate;
+                    } else {
+                        // If visa_issued_date is missing, set both dates to defaults
+                        $visaIssuedDate = now()->format('Y-m-d'); // Default to current date
+                        $manpower->visa_issued_date = $visaIssuedDate;
+                        
+                        // Default visa_exp_date to 90 days from now
+                        $visaExpDate = (new DateTime($visaIssuedDate))->modify('+90 days')->format('Y-m-d');
+                        $manpower->visa_exp_date = $visaExpDate;
+                    }
+
+
+    
+                    // Set is_delete default to 0 if not provided
+                    $manpower->is_delete = $request->input('is_delete', 0);
+    
+                    // Save manpower record
+                    $manpower->save();
+    
+                    // Update the candidate with the new manpower_id
+                    $candidate = Candidates::find($id);
+                    if ($candidate) {
+                        $candidate->manpower_id = $manpower->id;
+                        $candidate->save();
+                    } else {
+                        // If the candidate was not found, throw an exception to trigger a rollback
+                        throw new \Exception("Candidate not found");
+                    }
+    
+                    // Commit transaction
+                    DB::commit();
+    
+                    return response()->json([
+                        'title' => 'Success',
+                        'success' => true,
+                        'icon' => 'success',
+                        'message' => 'Manpower added successfully',
+                        'redirect_url' => 'user/index'
+                    ]);
+    
+                } catch (\Exception $e) {
+                    // Rollback the transaction if something went wrong
+                    DB::rollBack();
+    
+                    return response()->json([
+                        'title' => 'Error',
+                        'success' => false,
+                        'icon' => 'error',
+                        'message' => 'Failed to add manpower record: ' . $e->getMessage(),
+                        'redirect_url' => 'user/index'
+                    ]);
+                }
+            }
+        } else {
+            return redirect(url('/'));
+        }
+    }
+
+    public function manpower_edit(Request $request, $id)
+    {
+        try {
+            // Find the manpower record by ID
+            $manpower = Manpower::findOrFail($id);
+
+            // Update fields directly from the request
+            $manpower->passenger_no = strtoupper($request->input('passenger_no'));
+            $manpower->company_name = strtoupper($request->input('company_name'));
+            $manpower->certificate_no = strtoupper($request->input('certificate_no'));
+            $manpower->ffc_name = strtoupper($request->input('ffc_name'));
+            $manpower->reg_id = strtoupper($request->input('reg_id'));
+            $manpower->visa_no = strtoupper($request->input('visa_no'));
+
+            // Update dates if provided
+            if ($request->input('visa_issued_date')) {
+                $manpower->visa_issued_date = (new DateTime($request->input('visa_issued_date')))->format('Y-m-d');
+            }
+
+            if ($request->input('visa_exp_date')) {
+                $manpower->visa_exp_date = (new DateTime($request->input('visa_exp_date')))->format('Y-m-d');
+            }
+
+            // Save the updated manpower record
+            $manpower->save();
+
+            return response()->json([
+                'title' => 'Success',
+                'success' => true,
+                'icon' => 'success',
+                'message' => 'Manpower record updated successfully',
+                'redirect_url' => 'user/index'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'title' => 'Error',
+                'success' => false,
+                'icon' => 'error',
+                'message' => 'Failed to update manpower record: ' . $e->getMessage(),
+                'redirect_url' => 'user/index'
+            ]);
+        }
     }
 
     public function visa_edit($id, Request $request){

@@ -77,19 +77,6 @@
             border-top-width: 1px;
             background-color: lightgray;
         }
-
-        .dropdown-menu.show {
-            display: block;
-        }
-
-        .dropdown-item {
-            padding: 8px 12px;
-            cursor: pointer;
-        }
-
-        .dropdown-item:hover {
-            background-color: #f1f1f1;
-        }
     </style>
 
     @include('layout.head')
@@ -118,7 +105,7 @@
                 <div class="modal-header bg-indigo-300">
                     <h5 class="modal-title text-black font-semibold" id="exampleModalLabel">Update User</h5>
                     <button type="button"
-                        class="btn-close bg-red-800 flex justify-center items-center font-bold bg-white p-2"
+                        class="btn-close text-white flex justify-center items-center  font-bold bg-red-900 p-2"
                         data-bs-dismiss="modal" aria-label="Close">X</button>
                 </div>
                 <div class="modal-body pt-0">
@@ -260,81 +247,32 @@
             </div>
         </div>
     </div>
-
-
-    <div class="modal fade " id="agentModal" tabindex="-1" aria-labelledby="agentModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header bg-indigo-300">
-                    <h5 class="modal-title" id="agentModalLabel">Add New Agent</h5>
-                    {{-- <button type="button" class="btn-close btn text-red-700 font-bold" data-bs-dismiss="modal" aria-label="Close">X</button> --}}
-                </div>
-
-
-                <div class="modal-body">
-                    <form class="row g-3" id="addagent" action="{{ route('agent/index') }}" method="post"
-                        enctype="multipart/form-data">
-                        @csrf
-                        <div class="">
-                            <div class="px-10 gap-x-10 grid md:grid-cols-2">
-                                <div class="py-1">
-                                    <div class="font-semibold text-lg">Agent's Name</div>
-                                    <input type="text" class="form-control uppercase" required id="agent_name"
-                                        name="agent_name" placeholder="">
-                                </div>
-                                <div class="py-1">
-                                    <div class="font-semibold text-lg">Agent's Phone Number</div>
-                                    <input type="number" class="form-control uppercase" required id="agent_phone"
-                                        name="agent_phone" placeholder="">
-                                </div>
-                                <div class="py-1">
-                                    <div class="font-semibold text-lg">Agent's Email</div>
-                                    <input type="email" class="form-control" required id="agent_email"
-                                        name="agent_email" placeholder="">
-                                </div>
-                                <div class="py-1">
-                                    <div class="font-semibold text-lg">Agent's Address</div>
-                                    <input type="text" class="form-control uppercase" id="agent_address"
-                                        name="agent_address" placeholder="">
-                                </div>
-                                <div class="py-1">
-                                    <div class="font-semibold text-lg">Agent's Emergency Phone No</div>
-                                    <input type="text" class="form-control uppercase" id="agent_e_phone"
-                                        name="agent_e_phone" placeholder="">
-                                </div>
-                                <div class="py-1">
-                                    <div class="font-semibold text-lg">Agent's Picture</div>
-                                    <input type="file" class="form-control" id="agent_picture"
-                                        name="agent_picture">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit"
-                                class="bg-[#289788] hover:bg-[#074f56] p-3 rounded text-white font-semibold">
-                                Add Agent
-                            </button>
-                        </div>
-                    </form>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class=" bg-[#074f56] p-3 rounded text-white font-semibold"
-                        data-bs-dismiss="modal">Close</button>
-
-                </div>
-            </div>
+    {{-- <div class="modal fade" id="warning" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-indigo-300">
+            <h5 class="modal-title text-black font-semibold" id="warningModalLabel">Warning</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            sdf
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="md:text-lg text-md cursor-pointer bg-green-700 p-1 px-2 rounded-lg text-white bg-indigo-600 text-white" data-bs-dismiss="modal">Close</button>
+           
+          </div>
         </div>
-    </div>
+      </div>
+    </div> --}}
 
-    <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header bg-[#289788] text-white">
                     <h5 class="modal-title" id="exampleModalLabel">Add New Candidate</h5>
-                    <button type="button" class="btn-close btn text-white font-bold" data-bs-dismiss="modal"
-                        aria-label="Close">X</button>
+                    <button type="button"
+                        class="btn-close text-white bg-red-800 p-2 rounded-md flex items-center justify-center font-bold"
+                        data-bs-dismiss="modal" aria-label="Close">X</button>
                 </div>
 
 
@@ -342,27 +280,30 @@
                     <form class="row g-3" id="addcandidate" action="{{ route('user/index') }}" method="post">
                         @csrf
 
+                        {{-- <div class="">
+                      <div class="px-10 gap-x-10 grid md:grid-cols-2">
+                      <div class="py-1">
+                      <div class="font-semibold text-lg" >Candidate Name <span class="text-red-500">*</span> </div>
+                      <input type="text" class="form-control uppercase" id="pname" name="pname" placeholder="" required>
+                    </div> --}}
                         <div class="">
                             <div class="px-10 gap-x-10 grid md:grid-cols-2">
-                              <div class="py-1">
-                                <div class="font-semibold text-lg">Agent <span class="text-red-500">*</span></div>
-                                <select class="form-control select2" id="agent_id" name="agent_id" required>
-                                    <option value="" disabled selected>Select Agent</option>
-                                    @foreach ($agentsform as $agent)
-                                        <option value="{{ $agent->id }}">{{ $agent->agent_name }}</option>
-                                    @endforeach
-                                    <!-- Add more options as needed -->
-                                </select>
-                              </div>
-                              <div class="py-1">
+                                <div class="py-1">
+                                    <div class="font-semibold text-lg">Agent <span class="text-red-500">*</span></div>
+                                    <select class="form-control select2" id="agent_id" name="agent_id" required>
+                                        <option value="" disabled selected>Select Agent</option>
+                                        @foreach ($agentsform as $agent)
+                                            <option value="{{ $agent->id }}">{{ $agent->agent_name }}</option>
+                                        @endforeach
+                                        <!-- Add more options as needed -->
+                                    </select>
+                                </div>
+                                <div class="py-1">
                                     <div class="font-semibold text-lg">Candidate Name <span
                                             class="text-red-500">*</span> </div>
                                     <input type="text" class="form-control uppercase" id="pname"
                                         name="pname" placeholder="" required>
                                 </div>
-                                
-
-
                                 <div class="py-1">
                                     <div class="font-semibold text-lg">Passport Number <span
                                             class="text-red-500">*</span></div>
@@ -556,7 +497,6 @@
                                             onclick="SearchPC()">Search</button>
                                     </div>
                                 </div>
-
                                 <div class="text-start">
                                 </div>
                             </div>
@@ -578,28 +518,76 @@
         </div>
     </div>
 
-
-    <div class="modal fade" id="viewAgentModal" tabindex="-1" aria-labelledby="viewAgentModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="viewAgentModalLabel">Agent Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal fade " id="agentModal" tabindex="-1" aria-labelledby="agentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content ">
+                <div class="modal-header text-white bg-[#289788]">
+                    <h5 class="modal-title text-xl" id="agentModalLabel">Add New Agent</h5>
+                    <button type="button" class="btn-close btn text-red-700 font-bold" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-                <div class="modal-body" id="agentDetails">
+
+
+                <div class="modal-body ">
+                    <form class="row g-3" id="addagent" action="{{ route('agent/index') }}" method="post"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="">
+                            <div class="px-10 gap-x-10 grid md:grid-cols-2">
+                                <div class="py-1">
+                                    <div class="font-semibold text-lg">Agent Name</div>
+                                    <input type="text" class="form-control uppercase" required id="agent_name"
+                                        name="agent_name" placeholder="">
+                                </div>
+                                <div class="py-1">
+                                    <div class="font-semibold text-lg">Phone Number</div>
+                                    <input type="number" class="form-control uppercase" required id="agent_phone"
+                                        name="agent_phone" placeholder="">
+                                </div>
+                                <div class="py-1">
+                                    <div class="font-semibold text-lg">Email Address</div>
+                                    <input type="email" class="form-control" id="agent_email"
+                                        name="agent_email" placeholder="">
+                                </div>
+                                <div class="py-1">
+                                    <div class="font-semibold text-lg">Agent's Address</div>
+                                    <input type="text" class="form-control uppercase" id="agent_address"
+                                        name="agent_address" placeholder="">
+                                </div>
+                                <div class="py-1">
+                                    <div class="font-semibold text-lg">Emergency Phone No</div>
+                                    <input type="text" class="form-control uppercase" id="agent_e_phone"
+                                        name="agent_e_phone" placeholder="">
+                                </div>
+                                <div class="py-1">
+                                    <div class="font-semibold text-lg">Picture</div>
+                                    <input type="file" class="form-control" id="agent_picture"
+                                        name="agent_picture">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit"
+                                class="bg-[#289788] hover:bg-[#074f56] p-3 rounded text-white font-semibold">
+                                Add Agent
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class=" bg-[#074f56] p-3 rounded text-white font-semibold"
+                        data-bs-dismiss="modal">Close</button>
 
                 </div>
             </div>
         </div>
     </div>
-
-
+   
 
     <!-- End Hero -->
-    <div class="w-[90%] mx-auto my-5 hello">
-
-        <div class="flex justify-end gap-3">
+    <div class="w-[80%] mx-auto my-5 hello">
+        <div class="flex justify-end">
             <button type="button" data-toggle="tooltip" data-placement="bottom" title="Add Agent"
                 class="bg-indigo-500 text-white font-semibold text-xl px-14 mr-2 py-2 rounded-md mb-2"
                 data-bs-toggle="modal" data-bs-target="#agentModal">
@@ -624,255 +612,302 @@
                     Report
                 </button>
             </a>
-
-            <!-- Dropdown Button -->
-            <div class="relative">
-                <button class="bg-blue-500 text-white font-semibold text-xl px-14 py-2 rounded-md mb-2"
-                    id="dropdownButton" aria-expanded="false" data-toggle="tooltip" data-placement="bottom"
-                    title="More Actions">
-                    Manpower Forms
-                </button>
-                <!-- Dropdown Menu -->
-                <ul id="dropdownMenu" class="absolute hidden bg-white shadow-md rounded-md w-48 mt-2 right-0 z-10">
-                    <li><a class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-gray-200"
-                            href="{{ route('note-sheet') }}">Note Sheet</a></li>
-                    <li><a class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-gray-200"
-                            href="{{ route('putup-list') }}">Putup List</a></li>
-                    <li><a class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-gray-200"
-                            href="{{ route('contract') }}">Contract</a></li>
-                    <li><a class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-gray-200"
-                            href="{{ route('stemp_paper') }}">Stemp Paper</a></li>
-                    <li><a class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-gray-200"
-                            href="{{ route('application') }}">Application</a></li>
-                </ul>
-            </div>
         </div>
+        <div class="table-responsive main-datatable ">
+            <form method="GET" action="{{ route('user/index') }}">
+                <div class="flex w-[50%] mx-auto gap-4">
+                    <input type="text" class="form-control" name="search" placeholder="Search"
+                        value="{{ request('search') }}">
+                    <button type="submit" class="text-white px-4 rounded-lg bg-indigo-500">Search</button>
+                </div>
+            </form>
+            <table class="table stripe no-footer dataTable passenger-table" id="candidatetable">
+                <thead class="bg-[#f9f9f9] thed">
+                    <tr class="bg-[#f9f9f9]">
+                        <th scope="col">Serial <br /> Number</th>
+                        <th scope="col">Creation <br /> Date</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Passport <br /> Number</th>
+                        <th scope="col">DOB</th>
+                        <th scope="col" style="">VISA/Sponsor <br /> Number</th>
+                        <th scope="col" class='text-lg' style="width: 17%">Profession</th>
 
-    </div>
-    
+                        <th scope="col">Application (MOFA) <br /> Number</th>
+                        <th scope="col">Agent</th>
+                        <th scope="col">Actions</th>
+                        
+                    </tr>
+                </thead>
+                <tbody class="bg-gray-400">
+                    @foreach ($candidates as $candidate)
+                        @php
+                            $dob = $candidate->date_of_birth;
+                            $birthdate = new DateTime($dob);
+                            $currentDate = new DateTime();
 
-    <div class="table-responsive rounded-lg bg-[#275E8B] my-5 w-[98%] xl:w-[90%] mx-auto shadow-lg main-datatable ">
-        <form method="GET" action="{{ route('user/index') }}">
-            <div class="flex w-[50%] my-3 mx-auto gap-4 ">
-                <input type="text" class="form-control" name="search" placeholder="Search"
-                    value="{{ request('search') }}">
-                <button type="submit" class="text-white px-4 rounded-lg bg-indigo-500">Search</button>
-            </div>
-        </form>
-        <table class="table stripe  no-footer dataTable passenger-table" id="candidatetable">
-            <thead class="bg-[#f9f9f9] thed">
-                <tr class="bg-[#f9f9f9]">
-                    <th scope="col">Serial <br /> Number</th>
-                    <th scope="col">Creation <br /> Date</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Passport <br /> Number</th>
-                    <th scope="col">DOB</th>
-                    <th scope="col" style="">VISA/Sponsor <br /> Number</th>
-                    <th scope="col" class="text-lg">Profession</th>
+                            // Calculate the difference between the current date and the date of birth
+                            $ageInterval = $birthdate->diff($currentDate);
 
-                    <th scope="col">Application (MOFA) <br /> Number</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody class="bg-gray-400">
-                @foreach ($candidates as $index => $candidate)
-                    @php
-                        $dob = $candidate->date_of_birth;
-                        $birthdate = new DateTime($dob);
-                        $currentDate = new DateTime();
-                        $ageInterval = $birthdate->diff($currentDate);
-                        $years = $ageInterval->y;
-                        $age = '';
-                        if ($years > 0) {
-                            $age .= $years . ' year' . ($years > 1 ? 's' : '');
-                        }
-                    @endphp
+                            // Extract the years, months, and days from the calculated interval
+                            $years = $ageInterval->y;
+                            $months = $ageInterval->m;
+                            $days = $ageInterval->d;
 
-                    <!-- Add Candidate Visa Modal -->
-                    <div class="modal fade" id="addVisaModal" tabindex="-1" aria-labelledby="addVisaModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-xl">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="addVisaModalLabel">Add Candidate Visa</h5>
-                                    <button type="button" class="btn-close btn text-red-700 font-bold"
-                                        data-bs-dismiss="modal" aria-label="Close">X</button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="visainput" method="post" action class="mt-5">
-                                        @csrf
-                                        <input type="hidden" name="candidate_id" id="candidate_id"
-                                            value="{{ $candidate->id }}" />
-                                        <div class="px-10 gap-x-10 grid md:grid-cols-2">
-                                            @foreach ([['Visa No', 'visa_no', 'Ex- 1303044456'], ['Sponsor ID', 'spon_id', 'Ex- 7097997442'], ['Visa Date (Hijri)', 'visa_date', 'Ex- 1444/09/30'], ['Salary', 'salary', 'Ex- 1000'], ['Sponsor Name (Arabic)', 'spon_name_arabic', 'Ex- القوة العربية.'], ['Sponsor Name (English)', 'spon_name_english', 'Ex- Arabic Power'], ['Profession (Arabic)', 'prof_name_arabic', 'Ex- القوة العربية.'], ['Profession (English)', 'prof_name_english', 'Ex- Electrian'], ['Mofa No', 'mofa_no', 'Ex- 43780333'], ['Mofa Date', 'mofa_date', ''], ['Okala No', 'okala_no', 'Ex- 9430340'], ['Musaned No', 'musaned_no', 'Ex- 039409230']] as [$label, $id, $placeholder])
-                                                <div class="py-2 flex flex-col gap-2">
-                                                    <div class="font-bold text-lg">{{ $label }}</div>
-                                                    <input type="{{ $id === 'mofa_date' ? 'date' : 'text' }}"
-                                                        id="{{ $id }}" name="{{ $id }}"
-                                                        class="form-control p-2 rounded-lg w-full uppercase"
-                                                        placeholder="{{ $placeholder }}" />
+                            // Format the age as "X years, Y months, Z days"
+                            $age = '';
+                            if ($years > 0) {
+                                $age .= $years . ' year' . ($years > 1 ? 's' : '');
+                            }
+                            // if ($months > 0) {
+                            //     $age .= ($age ? ", " : "") . $months . " month" . ($months > 1 ? "s" : "");
+                            // }
+                            // if ($days > 0) {
+                            //     $age .= ($age ? ", " : "") . $days . " day" . ($days > 1 ? "s" : "");
+                            // }
+                        @endphp
+                        <div class="modal fade " id="addVisaModal" tabindex="-1"
+                            aria-labelledby="addVisaModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addVisaModalLabel">Add Candidate Visa</h5>
+                                        <button type="button" class="btn-close btn text-red-700 font-bold"
+                                            data-bs-dismiss="modal" aria-label="Close">X</button>
+                                    </div>
+
+
+                                    <div class="modal-body">
+                                        <form id="visainput" method="post" action class="mt-5">
+                                            @csrf
+                                            <div class="row">
+                                                <input type="hidden" name="" id="candidate_id"
+                                                    value="{{ $candidate->id }}" />
+                                                <div class="px-10 gap-x-10 grid md:grid-cols-2">
+                                                    <div class="py-2 flex flex-col gap-2">
+                                                        <div class="font-bold text-lg">Visa No</div>
+                                                        <input type="text" id="visa_no" name="visa_no"
+                                                            class="form-control p-2 rounded-lg w-full uppercase"
+                                                            placeholder="Ex- 1303044456" />
+                                                    </div>
+                                                    <div class="py-2 flex flex-col gap-2">
+                                                        <div class="font-bold text-lg">Sponsor ID</div>
+                                                        <input type="text" id="spon_id" name="spon_id"
+                                                            class="form-control p-2 rounded-lg w-full uppercase"
+                                                            placeholder="Ex- 7097997442" />
+                                                    </div>
+                                                    <div class="py-2 flex flex-col gap-2">
+                                                        <div class="font-bold text-lg">Visa Date (Hijri)</div>
+                                                        <input type="text" id="visa_date" name="visa_date"
+                                                            class="form-control p-2 rounded-lg w-full uppercase"
+                                                            placeholder="Ex- 1444/09/30" />
+                                                    </div>
+                                                    <div class="py-2 flex flex-col gap-2">
+                                                        <div class="font-bold text-lg">Salary</div>
+                                                        <input type="text" id="salary" name="salary"
+                                                            class="form-control p-2 rounded-lg w-full uppercase"
+                                                            placeholder="Ex- 1000" />
+                                                    </div>
+                                                    <div class="py-2 flex flex-col gap-2">
+                                                        <div class="font-bold text-lg">Sponsor Name (Arabic)</div>
+                                                        <input type="text" id="spon_name_arabic"
+                                                            name="spon_name_arabic"
+                                                            class="form-control p-2 rounded-lg w-full uppercase"
+                                                            placeholder="Ex- القوة العربية." />
+                                                    </div>
+                                                    <div class="py-2 flex flex-col gap-2">
+                                                        <div class="font-bold text-lg">Sponsor Name (English)</div>
+                                                        <input type="text" id="spon_name_english"
+                                                            name="spon_name_english"
+                                                            class="form-control p-2 rounded-lg w-full uppercase"
+                                                            placeholder="Ex- Arabic Power" />
+                                                    </div>
+                                                    <div class="py-2 flex flex-col gap-2">
+                                                        <div class="font-bold text-lg">Profession (Arabic)</div>
+                                                        <input type="text" id="prof_name_arabic"
+                                                            name="prof_name_arabic"
+                                                            class="form-control p-2 rounded-lg w-full uppercase"
+                                                            placeholder="Ex- القوة العربية." />
+                                                    </div>
+                                                    <div class="py-2 flex flex-col gap-2">
+                                                        <div class="font-bold text-lg">Profession (English)</div>
+                                                        <input type="text" id="prof_name_english"
+                                                            name="prof_name_english"
+                                                            class="form-control p-2 rounded-lg w-full uppercase"
+                                                            placeholder="Ex- Electrian" />
+                                                    </div>
+                                                    <div class="py-2 flex flex-col gap-2">
+                                                        <div class="font-bold text-lg">Mofa No</div>
+                                                        <input type="text" id="mofa_no" name="mofa_no"
+                                                            class="form-control p-2 rounded-lg w-full uppercase"
+                                                            placeholder="Ex- 43780333" />
+                                                    </div>
+                                                    <div class="py-2 flex flex-col gap-2">
+                                                        <div class="font-bold text-lg">Mofa Date</div>
+                                                        <input type="date" id="mofa_date" name="mofa_date"
+                                                            class="form-control p-2 rounded-lg w-full uppercase"
+                                                            placeholder="" />
+                                                    </div>
+                                                    <div class="py-2 flex flex-col gap-2">
+                                                        <div class="font-bold text-lg">Okala No</div>
+                                                        <input type="text" id="okala_no" name="okala_no"
+                                                            class="form-control p-2 rounded-lg w-full uppercase"
+                                                            placeholder="Ex- 9430340" />
+                                                    </div>
+                                                    <div class="py-2 flex flex-col gap-2">
+                                                        <div class="font-bold text-lg">Musaned No</div>
+                                                        <input type="text" id="musaned_no" name="musaned_no"
+                                                            class="form-control p-2 rounded-lg w-full uppercase"
+                                                            placeholder="Ex- 039409230" />
+                                                    </div>
                                                 </div>
-                                            @endforeach
-                                        </div>
-                                        <div class="text-center pt-3">
-                                            <button type="submit"
-                                                class="bg-[#289788] mb-2 hover:bg-[#074f56] p-3 rounded text-white font-semibold">Add
-                                                Candidate Visa</button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="bg-[#074f56] p-3 rounded text-white font-semibold"
-                                        data-bs-dismiss="modal">Close</button>
+                                                <div class="text-center pt-3">
+                                                    <button type="submit"
+                                                        class="bg-[#289788] mb-2 hover:bg-[#074f56] p-3 rounded text-white font-semibold">
+                                                        Add Candidate Visa
+                                                    </button>
+                                                </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button"
+                                            class=" bg-[#074f56] p-3 rounded text-white font-semibold"
+                                            data-bs-dismiss="modal">Close</button>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <tr class="bg-gray-700 td-bg my-auto">
+                            <th scope="col" class=""><span>{{ $candidate->id }}</span></th>
+                            <td><?php
+                            $inputDate = $candidate->created_at;
+                            
+                            // Convert the date format
+                            $formattedDate = date('d-m-Y', strtotime($inputDate));
+                            
+                            // Output the formatted date
+                            echo $formattedDate;
+                            ?><br /><?php
+                            $inputDate = $candidate->created_at;
+                            
+                            // Convert the date format
+                            $formattedDate = date('H:m', strtotime($inputDate));
+                            
+                            // Output the formatted date
+                            echo $formattedDate;
+                            ?></td>
+                            <td><a href="{{ route('user/view', ['id' => $candidate->id]) }}"
+                                    class="font-semibold hover:font-bold cursor-pointer hover:text-blue-400 ">{{ $candidate->name }}</a>
+                            </td>
+                            <td>{{ $candidate->passport_number }}</td>
+                            <td> <?php
+                            $inputDate = $candidate->date_of_birth;
+                            
+                            // Convert the date format
+                            $formattedDate = date('d-m-Y', strtotime($inputDate));
+                            
+                            // Output the formatted date
+                            echo $formattedDate;
+                            ?>
+                                <br /><span class="font-semibold">Age</span>: @php echo $age; @endphp
+                            </td>
+                            <td><strong>Visa No:</strong> {{ $candidate->visa_no }} <br />
+                                <strong>Sponsor ID:</strong> {{ $candidate->spon_id }}
+                            </td>
+                            </td>
+                            <td>{{ $candidate->prof_name_english }} <br /></td>
+                            </td>
+                            <?php
+                            // dd($candidates[0])
+                            ?>
+                            <td>{{ $candidate->mofa_no }}</td>
+                            <td>{{ $agentsform->firstWhere('id', $candidate->agent)->agent_name ?? 'N/A' }}</td>
+                            <td class=" p-2">
+                                @if (!$candidate->visa_no)
+                                    <div class="md:text-lg text-md cursor-pointer">
+                                        <a href="{{ route('user/visaadd', ['id' => $candidate->id]) }}"
+                                            {{-- data-bs-toggle="modal" 
+                                data-bs-target="#addVisaModal"  --}} class="fw-semibold text-primary">
+                                            <i class="bi bi-file-earmark-plus mr-1"></i>Visa
+                                        </a>
+                                    </div>
+                                @endif
 
-                    <!-- Candidate Table Row -->
-                    <tr class="bg-gray-700 td-bg my-auto">
-                        <th scope="col">{{ $index + 1 }}</th>
-                        <td>
-                            {{ date('d-m-Y', strtotime($candidate->created_at)) }}<br />
-                            {{ date('H:m', strtotime($candidate->created_at)) }}
-                        </td>
-                        <td><a href="{{ route('user/view', ['id' => $candidate->id]) }}"
-                                class="font-semibold hover:font-bold cursor-pointer hover:text-blue-400 ">{{ $candidate->name }}</a>
-                        </td>
-                        <td>{{ $candidate->passport_number }}</td>
-                        <td>
-                            {{ date('d-m-Y', strtotime($candidate->date_of_birth)) }}
-                            <br /><span class="font-semibold">Age</span>: {{ $age }}
-                        </td>
-                        <td>
-                            <strong>Visa No:</strong> {{ $candidate->visa_no }} <br />
-                            <strong>Sponsor ID:</strong> {{ $candidate->spon_id }}
-                        </td>
-                        <td>{{ $candidate->prof_name_english }}</td>
-                        <td>{{ $candidate->mofa_no }}</td>
-                        <td class="p-2">
-                            @if (!$candidate->visa_no)
-                                <div class="md:text-lg text-md cursor-pointer">
-                                    <a href="{{ route('user/visaadd', ['id' => $candidate->id]) }}"
-                                        class="fw-semibold text-primary"><i
-                                            class="bi bi-file-earmark-plus mr-1"></i>Visa</a>
-                                </div>
-                            @endif
-                            @if (!$candidate->manpower_id)
-                                <div class="md:text-lg text-md cursor-pointer">
-                                    <a href="{{ route('user/manpoweradd', ['id' => $candidate->id]) }}"
-                                        class="fw-semibold text-primary"><i
-                                            class="bi bi-file-earmark-plus mr-1"></i>Manpower</a>
-                                </div>
-                            @endif
-                            <div class="md:text-lg text-md">
-                                <a href="{{ route('user/edit', ['id' => $candidate->id]) }}"
-                                    class="fw-semibold text-success"><i class="bi bi-pencil-square mr-1"></i>Edit</a>
-                            </div>
-                            <div class="md:text-lg text-md">
-                                <a href="#" onclick="return surity('{{ $candidate->id }}')"
-                                    class="fw-semibold text-danger"><i class="bi bi-trash mr-1"></i>Delete</a>
-                            </div>
-                            @if (!$candidate->visa_no)
-                                <div class="md:text-lg text-md fw-semibold text-warning cursor-pointer"
-                                    data-bs-toggle="modal" data-bs-target="#printModal">
-                                    <i class="bi bi-printer-fill mr-1"></i>Print
-                                </div>
-                                <!-- Print Warning Modal -->
-                                <div class="modal fade" id="printModal" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header bg-indigo-300">
-                                                <h5 class="modal-title text-black font-semibold"
-                                                    id="exampleModalLabel">Print Warning</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body font-semibold text-indigo-800">
-                                                Please Enter Candidates Visa Information First and then Try to Print
-                                            </div>
-                                            <div class="modal-footer">
-                                                <div
-                                                    class="md:text-lg text-md cursor-pointer bg-green-700 p-1 px-2 rounded-lg text-white">
-                                                    <a href="{{ route('user/visaadd', ['id' => $candidate->id]) }}"
-                                                        class="fw-semibold"><i
-                                                            class="bi bi-file-earmark-plus mr-1"></i>Visa</a>
+
+
+
+                                <div>
+                                    <div class="md:text-lg text-md"><a
+                                            href="{{ route('user/edit', ['id' => $candidate->id]) }}"
+                                            class="fw-semibold text-success"><i
+                                                class="bi bi-pencil-square mr-1"></i>Edit</a></div>
+
+                                    <div class="md:text-lg text-md">
+                                        <a href="#" onclick="return surity('{{ $candidate->id }}')"
+                                            class="fw-semibold text-danger">
+                                            <i class="bi bi-trash mr-1"></i>Delete
+                                        </a>
+                                    </div>
+
+                                   
+                                    @if (!$candidate->visa_no)
+                                        <div class="md:text-lg text-md fw-semibold text-warning cursor-pointer"
+                                            data-bs-toggle="modal" data-bs-target="#printModal">
+                                            <i class="bi bi-printer-fill mr-1"></i>Print
+                                        </div>
+
+
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="printModal" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header bg-indigo-300">
+                                                        <h5 class="modal-title text-black font-semibold"
+                                                            id="exampleModalLabel">Print Warning</h5>
+                                                        <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body font-semibold text-indigo-800">
+                                                        Please Enter Candidates Visa Information First and then Try to
+                                                        Print
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <div
+                                                            class="md:text-lg text-md cursor-pointer bg-green-700 p-1 px-2 rounded-lg text-white">
+                                                            <a href="{{ route('user/visaadd', ['id' => $candidate->id]) }}"
+                                                                class="fw-semibold">
+                                                                <i class="bi bi-file-earmark-plus mr-1"></i>Visa
+                                                            </a>
+                                                        </div>
+                                                        <button type="button"
+                                                            class="md:text-lg text-md cursor-pointer bg-green-700 p-1 px-2 rounded-lg text-white bg-indigo-600 text-white"
+                                                            data-bs-dismiss="modal">Close</button>
+
+                                                    </div>
                                                 </div>
-                                                <button type="button"
-                                                    class="md:text-lg text-md cursor-pointer bg-green-700 p-1 px-2 rounded-lg text-white bg-indigo-600 text-white"
-                                                    data-bs-dismiss="modal">Close</button>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            @else
-                                <div class="md:text-lg text-md">
-                                    <a href="{{ route('user/print', ['id' => $candidate->id]) }}"
-                                        class="fw-semibold text-warning"><i
-                                            class="bi bi-printer-fill mr-1"></i>Print</a>
-                                </div>
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-
-        </table>
-        {{ $candidates->links() }}
-    </div>
-
-
-    {{-- <div class="table-responsive main-datatable mt-5">
-        <form method="GET" action="{{ route('user/index') }}">
-            <div class="flex w-[50%] mx-auto gap-4">
-                <input type="text" class="form-control" name="search" placeholder="Search"
-                    value="{{ request('search') }}">
-                <button type="submit" class="text-white px-4 rounded-lg bg-indigo-500">Search</button>
-            </div>
-        </form>
-        <table class="table stripe no-footer dataTable passenger-table" id="candidatetable">
-            <thead class="bg-green-500 thed">
-                <tr class="bg-green-500">
-                    <th scope="col">Serial <br /> Number</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Phone <br /> Number</th>
-                    <th scope="col">Email <br /></th>
-                    <th scope="col">Address</th>
-
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($agents as $index => $agent)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $agent->agent_name }}</td>
-                        <td>{{ $agent->agent_phone }}</td>
-                        <td>{{ $agent->agent_email }}</td>
-                        <td>{{ $agent->agent_address }}</td>
-                        <td class="flex gap-2">
-                            <a href="{{ route('agent.edit', $agent->id) }}" class="btn btn-primary"><i
-                                    class="bi bi-pencil-square mr-1"></i></a>
-                            <a href="#" class="btn btn-secondary view-agent-btn"
-                                data-agent-id="{{ $agent->id }}"><i class="bi bi-eye"></i></a>
-                            <form action="{{ route('agent.delete', $agent->id) }}" method="POST"
-                                class="delete-form"
-                                data-confirm-message="Are you sure you want to delete this agent?">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger"><i
-                                        class="bi bi-trash mr-1"></i></button>
-                            </form>
-                        </td>
-
-                    </tr>
-                @endforeach
-
-            </tbody>
-        </table>
-        {{ $candidates->links() }}
-    </div> --}}
+                                    @else
+                                        <div class="md:text-lg text-md">
+                                            <a href="{{ route('user/print', ['id' => $candidate->id]) }}"
+                                                {{-- target="_blank"  --}} class="fw-semibold text-warning">
+                                                <i class="bi bi-printer-fill mr-1"></i>Print
+                                            </a>
+                                        </div>
+                                    @endif
+                                    {{-- <div class="md:text-lg text-md"> <a href="{{ route('user/print', ['id' => $candidate->id]) }}" target="_blank" class="fw-semibold text-warning"><i class="bi bi-printer-fill mr-1"></i>Print</a></div>
+            
+            </div> --}}
+                            </td>
+                            
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            {{ $candidates->links() }}
+        </div>
 
     </div>
 
@@ -898,27 +933,6 @@
     <!--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
     @include('layout.script')
 
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-    <!-- JavaScript to toggle dropdown -->
-    <script>
-        const dropdownButton = document.getElementById('dropdownButton');
-        const dropdownMenu = document.getElementById('dropdownMenu');
-
-        dropdownButton.addEventListener('click', () => {
-            const isExpanded = dropdownMenu.classList.contains('hidden');
-            // Toggle the visibility of the dropdown
-            dropdownMenu.classList.toggle('hidden', !isExpanded);
-        });
-
-        // Close the dropdown if clicked outside
-        document.addEventListener('click', (event) => {
-            if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                dropdownMenu.classList.add('hidden');
-            }
-        });
-    </script>
     <script>
         function showAlert() {
             alert("Visa is not available! Please Enter Your Candidates Visa First for Print");
@@ -966,132 +980,9 @@
             window.open(url, "_blank");
         }
     </script>
-
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const agents = @json($agents->items());
-            const agentInput = document.getElementById('agentSearch');
-            const agentDropdown = document.getElementById('agentDropdown');
-            const agentIdInput = document.getElementById('agent_id');
-
-            function filterOptions(search) {
-                agentDropdown.innerHTML = ''; // Clear previous options
-                const filteredAgents = agents.filter(agent =>
-                    agent.agent_name.toLowerCase().includes(search.toLowerCase())
-                );
-
-                if (filteredAgents.length) {
-                    filteredAgents.forEach(agent => {
-                        const option = document.createElement('div');
-                        option.classList.add('dropdown-item');
-                        option.textContent = agent.agent_name;
-                        option.dataset.value = agent.id;
-                        option.addEventListener('click', () => {
-                            agentInput.value = agent.agent_name;
-                            agentIdInput.value = agent.id;
-                            agentDropdown.classList.remove('show');
-                        });
-                        agentDropdown.appendChild(option);
-                    });
-                } else {
-                    const noResult = document.createElement('div');
-                    noResult.classList.add('dropdown-item');
-                    noResult.textContent = 'No agents found';
-                    agentDropdown.appendChild(noResult);
-                }
-            }
-
-            agentInput.addEventListener('input', function() {
-                const search = agentInput.value;
-                filterOptions(search);
-                agentDropdown.classList.add('show');
-            });
-
-            document.addEventListener('click', function(e) {
-                if (!agentDropdown.contains(e.target) && e.target !== agentInput) {
-                    agentDropdown.classList.remove('show');
-                }
-            });
-        });
-
-
-
-
-        function deleteAgent(agentId) {
-            $.ajax({
-                url: `/agents/${agentId}`,
-                type: 'DELETE',
-                data: {
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    if (response.success) {
-                        alert(response.message);
-                        window.location.href = response.redirect_url;
-                    } else {
-                        alert(response.message);
-                    }
-                },
-                error: function(xhr) {
-                    alert('An error occurred. Please try again.');
-                }
-            });
-        }
-
         $(document).ready(function() {
             // $('#candidatetable').DataTable();
-            // $('.select2').select2();
-            //  $('#agent_id').select2();
-            // $('#exampleModal').on('shown.bs.modal', function (e) {
-            //     $('.select2').select2();
-            // });
-
-
-            // $('.delete-form').submit(function(e) {
-            //   e.preventDefault();
-            //   const form = this;
-            //   const confirmMessage = $(this).data('confirm-message') || 'Are you sure you want to delete this agent?';
-
-            //     if (confirm(confirmMessage)) {
-            //         $.ajax({
-            //             url: $(form).attr('action'),
-            //             type: 'POST',
-            //             data: $(form).serialize(),
-            //             success: function (response) {
-            //               console.log(response);
-            //                 Swal.fire({
-            //                     title: response.title,
-            //                     text: response.message,
-            //                     icon: response.icon,
-            //                 });
-            //                 setTimeout(function() {
-            //                     window.location.href = response.redirect_url;
-            //                 }, 3000);
-            //             },
-            //             error: function (xhr) {
-            //                 alert('An error occurred. Please try again.');
-            //             }
-            //         });
-            //     }
-            // });
-
-            $('.view-agent-btn').click(function(e) {
-                e.preventDefault();
-                var agentId = $(this).data('agent-id');
-
-                $.ajax({
-                    url: '{{ route('agent.view', ':id') }}'.replace(':id', agentId),
-                    type: 'GET',
-                    success: function(response) {
-                        console.log(response.html);
-                        $('#agentDetails').html(response.html);
-                        $('#viewAgentModal').modal('show');
-                    },
-                    error: function(xhr) {
-                        console.error('Failed to fetch agent details');
-                    }
-                });
-            });
 
             $('#medical_issue_date').datepicker({
                 dateFormat: 'dd/mm/yy',
@@ -1103,8 +994,6 @@
                     $('#medical_expire_date').val(formattedDate);
                 }
             });
-
-
             $('#pass_issue_date').datepicker({
                 dateFormat: 'dd/mm/yy',
                 onSelect: function(selectedDate) {
@@ -1168,11 +1057,30 @@
                 }
             });
 
+            $('.view-agent-btn').click(function(e) {
+                e.preventDefault();
+                var agentId = $(this).data('agent-id');
 
+                $.ajax({
+                    url: '{{ route('agent.view', ':id') }}'.replace(':id', agentId),
+                    type: 'GET',
+                    success: function(response) {
+                        console.log(response.html);
+                        $('#agentDetails').html(response.html);
+                        $('#viewAgentModal').modal('show');
+                    },
+                    error: function(xhr) {
+                        console.error('Failed to fetch agent details');
+                    }
+                });
+            });
 
             $('#pass_expire_date').datepicker({
                 dateFormat: 'd/m/y'
             });
+
+
+
 
             var apiUrl = window.location.origin + '/user/get';
             var method = "GET";
@@ -1342,6 +1250,7 @@
                 }
             });
         });
+
         $('#addagent').on('submit', function(e) {
             e.preventDefault();
 
@@ -1399,13 +1308,13 @@
                 }
             });
         });
-        document.getElementById('pass_issue_date').addEventListener('change', function() {
-            var issueDate = new Date(this.value);
-            var expireDate = new Date(issueDate.getFullYear() + 10, issueDate.getMonth(), issueDate.getDate());
-            var formattedExpireDate = formatDate(expireDate);
-            console.log(formattedExpireDate);
-            document.getElementById('pass_expire_date').value = formattedExpireDate;
-        });
+        // document.getElementById('pass_issue_date').addEventListener('change', function() {
+        //   var issueDate = new Date(this.value);
+        //   var expireDate = new Date(issueDate.getFullYear() + 10, issueDate.getMonth(), issueDate.getDate());
+        //   var formattedExpireDate = formatDate(expireDate);
+        //   console.log(formattedExpireDate);
+        //   document.getElementById('pass_expire_date').value = formattedExpireDate;
+        // });
 
         function formatDate(date) {
             date.setDate(date.getDate() - 1); // Subtract 1 day from the date

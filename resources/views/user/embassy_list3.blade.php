@@ -124,7 +124,7 @@
                 </div>
             </div>
 
-            <div id="candidateModal" class="fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50"
+            <div id="candidateModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
                 style="display:none;">
                 <div
                     class="bg-white w-full max-w-md rounded-lg shadow-lg overflow-hidden transform transition-all duration-300">
@@ -497,60 +497,8 @@
 
 
             // Function to handle overwrite button click
-            // function overwriteRow(btn) {
-            //     var row = btn.parentNode.parentNode;
-            //     var index = Array.from(row.parentNode.children).indexOf(row);
-
-            //     // Prompt user to select candidate from the datalist
-            //     var selectedCandidate = prompt('Select a candidate from the list by entering candidate ID:');
-
-            //     // Validate input
-            //     if (!selectedCandidate) return; // Handle if user cancels
-
-            //     // Example: Simulate fetching new data based on selected candidate ID
-            //     fetch('/user/embassy/' + selectedCandidate, {
-            //         method: 'GET',
-            //         headers: {
-            //             'Content-Type': 'application/json'
-            //         },
-            //     })
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         console.log(data[0]);
-            //         // Example: Replace row with new data
-            //         row.children[0].innerHTML = data[0].prof_name_arabic;
-            //         row.children[1].innerHTML = data[0].visa_date2.substr(0, 4);
-            //         row.children[2].innerHTML = data[0].visa_no;
-            //         row.children[3].innerHTML = data[0].spon_name_arabic;
-            //         row.children[4].innerHTML = data[0].passport_number;
-
-            //         // Update rowsData or cancelRowsData based on tbody ID
-            //         if (row.parentNode.id === 'table_cancel_body') {
-            //             cancelRowsData[index] = row;
-            //         } else {
-            //             rowsData[index] = row;
-            //         }
-
-            //         // Trigger getdata() or getCanceldata() with the updated passport number or name
-            //         var passportNumber = data[0].passport_number; // Adjust this based on your data structure
-
-            //         if (row.parentNode.id === 'table_cancel_body') {
-            //             document.getElementById('cancelInput').value = passportNumber; // Adjust this if you use name instead
-            //             getCanceldata();
-            //         } else {
-            //             document.getElementById('candidate').value = passportNumber; // Adjust this if you use name instead
-            //             getdata();
-            //         }
-
-            //         updateTable();
-            //     })
-            //     .catch(error => {
-            //         // Handle any errors that occurred during the request
-            //         console.error('Error fetching candidate data:', error);
-            //     });
-            // }
+            
             var selectedCandidate = null; // Store the selected candidate globally
-
 
             function overwriteRow(btn) {
                 var row = btn.parentNode.parentNode;

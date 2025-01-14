@@ -522,7 +522,7 @@
                           </div>
                       </form>
                     </div>
-              
+                    
                   
             
                 </div>
@@ -536,6 +536,87 @@
 
           
         </div>
+        @if($manpower)
+                  <div class="w-[60%] mx-auto mt-5">
+                    <div class="bg-white container shadow-2xl py-3 my-3 rounded-lg">
+                      <div class="flex text-[#082F2C] bg-[#ADCCC8] rounded-lg p-3 text-xl  font-semibold justify-between items-center"><h2 class="">Edit Candidate Manpower Information</h2>
+                      </div> 
+                      <form id="manpowerinput" class="pt-4">
+                        @csrf
+                        <div class="row">
+                            {{-- <input type="hidden" name="candidate_id" id="candidate_id" value="{{ $candidate->id }}" /> --}}
+                            @if($manpower)
+                                <input type="hidden" name="manpower_id" id="manpower_id" value="{{ $manpower->id }}" />
+                            @endif
+                                            
+                            <div class="px-10 gap-x-10 grid md:grid-cols-2">
+                                <div class="py-2 flex flex-col gap-2">
+                                    <div class="font-bold text-lg">Passenger Number <span class="text-red-500">*</span></div>
+                                    <input type="text" id="passenger_no" name="passenger_no" class="form-control p-2 rounded-lg w-full uppercase" 
+                                        required placeholder="" value="{{ old('passenger_no', $manpower->passenger_no ?? '') }}" />
+                                </div>
+                    
+                                <div class="py-2 flex flex-col gap-2">
+                                    <div class="font-bold text-lg">Company Name <span class="text-red-500">*</span></div>
+                                    <input type="text" id="company_name" name="company_name" class="form-control p-2 rounded-lg w-full uppercase" 
+                                        required placeholder="" value="{{ old('company_name', $manpower->company_name ?? '') }}" />
+                                </div>
+                    
+                                <div class="py-2 flex flex-col gap-2">
+                                    <div class="font-bold text-lg">Certificate No <span class="text-red-500">*</span></div>
+                                    <input type="text" id="certificate_no" name="certificate_no" class="form-control p-2 rounded-lg w-full uppercase" 
+                                        required placeholder="" value="{{ old('certificate_no', $manpower->certificate_no ?? '') }}" />
+                                </div>
+                    
+                                <div class="py-2 flex flex-col gap-2">
+                                    <div class="font-bold text-lg">FFC Name <span class="text-red-500">*</span></div>
+                                    <input type="text" id="ffc_name" name="ffc_name" class="form-control p-2 rounded-lg w-full uppercase" 
+                                        required placeholder="" value="{{ old('ffc_name', $manpower->ffc_name ?? '') }}" />
+                                </div>
+                    
+                                <div class="py-2 flex flex-col gap-2">
+                                    <div class="font-bold text-lg">Registration ID <span class="text-red-500">*</span></div>
+                                    <input type="text" id="reg_id" name="reg_id" class="form-control p-2 rounded-lg w-full uppercase" 
+                                        required placeholder="" value="{{ old('reg_id', $manpower->reg_id ?? '') }}" />
+                                </div>
+                    
+                                <div class="py-2 flex flex-col gap-2">
+                                    <div class="font-bold text-lg">Visa No <span class="text-red-500">*</span></div>
+                                    <input type="text" id="visa_no" name="visa_no" class="form-control p-2 rounded-lg w-full uppercase" 
+                                        required placeholder="" value="{{ old('visa_no', $manpower->visa_no ?? '') }}" />
+                                </div>
+                    
+                                <div class="py-2 flex flex-col gap-2">
+                                    <div class="font-bold text-lg">Visa Issued Date <span class="text-red-500">*</span></div>
+                                    <input type="text" id="visa_issued_date" name="visa_issued_date" class="form-control p-2 rounded-lg w-full uppercase" 
+                                        required placeholder="DD-MM-YYYY" value="{{ old('visa_issued_date', $manpower->visa_issued_date ?? '') }}" />
+                                </div>
+                    
+                                <div class="py-2 flex flex-col gap-2">
+                                    <div class="font-bold text-lg">Visa Expiration Date <span class="text-red-500">*</span></div>
+                                    <input type="text" id="visa_exp_date" name="visa_exp_date" class="form-control p-2 rounded-lg w-full uppercase" 
+                                        required placeholder="DD-MM-YYYY" value="{{ old('visa_exp_date', $manpower->visa_exp_date ?? '') }}" />
+                                </div>
+                            </div>
+                    
+                            <div class="text-center pt-3">
+                                <button type="submit" class="bg-[#289788] mb-2 hover:bg-[#074f56] p-3 rounded text-white font-semibold">
+                                    Edit Candidate Manpower
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    </div>
+                  </div>
+                  @else
+                    <div class="w-[60%] mx-auto m-5">
+                      <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg shadow-lg" role="alert">
+                          <strong class="font-bold">Notice:</strong>
+                          <span class="block sm:inline">No manpower information found for this candidate.</span>
+                      </div>
+                    </div>
+                @endif
     </main>
     @include('layout.script')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -642,6 +723,7 @@ $('#pnumber').on('change', function () {
                 $('#medical_expire_date').val(formattedDate);
           }
       });
+
     $('#pass_issue_date').datepicker({
       dateFormat: 'dd/mm/yy',
       onSelect: function(selectedDate) {
@@ -772,7 +854,57 @@ $('#pnumber').on('change', function () {
                 }
             });
         });
+        if ($('#manpowerinput').length > 0) {
+            $('#manpowerinput').submit(function(e) {
+                e.preventDefault();
+
+                var id = $('#manpower_id').val();
+
+                if (!id) {
+                    alert("No manpower information found.");
+                    return;
+                }
+
+                var formData = $(this).serialize();
+
+                // Proceed with AJAX or other actions
+                $.ajax({
+                  url: "{{ url('user/manpoweredit') }}/" + id,
+                  type: "POST",
+                  data: formData,
+                  success: function(response) {
+                      Swal.fire({
+                          title: response.title,
+                          text: response.message,
+                          icon: response.icon,
+                      });
+                      
+                      if (response.redirect_url) {
+                          setTimeout(function() {
+                              var redirectUrl = window.location.origin + '/' + response.redirect_url;
+                              window.location.href = redirectUrl;
+                          }, 2000);
+                      }
+                  },
+                  error: function(response) {
+                      Swal.fire({
+                          title: "Error",
+                          text: "Cannot edit manpower\n 1: Ensure all required fields are completed\n 2: Check for duplicate IDs",
+                          icon: 'error',
+                      });
+
+                      if (response.responseJSON && response.responseJSON.redirect_url) {
+                          setTimeout(function() {
+                              var redirectUrl = window.location.origin + '/' + response.responseJSON.redirect_url;
+                              window.location.href = redirectUrl;
+                          }, 2000);
+                      }
+                  } 
+              });
+            });
+        }
     });
+
 </script>
 </body>
 </html>

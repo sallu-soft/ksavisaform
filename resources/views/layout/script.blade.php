@@ -39,6 +39,22 @@
         
 }
 </script>
+<script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        important: true,
+        theme: {
+          extend: {
+            colors: {
+              clifford: "#da373d",
+            },
+            backgroundImage: {
+              "hero-pattern": "url('/asset/image/hero1.jpg')",
+            },
+          },
+        },
+      };
+    </script>
 
 
 

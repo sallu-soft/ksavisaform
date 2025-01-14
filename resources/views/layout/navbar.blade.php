@@ -1,8 +1,8 @@
 <div class="bg-[#0b7f96]">
   <nav class="container mx-auto px-4 py-2 flex items-center justify-between">
     <div class="flex items-center">
-      <a href="{{ route('user/index') }}" class="text-lg font-semibold text-white hover:text-blue-200 mr-4">
-        KSA Embassy File Solution
+      <a href="{{ route('user/index') }}" class="text-lg font-semibold  hover:text-blue-200 mr-4">
+        <img src="{{ asset('./assets/images/logo.png') }}" width="100px" id="up" height="100" class="w-[200px] h-auto object-contain" />
       </a>
       <a href="{{ route('user/embassy_list') }}" class="text-lg font-semibold text-white hover:text-blue-200 mr-4 flex items-center">
         <i class="fas fa-list-alt text-xl mr-2"></i>
