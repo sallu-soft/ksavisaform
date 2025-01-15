@@ -675,7 +675,12 @@
                 </tr>
             </thead>
             <tbody class="bg-gray-400">
+                @php
+                    $serial = 1; // Initialize serial number
+                @endphp
+                {{-- @foreach ($candidates as $index => $candidate) --}}
                 @foreach ($candidates as $index => $candidate)
+
                     @php
                         $dob = $candidate->date_of_birth;
                         $birthdate = new DateTime($dob);
@@ -729,9 +734,96 @@
                         </div>
                     </div>
 
-                    <!-- Candidate Table Row -->
-                    <tr class="bg-gray-700 td-bg my-auto">
-                        <th scope="col">{{ $index + 1 }}</th>
+                    @if($candidate->is_delete == 0)
+                        <!-- Candidate Table Row -->
+                        <tr class="bg-gray-700 td-bg my-auto">
+                            <td>{{ $candidates->total() - ($loop->index + (($candidates->currentPage() - 1) * $candidates->perPage())) }}</td>
+                            <td>
+                                {{ date('d-m-Y', strtotime($candidate->created_at)) }}<br />
+                                {{ date('H:m', strtotime($candidate->created_at)) }}
+                            </td>
+                            <td><a href="{{ route('user/view', ['id' => $candidate->id]) }}"
+                                    class="font-semibold hover:font-bold cursor-pointer hover:text-blue-400 ">{{ $candidate->name }}</a>
+                            </td>
+                            <td>{{ $candidate->passport_number }}</td>
+                            <td>
+                                {{ date('d-m-Y', strtotime($candidate->date_of_birth)) }}
+                                <br /><span class="font-semibold">Age</span>: {{ $age }}
+                            </td>
+                            <td>
+                                <strong>Visa No:</strong> {{ $candidate->visa_no }} <br />
+                                <strong>Sponsor ID:</strong> {{ $candidate->spon_id }}
+                            </td>
+                            <td>{{ $candidate->prof_name_english }}</td>
+                            <td>{{ $candidate->mofa_no }}</td>
+                            <td scope="col" class="p-1">
+                                @if (!$candidate->visa_no)
+                                    <div class="2xl:text-lg text-sm cursor-pointer">
+                                        <a href="{{ route('user/visaadd', ['id' => $candidate->id]) }}"
+                                            class="fw-semibold text-primary"><i
+                                                class="bi bi-file-earmark-plus mr-1"></i>Visa</a>
+                                    </div>
+                                @endif
+                                @if (!$candidate->manpower_id)
+                                    <div class="2xl:text-lg text-sm cursor-pointer">
+                                        <a href="{{ route('user/manpoweradd', ['id' => $candidate->id]) }}"
+                                            class="fw-semibold text-primary"><i
+                                                class="bi bi-file-earmark-plus mr-1"></i>Manpower</a>
+                                    </div>
+                                @endif
+                                <div class="2xl:text-lg text-sm">
+                                    <a href="{{ route('user/edit', ['id' => $candidate->id]) }}"
+                                        class="fw-semibold text-success"><i class="bi bi-pencil-square mr-1"></i>Edit</a>
+                                </div>
+                                <div class="2xl:text-lg text-sm">
+                                    <a href="#" onclick="return surity('{{ $candidate->id }}')"
+                                        class="fw-semibold text-danger"><i class="bi bi-trash mr-1"></i>Delete</a>
+                                </div>
+                                @if (!$candidate->visa_no)
+                                    <div class="2xl:text-lg text-sm fw-semibold text-warning cursor-pointer"
+                                        data-bs-toggle="modal" data-bs-target="#printModal">
+                                        <i class="bi bi-printer-fill mr-1"></i>Print
+                                    </div>
+                                    <div class="modal fade" id="printModal" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-indigo-300">
+                                                    <h5 class="modal-title text-black font-semibold"
+                                                        id="exampleModalLabel">Print Warning</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body font-semibold text-indigo-800">
+                                                    Please Enter Candidates Visa Information First and then Try to Print
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <div
+                                                        class="md:text-lg text-md cursor-pointer bg-green-700 p-1 px-2 rounded-lg text-white">
+                                                        <a href="{{ route('user/visaadd', ['id' => $candidate->id]) }}"
+                                                            class="fw-semibold"><i
+                                                                class="bi bi-file-earmark-plus mr-1"></i>Visa</a>
+                                                    </div>
+                                                    <button type="button"
+                                                        class="md:text-lg text-md cursor-pointer bg-green-700 p-1 px-2 rounded-lg text-white bg-indigo-600 text-white"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="2xl:text-lg text-sm">
+                                        <a href="{{ route('user/print', ['id' => $candidate->id]) }}"
+                                            class="fw-semibold text-warning"><i
+                                                class="bi bi-printer-fill mr-1"></i>Print</a>
+                                    </div>
+                                @endif
+                            </td>
+                        </tr>
+                    
+                    @else
+                    <tr class="bg-gray-700 td-bg my-auto" style="display: none">
+                        <td>{{ $candidates->total() - ($loop->index + (($candidates->currentPage() - 1) * $candidates->perPage())) }}</td>
                         <td>
                             {{ date('d-m-Y', strtotime($candidate->created_at)) }}<br />
                             {{ date('H:m', strtotime($candidate->created_at)) }}
@@ -778,7 +870,6 @@
                                     data-bs-toggle="modal" data-bs-target="#printModal">
                                     <i class="bi bi-printer-fill mr-1"></i>Print
                                 </div>
-                                <!-- Print Warning Modal -->
                                 <div class="modal fade" id="printModal" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -815,6 +906,10 @@
                             @endif
                         </td>
                     </tr>
+                
+                        
+                    @endif
+
                 @endforeach
             </tbody>
 

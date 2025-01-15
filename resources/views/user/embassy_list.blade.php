@@ -72,14 +72,26 @@
             </div>
 
 
+            {{-- <datalist id="candidates">
+                @foreach ($candidates as $index => $candidate)
+                    <option value="{{ $candidate->candidate_id }}" data-id="{{ $candidate->candidate_id }}">
+                        <b>Serial no: {{$candidates->total() - ($loop->index + (($candidates->currentPage() - 1) * $candidates->perPage()))}}</b>,
+                        Passport no: {{ $candidate->passport_number }},
+                        Candidate Name: {{ $candidate->name }}
+                    </option>
+                @endforeach
+            </datalist> --}}
             <datalist id="candidates">
-                @foreach ($candidates as $candidate)
-                    <option value="{{ $candidate->candidate_id }}">
-                        <b class="text-danger">Passport no: {{ $candidate->passport_number }},</b>
+                @foreach ($candidates as $index => $candidate)
+                    <option data-id="{{ $candidate->candidate_id }}">
+                        <b>Serial no: {{$candidates->total() - ($loop->index + (($candidates->currentPage() - 1) * $candidates->perPage()))}}</b>,
+                        Passport no: {{ $candidate->passport_number }},
                         Candidate Name: {{ $candidate->name }}
                     </option>
                 @endforeach
             </datalist>
+           
+            
 
 
             <button class="btn btn-primary mr-2" onclick="printtable()">Print</button>
@@ -250,111 +262,43 @@
         <script type="text/javascript">
             
             function toggleInputBox() {
-    const radioSelection = document.querySelector('input[name="emb_list"]:checked')?.value;
-    const inputNew = document.getElementById('candidate');
-    const inputCancel = document.getElementById('cancelInput');
+                const radioSelection = document.querySelector('input[name="emb_list"]:checked')?.value;
+                const inputNew = document.getElementById('candidate');
+                const inputCancel = document.getElementById('cancelInput');
 
-    if (radioSelection === 'New') {
-        inputNew.style.display = 'block';
-        inputCancel.style.display = 'none';
-    } else if (radioSelection === 'Cancel') {
-        inputNew.style.display = 'none';
-        inputCancel.style.display = 'block';
-    }
-}
+                if (radioSelection === 'New') {
+                    inputNew.style.display = 'block';
+                    inputCancel.style.display = 'none';
+                } else if (radioSelection === 'Cancel') {
+                    inputNew.style.display = 'none';
+                    inputCancel.style.display = 'block';
+                }
+            }
 
             var sl = 1;
             var rowsData = [];
             var cancelRowsData = [];
 
-            // function getdata(id=null) {
-            //     if(id==null){
-            //         var id = document.getElementById('candidate').value;
 
-            //     fetch('/user/embassy/' + id, {
-            //             method: 'GET',
-            //             headers: {
-            //                 'Content-Type': 'application/json'
-            //             },
-            //         })
-            //         .then(response => response.json())
-            //         .then(data => {
-            //             addRowToTable(data[0]);
-            //             document.getElementById('candidate').value = null;
-            //             updateTotalCount();
-            //         })
-            //         .catch(error => {
-            //             console.error(error);
-            //         });
-            //     }else{
-            //         // var id = document.getElementById('candidate').value;
-
-            //     fetch('/user/embassy/' + id, {
-            //             method: 'GET',
-            //             headers: {
-            //                 'Content-Type': 'application/json'
-            //             },
-            //         })
-            //         .then(response => response.json())
-            //         .then(data => {
-            //             addRowToTable(data[0]);
-            //             document.getElementById('candidate').value = null;
-            //             updateTotalCount();
-            //         })
-            //         .catch(error => {
-            //             console.error(error);
-            //         });
-            //     }
-
-            // }
-
-
-            // function getCanceldata(id=null) {
-            //     if(id == null){
-            //         var id = document.getElementById('cancelInput').value;
-
-            //     fetch('/user/embassy/' + id, {
-            //             method: 'GET',
-            //             headers: {
-            //                 'Content-Type': 'application/json'
-            //             },
-            //         })
-            //         .then(response => response.json())
-            //         .then(data => {
-            //             addRowToTable(data[0], true); // Pass true to highlight row
-            //             document.getElementById('cancelInput').value = null;
-            //             updateTotalCount();
-            //         })
-            //         .catch(error => {
-            //             console.error(error);
-            //         });
-            //     }else{
-            //         // var id = document.getElementById('cancelInput').value;
-
-            //     fetch('/user/embassy/' + id, {
-            //             method: 'GET',
-            //             headers: {
-            //                 'Content-Type': 'application/json'
-            //             },
-            //         })
-            //         .then(response => response.json())
-            //         .then(data => {
-            //             addRowToTable(data[0], true); // Pass true to highlight row
-            //             document.getElementById('cancelInput').value = null;
-            //             updateTotalCount();
-            //         })
-            //         .catch(error => {
-            //             console.error(error);
-            //         });
-            //     }
-            // }
-
+            function getSelectedOption(inputElement) {
+        let options = inputElement.list.options; // Get all options in the datalist
+        for (let option of options) {
+            if (option.value === inputElement.value) {
+                return option; // Return the matching option element
+            }
+        }
+        return null; // Return null if no match is found
+    }
             function getdata(id = null) {
-                if (id == null) {
-                    var id = document.getElementById('candidate').value;
-                }
-
-                fetch('/user/embassy/' + id, {
+                // if (id == null) {
+                //     var id = document.getElementById('candidate').value;
+                // }
+                let input = document.getElementById('candidate');
+                let selectedOption = getSelectedOption(input);
+                if (selectedOption) {
+                    let candidateId = selectedOption.getAttribute('data-id');
+                    console.log('Selected candidate id:', candidateId);
+                    fetch('/user/embassy/' + candidateId, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json'
@@ -378,20 +322,28 @@
                     .catch(error => {
                         console.error(error);
                     });
+                } else {
+                    console.log('No valid selection made.');
+                }
+                
             }
 
 
             function getCanceldata(id = null) {
-                if (id == null) {
-                    var id = document.getElementById('cancelInput').value;
-                }
-
-                fetch('/user/embassy/' + id, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                    })
+                // if (id == null) {
+                //     var id = document.getElementById('cancelInput').value;
+                // }
+                let input = document.getElementById('cancelInput');
+                let selectedOption = getSelectedOption(input);
+                if (selectedOption) {
+                    let candidateId = selectedOption.getAttribute('data-id');
+                    console.log('Selected candidate id:', candidateId);
+                    fetch('/user/embassy/' + candidateId, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                        })
                     .then(response => response.json())
                     .then(data => {
                         var existingRow = findRowById(data[0].passport_number, 'table_cancel_body');
@@ -410,6 +362,9 @@
                     .catch(error => {
                         console.error(error);
                     });
+                }else {
+                    console.log('No valid selection made.');
+                }
             }
 
             function findRowById(passportNumber, tableBodyId) {
