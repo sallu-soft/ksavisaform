@@ -18,47 +18,90 @@ class UserController extends Controller
 
     if(Session::get('user')){
        
-        if ($request->isMethod('GET')) {
+        // if ($request->isMethod('GET')) {
+        //     $query = DB::table('candidates')
+        //         ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
+        //         ->select('candidates.*', 'visas.visa_no', 'visas.mofa_no', 'visas.spon_id', 'visas.prof_name_english')
+        //         ->where('candidates.agency', '=', Session::get('user'));
+    
+        //     if ($request->has('search')) {
+        //         $searchTerm = $request->input('search');
+        //         $query->where(function ($query) use ($searchTerm) {
+        //             $query->where('candidates.name', 'like', '%' . $searchTerm . '%')
+        //                   ->orWhere('candidates.id', 'like', '%' . $searchTerm . '%')
+        //                   ->orWhere('candidates.passport_number', 'like', '%' . $searchTerm . '%');
+        //         });
+        //     }
+    
+        //     $query->orderBy('candidates.created_at', 'DESC');
+    
+        //     $candidates = $query->paginate(10);
+        //     $startingSerial = ($candidates->currentPage() - 1) * $candidates->perPage() + 1;
+    
+        //     $agents = DB::table('agents')
+        //         ->select('*')
+        //         ->where('user', '=', Session::get('user'))
+        //         ->where('is_delete', '=', 0)
+        //         ->paginate(10);
+    
+        //     $agentsform = DB::table('agents')
+        //         ->select('*')
+        //         ->where('user', '=', Session::get('user'))
+        //         ->where('is_delete', '=', 0)
+        //         ->get();
+    
+        //     $user = DB::table('user')
+        //         ->select('*')
+        //         ->where('email', '=', Session::get('user'))
+        //         ->first();
+
+        //     // dd($candidates->reverse(), $startingSerial);
+    
+        //     return view('user.index', compact('candidates', 'startingSerial', 'agents', 'agentsform', 'user'));
+        // } 
+        if($request->isMethod('GET')){
+           
+            // $candidates = DB::table('candidates')
+            //         ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
+            //         ->select('candidates.*', 'visas.visa_no', 'visas.mofa_no', 'visas.spon_id')->where('candidates.agency', '=', Session::get('user'))
+            //         // ->select('candidates.*', 'visas.*')->where('candidates.agency', '=', Session::get('user'))
+            //         // ->paginate(100);
+            //         ->get();
+            // $user = DB::table('user')->select('*')->where('email','=', Session::get('user'))->first();
+            // // dd($user);
+            // return view('user.index', compact('candidates', 'user'));
+            
             $query = DB::table('candidates')
-                ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
-                ->select('candidates.*', 'visas.visa_no', 'visas.mofa_no', 'visas.spon_id', 'visas.prof_name_english')
-                ->where('candidates.agency', '=', Session::get('user'));
-    
-            if ($request->has('search')) {
-                $searchTerm = $request->input('search');
-                $query->where(function ($query) use ($searchTerm) {
-                    $query->where('candidates.name', 'like', '%' . $searchTerm . '%')
-                          ->orWhere('candidates.id', 'like', '%' . $searchTerm . '%')
-                          ->orWhere('candidates.passport_number', 'like', '%' . $searchTerm . '%');
-                });
-            }
-    
-            $query->orderBy('candidates.created_at', 'DESC');
-    
-            $candidates = $query->paginate(10);
-            $startingSerial = ($candidates->currentPage() - 1) * $candidates->perPage() + 1;
-    
+            ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
+            ->select('candidates.*', 'visas.visa_no', 'visas.mofa_no', 'visas.spon_id','visas.prof_name_english')
+            ->where('candidates.agency', '=', Session::get('user'));
+
             $agents = DB::table('agents')
                 ->select('*')
                 ->where('user', '=', Session::get('user'))
                 ->where('is_delete', '=', 0)
                 ->paginate(10);
-    
             $agentsform = DB::table('agents')
                 ->select('*')
                 ->where('user', '=', Session::get('user'))
-                ->where('is_delete', '=', 0)
-                ->get();
-    
-            $user = DB::table('user')
-                ->select('*')
-                ->where('email', '=', Session::get('user'))
-                ->first();
+                ->where('is_delete', '=', 0)->get();
+        // Add search functionality
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('candidates.name', 'like', '%' . $searchTerm . '%')
+                      ->orWhere('candidates.id', 'like', '%' . $searchTerm . '%')
+                      ->orWhere('candidates.passport_number', 'like', '%' . $searchTerm . '%');
+            });
+        }
 
-            // dd($candidates->reverse(), $startingSerial);
-    
-            return view('user.index', compact('candidates', 'startingSerial', 'agents', 'agentsform', 'user'));
-        } 
+        $query->orderBy('candidates.created_at', 'desc');
+
+        $candidates = $query->paginate(10);
+        $user = DB::table('user')->select('*')->where('email', '=', Session::get('user'))->first();
+
+        return view('user.index', compact('candidates','agentsform','agents','user'));
+        }
         else {
             DB::beginTransaction();
             $response = [
@@ -241,15 +284,31 @@ class UserController extends Controller
 
     }  
     
+    // public function embassy_list(){
+    //     if(Session::get('user')){
+    //         $candidates = DB::table('candidates')
+    //             ->join('visas', 'candidates.id', '=', 'visas.candidate_id')  // Changed to inner join
+    //             ->select('candidates.*', 'visas.*')
+    //             ->where('candidates.agency', '=', Session::get('user'))
+    //             ->orderBy('candidates.created_at', 'DESC')
+    //             ->paginate(10);
+
+    //     // dd($candidates);
+    //     $user = DB::table('user')->select('*')->where('email', '=', Session::get('user'))->first();
+    //         return view('user.embassy_list', compact('candidates','user'));
+    //     }
+    //     else{
+    //         return redirect(url('/'));
+    //     }
+        
+    // }
     public function embassy_list(){
         if(Session::get('user')){
             $candidates = DB::table('candidates')
-                ->join('visas', 'candidates.id', '=', 'visas.candidate_id')  // Changed to inner join
-                ->select('candidates.*', 'visas.*')
-                ->where('candidates.agency', '=', Session::get('user'))
-                ->orderBy('candidates.created_at', 'DESC')
-                ->paginate(10);
-
+                    ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
+                    ->select('candidates.*', 'visas.*')
+                    ->where('candidates.agency', '=', Session::get('user'))
+                    ->get();
         // dd($candidates);
         $user = DB::table('user')->select('*')->where('email', '=', Session::get('user'))->first();
             return view('user.embassy_list', compact('candidates','user'));
@@ -259,7 +318,6 @@ class UserController extends Controller
         }
         
     }
-    
    
 
     public function embassy_report(Request $request) {
