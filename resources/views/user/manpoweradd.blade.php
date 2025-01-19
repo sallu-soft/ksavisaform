@@ -16,7 +16,7 @@
             <input type="hidden" name="" id="candidate_id" value="{{$id}}" />
             <div class="px-10 gap-x-10 grid md:grid-cols-2">
                 <div class="py-2 flex flex-col gap-2">
-                    <div class="font-bold text-lg">Visa No <span class="text-red-500">*</span></div>
+                    <div class="font-bold text-lg">Issued Visa No <span class="text-red-500">*</span></div>
                     <input type="text" id="visa_no" name="visa_no" class="form-control p-2 rounded-lg w-full uppercase" required placeholder="" />
                 </div>
                 <div class="py-2 flex flex-col gap-2">

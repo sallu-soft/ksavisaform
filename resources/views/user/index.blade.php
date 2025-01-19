@@ -345,6 +345,7 @@
                         <div class="">
                             <div class="px-10 gap-x-10 grid md:grid-cols-2">
                               <div class="py-1">
+                                <input type="hidden" name="sl_number" value="{{$totalCount+1}}" />
                                 <div class="font-semibold text-lg">Agent <span class="text-red-500">*</span></div>
                                 <select class="form-control select2" id="agent_id" name="agent_id" required>
                                     <option value="" disabled selected>Select Agent</option>
@@ -733,185 +734,10 @@
                             </div>
                         </div>
                     </div>
-
-                    {{-- @if($candidate->is_delete == 0)
-                        <!-- Candidate Table Row -->
-                        <tr class="bg-gray-700 td-bg my-auto">
-                            <td>{{ $candidates->total() - ($loop->index + (($candidates->currentPage() - 1) * $candidates->perPage())) }}</td>
-                            <td>
-                                {{ date('d-m-Y', strtotime($candidate->created_at)) }}<br />
-                                {{ date('H:m', strtotime($candidate->created_at)) }}
-                            </td>
-                            <td><a href="{{ route('user/view', ['id' => $candidate->id]) }}"
-                                    class="font-semibold hover:font-bold cursor-pointer hover:text-blue-400 ">{{ $candidate->name }}</a>
-                            </td>
-                            <td>{{ $candidate->passport_number }}</td>
-                            <td>
-                                {{ date('d-m-Y', strtotime($candidate->date_of_birth)) }}
-                                <br /><span class="font-semibold">Age</span>: {{ $age }}
-                            </td>
-                            <td>
-                                <strong>Visa No:</strong> {{ $candidate->visa_no }} <br />
-                                <strong>Sponsor ID:</strong> {{ $candidate->spon_id }}
-                            </td>
-                            <td>{{ $candidate->prof_name_english }}</td>
-                            <td>{{ $candidate->mofa_no }}</td>
-                            <td scope="col" class="p-1">
-                                @if (!$candidate->visa_no)
-                                    <div class="2xl:text-lg text-sm cursor-pointer">
-                                        <a href="{{ route('user/visaadd', ['id' => $candidate->id]) }}"
-                                            class="fw-semibold text-primary"><i
-                                                class="bi bi-file-earmark-plus mr-1"></i>Visa</a>
-                                    </div>
-                                @endif
-                                @if (!$candidate->manpower_id)
-                                    <div class="2xl:text-lg text-sm cursor-pointer">
-                                        <a href="{{ route('user/manpoweradd', ['id' => $candidate->id]) }}"
-                                            class="fw-semibold text-primary"><i
-                                                class="bi bi-file-earmark-plus mr-1"></i>Manpower</a>
-                                    </div>
-                                @endif
-                                <div class="2xl:text-lg text-sm">
-                                    <a href="{{ route('user/edit', ['id' => $candidate->id]) }}"
-                                        class="fw-semibold text-success"><i class="bi bi-pencil-square mr-1"></i>Edit</a>
-                                </div>
-                                <div class="2xl:text-lg text-sm">
-                                    <a href="#" onclick="return surity('{{ $candidate->id }}')"
-                                        class="fw-semibold text-danger"><i class="bi bi-trash mr-1"></i>Delete</a>
-                                </div>
-                                @if (!$candidate->visa_no)
-                                    <div class="2xl:text-lg text-sm fw-semibold text-warning cursor-pointer"
-                                        data-bs-toggle="modal" data-bs-target="#printModal">
-                                        <i class="bi bi-printer-fill mr-1"></i>Print
-                                    </div>
-                                    <div class="modal fade" id="printModal" tabindex="-1"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header bg-indigo-300">
-                                                    <h5 class="modal-title text-black font-semibold"
-                                                        id="exampleModalLabel">Print Warning</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body font-semibold text-indigo-800">
-                                                    Please Enter Candidates Visa Information First and then Try to Print
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <div
-                                                        class="md:text-lg text-md cursor-pointer bg-green-700 p-1 px-2 rounded-lg text-white">
-                                                        <a href="{{ route('user/visaadd', ['id' => $candidate->id]) }}"
-                                                            class="fw-semibold"><i
-                                                                class="bi bi-file-earmark-plus mr-1"></i>Visa</a>
-                                                    </div>
-                                                    <button type="button"
-                                                        class="md:text-lg text-md cursor-pointer bg-green-700 p-1 px-2 rounded-lg text-white bg-indigo-600 text-white"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="2xl:text-lg text-sm">
-                                        <a href="{{ route('user/print', ['id' => $candidate->id]) }}"
-                                            class="fw-semibold text-warning"><i
-                                                class="bi bi-printer-fill mr-1"></i>Print</a>
-                                    </div>
-                                @endif
-                            </td>
-                        </tr>
-                    
-                    @else
-                    <tr class="bg-gray-700 td-bg my-auto" style="display: none">
-                        <td>{{ $candidates->total() - ($loop->index + (($candidates->currentPage() - 1) * $candidates->perPage())) }}</td>
-                        <td>
-                            {{ date('d-m-Y', strtotime($candidate->created_at)) }}<br />
-                            {{ date('H:m', strtotime($candidate->created_at)) }}
-                        </td>
-                        <td><a href="{{ route('user/view', ['id' => $candidate->id]) }}"
-                                class="font-semibold hover:font-bold cursor-pointer hover:text-blue-400 ">{{ $candidate->name }}</a>
-                        </td>
-                        <td>{{ $candidate->passport_number }}</td>
-                        <td>
-                            {{ date('d-m-Y', strtotime($candidate->date_of_birth)) }}
-                            <br /><span class="font-semibold">Age</span>: {{ $age }}
-                        </td>
-                        <td>
-                            <strong>Visa No:</strong> {{ $candidate->visa_no }} <br />
-                            <strong>Sponsor ID:</strong> {{ $candidate->spon_id }}
-                        </td>
-                        <td>{{ $candidate->prof_name_english }}</td>
-                        <td>{{ $candidate->mofa_no }}</td>
-                        <td scope="col" class="p-1">
-                            @if (!$candidate->visa_no)
-                                <div class="2xl:text-lg text-sm cursor-pointer">
-                                    <a href="{{ route('user/visaadd', ['id' => $candidate->id]) }}"
-                                        class="fw-semibold text-primary"><i
-                                            class="bi bi-file-earmark-plus mr-1"></i>Visa</a>
-                                </div>
-                            @endif
-                            @if (!$candidate->manpower_id)
-                                <div class="2xl:text-lg text-sm cursor-pointer">
-                                    <a href="{{ route('user/manpoweradd', ['id' => $candidate->id]) }}"
-                                        class="fw-semibold text-primary"><i
-                                            class="bi bi-file-earmark-plus mr-1"></i>Manpower</a>
-                                </div>
-                            @endif
-                            <div class="2xl:text-lg text-sm">
-                                <a href="{{ route('user/edit', ['id' => $candidate->id]) }}"
-                                    class="fw-semibold text-success"><i class="bi bi-pencil-square mr-1"></i>Edit</a>
-                            </div>
-                            <div class="2xl:text-lg text-sm">
-                                <a href="#" onclick="return surity('{{ $candidate->id }}')"
-                                    class="fw-semibold text-danger"><i class="bi bi-trash mr-1"></i>Delete</a>
-                            </div>
-                            @if (!$candidate->visa_no)
-                                <div class="2xl:text-lg text-sm fw-semibold text-warning cursor-pointer"
-                                    data-bs-toggle="modal" data-bs-target="#printModal">
-                                    <i class="bi bi-printer-fill mr-1"></i>Print
-                                </div>
-                                <div class="modal fade" id="printModal" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header bg-indigo-300">
-                                                <h5 class="modal-title text-black font-semibold"
-                                                    id="exampleModalLabel">Print Warning</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body font-semibold text-indigo-800">
-                                                Please Enter Candidates Visa Information First and then Try to Print
-                                            </div>
-                                            <div class="modal-footer">
-                                                <div
-                                                    class="md:text-lg text-md cursor-pointer bg-green-700 p-1 px-2 rounded-lg text-white">
-                                                    <a href="{{ route('user/visaadd', ['id' => $candidate->id]) }}"
-                                                        class="fw-semibold"><i
-                                                            class="bi bi-file-earmark-plus mr-1"></i>Visa</a>
-                                                </div>
-                                                <button type="button"
-                                                    class="md:text-lg text-md cursor-pointer bg-green-700 p-1 px-2 rounded-lg text-white bg-indigo-600 text-white"
-                                                    data-bs-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @else
-                                <div class="2xl:text-lg text-sm">
-                                    <a href="{{ route('user/print', ['id' => $candidate->id]) }}"
-                                        class="fw-semibold text-warning"><i
-                                            class="bi bi-printer-fill mr-1"></i>Print</a>
-                                </div>
-                            @endif
-                        </td>
-                    </tr>
-                
-                        
-                    @endif --}}
+                    @if($candidate->is_delete == 0)
                     <tr class="bg-gray-700 td-bg my-auto">
                         {{-- <td>{{ $candidates->total() - ($loop->index + (($candidates->currentPage() - 1) * $candidates->perPage())) }}</td> --}}
-                        <th scope="col" class=""><span>{{ $candidate->id }}</span></th>
+                        <th scope="col" class=""><span>{{ $candidate->sl_number ?? $candidate->serial_number }}</span></th>
                         <td>
                             {{ date('d-m-Y', strtotime($candidate->created_at)) }}<br />
                             {{ date('H:m', strtotime($candidate->created_at)) }}
@@ -994,6 +820,9 @@
                             @endif
                         </td>
                     </tr>
+                    @else
+                        
+                    @endif
                 
 
                 @endforeach
@@ -1003,57 +832,6 @@
         {{ $candidates->links() }}
     </div>
 
-
-    {{-- <div class="table-responsive main-datatable mt-5">
-        <form method="GET" action="{{ route('user/index') }}">
-            <div class="flex w-[50%] mx-auto gap-4">
-                <input type="text" class="form-control" name="search" placeholder="Search"
-                    value="{{ request('search') }}">
-                <button type="submit" class="text-white px-4 rounded-lg bg-indigo-500">Search</button>
-            </div>
-        </form>
-        <table class="table stripe no-footer dataTable passenger-table" id="candidatetable">
-            <thead class="bg-green-500 thed">
-                <tr class="bg-green-500">
-                    <th scope="col">Serial <br /> Number</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Phone <br /> Number</th>
-                    <th scope="col">Email <br /></th>
-                    <th scope="col">Address</th>
-
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($agents as $index => $agent)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $agent->agent_name }}</td>
-                        <td>{{ $agent->agent_phone }}</td>
-                        <td>{{ $agent->agent_email }}</td>
-                        <td>{{ $agent->agent_address }}</td>
-                        <td class="flex gap-2">
-                            <a href="{{ route('agent.edit', $agent->id) }}" class="btn btn-primary"><i
-                                    class="bi bi-pencil-square mr-1"></i></a>
-                            <a href="#" class="btn btn-secondary view-agent-btn"
-                                data-agent-id="{{ $agent->id }}"><i class="bi bi-eye"></i></a>
-                            <form action="{{ route('agent.delete', $agent->id) }}" method="POST"
-                                class="delete-form"
-                                data-confirm-message="Are you sure you want to delete this agent?">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger"><i
-                                        class="bi bi-trash mr-1"></i></button>
-                            </form>
-                        </td>
-
-                    </tr>
-                @endforeach
-
-            </tbody>
-        </table>
-        {{ $candidates->links() }}
-    </div> --}}
 
     </div>
 
@@ -1073,7 +851,7 @@
 
     <!-- <script src="{{ asset('assets/js/main.js') }}"></script>-->
 
-    <!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!--<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>-->
 
     <!--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
@@ -1081,8 +859,12 @@
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script> --}}
 
     <!-- JavaScript to toggle dropdown -->
+    
+ 
+
     <script>
         const dropdownButton = document.getElementById('dropdownButton');
         const dropdownMenu = document.getElementById('dropdownMenu');
@@ -1109,7 +891,7 @@
         function surity(id) {
             let text = "Sure Want to delete!\nEither OK or Cancel.";
             if (confirm(text)) {
-                let url = 'delete/' + id;
+                let url = '/user/delete/' + id;
                 fetch(url, {
                         method: 'DELETE',
                         headers: {

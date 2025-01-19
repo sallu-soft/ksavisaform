@@ -18,14 +18,63 @@ class UserController extends Controller
 
     if(Session::get('user')){
        
-       
+        // if ($request->isMethod('GET')) {
+        //     $query = DB::table('candidates')
+        //         ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
+        //         ->select('candidates.*', 'visas.visa_no', 'visas.mofa_no', 'visas.spon_id', 'visas.prof_name_english')
+        //         ->where('candidates.agency', '=', Session::get('user'));
+    
+        //     if ($request->has('search')) {
+        //         $searchTerm = $request->input('search');
+        //         $query->where(function ($query) use ($searchTerm) {
+        //             $query->where('candidates.name', 'like', '%' . $searchTerm . '%')
+        //                   ->orWhere('candidates.id', 'like', '%' . $searchTerm . '%')
+        //                   ->orWhere('candidates.passport_number', 'like', '%' . $searchTerm . '%');
+        //         });
+        //     }
+    
+        //     $query->orderBy('candidates.created_at', 'DESC');
+    
+        //     $candidates = $query->paginate(10);
+        //     $startingSerial = ($candidates->currentPage() - 1) * $candidates->perPage() + 1;
+    
+        //     $agents = DB::table('agents')
+        //         ->select('*')
+        //         ->where('user', '=', Session::get('user'))
+        //         ->where('is_delete', '=', 0)
+        //         ->paginate(10);
+    
+        //     $agentsform = DB::table('agents')
+        //         ->select('*')
+        //         ->where('user', '=', Session::get('user'))
+        //         ->where('is_delete', '=', 0)
+        //         ->get();
+    
+        //     $user = DB::table('user')
+        //         ->select('*')
+        //         ->where('email', '=', Session::get('user'))
+        //         ->first();
+
+        //     // dd($candidates->reverse(), $startingSerial);
+    
+        //     return view('user.index', compact('candidates', 'startingSerial', 'agents', 'agentsform', 'user'));
+        // } 
         if($request->isMethod('GET')){
            
+            // $candidates = DB::table('candidates')
+            //         ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
+            //         ->select('candidates.*', 'visas.visa_no', 'visas.mofa_no', 'visas.spon_id')->where('candidates.agency', '=', Session::get('user'))
+            //         // ->select('candidates.*', 'visas.*')->where('candidates.agency', '=', Session::get('user'))
+            //         // ->paginate(100);
+            //         ->get();
+            // $user = DB::table('user')->select('*')->where('email','=', Session::get('user'))->first();
+            // // dd($user);
+            // return view('user.index', compact('candidates', 'user'));
+            
             $query = DB::table('candidates')
             ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
             ->select('candidates.*', 'visas.visa_no', 'visas.mofa_no', 'visas.spon_id','visas.prof_name_english')
             ->where('candidates.agency', '=', Session::get('user'));
-            // ->where('candidates.is_delete', 0);
 
             $agents = DB::table('agents')
                 ->select('*')
@@ -36,55 +85,22 @@ class UserController extends Controller
                 ->select('*')
                 ->where('user', '=', Session::get('user'))
                 ->where('is_delete', '=', 0)->get();
-         
+        // Add search functionality
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('candidates.name', 'like', '%' . $searchTerm . '%')
+                      ->orWhere('candidates.id', 'like', '%' . $searchTerm . '%')
+                      ->orWhere('candidates.passport_number', 'like', '%' . $searchTerm . '%');
+            });
+        }
 
-            $query->orderBy('candidates.created_at', 'desc');
+        $query->orderBy('candidates.created_at', 'desc');
 
-           
-            $candidates = $query->paginate(10);
+        $candidates = $query->paginate(10);
+        $user = DB::table('user')->select('*')->where('email', '=', Session::get('user'))->first();
 
-            // Calculate the serial numbers based on the total collection
-            $totalCount = $candidates->total(); // Total records in the collection
-            $startNumber = $totalCount - (($candidates->currentPage() - 1) * $candidates->perPage()); // Starting number for the current page
-
-            foreach ($candidates as $candidate) {
-                $candidate->serial_number = $startNumber--; // Assign serial numbers in descending order
-            }
-
-            if ($request->has('search')) {
-                $searchTerm = $request->input('search');
-                
-                // Build the query
-                $query = DB::table('candidates')
-                    ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
-                    ->select('candidates.*', 'visas.visa_no', 'visas.mofa_no', 'visas.spon_id', 'visas.prof_name_english')
-                    ->where('candidates.agency', '=', Session::get('user'))
-                    ->where(function ($query) use ($searchTerm) {
-                        $query->where('candidates.name', 'like', '%' . $searchTerm . '%')
-                            ->orWhere('candidates.id', 'like', '%' . $searchTerm . '%')
-                            ->orWhere('candidates.passport_number', 'like', '%' . $searchTerm . '%');
-                    });
-            
-                // Order by the created_at field
-                $query->orderBy('candidates.created_at', 'desc');
-            
-                // Paginate the query
-                $candidates = $query->paginate(10);
-            
-                // Calculate the serial numbers based on the total collection
-                $totalCount = $candidates->total(); // Total records in the collection
-                $startNumber = $totalCount - (($candidates->currentPage() - 1) * $candidates->perPage()); // Starting number for the current page
-            
-                // Assign serial numbers to each candidate in the collection
-                foreach ($candidates as $candidate) {
-                    $candidate->serial_number = $startNumber--; // Assign serial numbers in descending order
-                }
-            }
-            
-            $user = DB::table('user')->select('*')->where('email', '=', Session::get('user'))->first();
-            // dd($totalCount);
-
-            return view('user.index', compact('candidates','agentsform','agents','user', 'totalCount'));
+        return view('user.index', compact('candidates','agentsform','agents','user'));
         }
         else {
             DB::beginTransaction();
@@ -93,11 +109,9 @@ class UserController extends Controller
             ];
         
             try {
-                // dd($request->all());
                 $candidate = new Candidates();
                 $candidate->name = strtoupper($request->pname);
                 $candidate->agent = $request->agent_id;
-                $candidate->sl_number = $request->sl_number;
                 $candidate->passport_number = strtoupper($request->pnumber);
                 // $candidate->passport_issue_date = date('Y-m-d', strtotime($request->pass_issue_date));
                 // $candidate->passport_expire_date = date('Y-m-d', strtotime($request->pass_expire_date));
@@ -190,104 +204,117 @@ class UserController extends Controller
         return redirect(url('/'));
    }
 
-    public function visa_add(Request $request, $id){
-        if(Session::get('user')){
-            if($request->isMethod('GET')){
-                
-                $candidates = DB::table('candidates')
-                ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
-                ->select('candidates.*', 'visas.*')->where('candidates.id', '=', $id)
-                ->get();
-    
-                $user = DB::table('user')->select('*')->where('email', '=', Session::get('user'))->first();
-                return view('user.addvisa', ['id' => $id], compact('id', 'candidates','user'));
-                }
-                else{
+   public function visa_add(Request $request, $id){
+    if(Session::get('user')){
+        if($request->isMethod('GET')){
             
-                $visa = new Visa();
-        
-                $visa->visa_no = strtoupper($request->input('visa_no'));
-                $visa->candidate_id = $id;
-                $visa->visa_date2 = strtoupper($request->input('visa_date'));
-                $visa->spon_id = strtoupper($request->input('spon_id'));
-                $visa->spon_name_arabic = strtoupper($request->input('spon_name_arabic'));
-                $visa->salary = strtoupper($request->input('salary'));
-                // $visa->spon_name_english = strtoupper($request->input('spon_name_english'));
-                $visa->prof_name_arabic = strtoupper($request->input('prof_name_arabic'));
-                $visa->prof_name_english = strtoupper($request->input('prof_name_english'));
-                $visa->mofa_no = strtoupper($request->input('mofa_no'));
+            $candidates = DB::table('candidates')
+            ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
+            ->select('candidates.*', 'visas.*')->where('candidates.id', '=', $id)
+            ->get();
+    // dd($candidates);        
+    // return view('user.addvisa', compact('id', 'candidates'));
 
-                $mofaDate = \DateTime::createFromFormat('Y-m-d', $request->mofa_date);
-                if ($mofaDate !== false) {
-                    $visa->mofa_date = $mofaDate->format('Y-m-d');
-                } else {
-            
-                }
-                // $visa->mofa_date = strtoupper($request->input('mofa_date'));
-                $visa->okala_no = strtoupper($request->input('okala_no'));
-                $visa->musaned_no = strtoupper($request->input('musaned_no'));
-                $visa->user = Session::get('user');
-                $candidate = Candidates::find($id);
-                $flag = Visa::where('candidate_id', $id)->exists();
-                // dd(1,$request->all(), 2, $id, 3, $flag);
-                if ($flag == false){
-                    if($visa->save()){
-                        return response()->json([
-                            'title'=> 'Success',
-                            'success' => true,
-                            'icon' => 'success',
-                            'message' => 'added succesfully',
-                            'redirect_url' => 'user/index'
-                        ]);
-                    }
-                    else{
-                        return response()->json([
-                            'title'=> 'Error',
-                            'success' => false,
-                            'icon' => 'error',
-                            'message' => 'Cannot add',
-                            'redirect_url' => 'user/index'
-                        ]);
-                    }
+            $user = DB::table('user')->select('*')->where('email', '=', Session::get('user'))->first();
+            return view('user.addvisa', ['id' => $id], compact('id', 'candidates','user'));
+            }
+            else{
+         
+            $visa = new Visa();
+    
+            $visa->visa_no = strtoupper($request->input('visa_no'));
+            $visa->candidate_id = $id;
+            $visa->visa_date2 = strtoupper($request->input('visa_date'));
+            $visa->spon_id = strtoupper($request->input('spon_id'));
+            $visa->spon_name_arabic = strtoupper($request->input('spon_name_arabic'));
+            $visa->salary = strtoupper($request->input('salary'));
+            // $visa->spon_name_english = strtoupper($request->input('spon_name_english'));
+            $visa->prof_name_arabic = strtoupper($request->input('prof_name_arabic'));
+            $visa->prof_name_english = strtoupper($request->input('prof_name_english'));
+            $visa->mofa_no = strtoupper($request->input('mofa_no'));
+
+            $mofaDate = \DateTime::createFromFormat('Y-m-d', $request->mofa_date);
+            if ($mofaDate !== false) {
+                $visa->mofa_date = $mofaDate->format('Y-m-d');
+            } else {
+           
+            }
+            // $visa->mofa_date = strtoupper($request->input('mofa_date'));
+            $visa->okala_no = strtoupper($request->input('okala_no'));
+            $visa->musaned_no = strtoupper($request->input('musaned_no'));
+            $visa->user = Session::get('user');
+            $candidate = Candidates::find($id);
+            $flag = Visa::where('candidate_id', $id)->exists();
+            // dd(1,$request->all(), 2, $id, 3, $flag);
+            if ($flag == false){
+                if($visa->save()){
+                    return response()->json([
+                        'title'=> 'Success',
+                        'success' => true,
+                        'icon' => 'success',
+                        'message' => 'added succesfully',
+                        'redirect_url' => 'user/index'
+                    ]);
                 }
                 else{
                     return response()->json([
                         'title'=> 'Error',
                         'success' => false,
                         'icon' => 'error',
-                        'message' => 'This candidate have a visa',
+                        'message' => 'Cannot add',
                         'redirect_url' => 'user/index'
                     ]);
                 }
             }
-        
+            else{
+                return response()->json([
+                    'title'=> 'Error',
+                    'success' => false,
+                    'icon' => 'error',
+                    'message' => 'This candidate have a visa',
+                    'redirect_url' => 'user/index'
+                ]);
+            }
         }
-        else{
-            return redirect(url('/'));
-        }
+    
+    }
+    else{
+        return redirect(url('/'));
+    }
 
     }  
-   
+    
+    // public function embassy_list(){
+    //     if(Session::get('user')){
+    //         $candidates = DB::table('candidates')
+    //             ->join('visas', 'candidates.id', '=', 'visas.candidate_id')  // Changed to inner join
+    //             ->select('candidates.*', 'visas.*')
+    //             ->where('candidates.agency', '=', Session::get('user'))
+    //             ->orderBy('candidates.created_at', 'DESC')
+    //             ->paginate(10);
+
+    //     // dd($candidates);
+    //     $user = DB::table('user')->select('*')->where('email', '=', Session::get('user'))->first();
+    //         return view('user.embassy_list', compact('candidates','user'));
+    //     }
+    //     else{
+    //         return redirect(url('/'));
+    //     }
+        
+    // }
     public function embassy_list(){
         if(Session::get('user')){
-          
-        $candidates = DB::table('candidates')
-            ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
-            ->select('candidates.*', 'visas.visa_no', 'visas.mofa_no', 'visas.spon_id', 'visas.prof_name_english')
-            ->where('candidates.agency', '=', Session::get('user'))
-            ->where('candidates.is_delete', 0)
-            ->whereNotNull('visas.candidate_id')
-            ->orderBy('candidates.created_at', 'desc')
-            ->get(); // Using get() instead of paginate()
-        
-        // Calculate the serial numbers based on the total collection
-        $totalCount = $candidates->count(); // Total records in the collection
-        $startNumber = $totalCount; // Starting number for serial number
-        
-        foreach ($candidates as $candidate) {
-            $candidate->serial_number = $startNumber--; // Assign serial numbers in descending order
-        }
-
+            // $candidates = DB::table('candidates')
+            //         ->join('visas', 'candidates.id', '=', 'visas.candidate_id')
+            //         ->select('candidates.*', 'visas.*')
+            //         ->where('candidates.agency', '=', Session::get('user'))
+            //         ->get();
+            $candidates = DB::table('candidates')
+                ->join('visas', 'candidates.id', '=', 'visas.candidate_id')
+                ->select('candidates.id as candidate_id', 'candidates.passport_number', 'candidates.name')
+                ->where('candidates.agency', '=', Session::get('user'))
+                ->get();
+        // dd($candidates);
         $user = DB::table('user')->select('*')->where('email', '=', Session::get('user'))->first();
             return view('user.embassy_list', compact('candidates','user'));
         }
@@ -328,32 +355,32 @@ class UserController extends Controller
     }
     
     public function edit($id, Request $request)
-    {
-        if (Session::get('user')) {
-            if ($request->isMethod('GET')) {
-                $candidates = DB::table('candidates')
-                    ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
-                    ->select('candidates.*', 'visas.*')
-                    ->where('candidates.id', '=', $id)
-                    ->get();
-                $agentsform = DB::table('agents')->where('user', Session::get('user'))->get();
-                $manpower = DB::table('manpower')
-                    ->where('candidate_id', $id)
-                    ->first();
+{
+    if (Session::get('user')) {
+        if ($request->isMethod('GET')) {
+            $candidates = DB::table('candidates')
+                ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
+                ->select('candidates.*', 'visas.*')
+                ->where('candidates.id', '=', $id)
+                ->get();
+            $agentsform = DB::table('agents')->where('user', Session::get('user'))->get();
+            $manpower = DB::table('manpower')
+                ->where('candidate_id', $id)
+                ->first();
 
-                Log::info('Retrieved manpower:', ['manpower' => $manpower]);
+            Log::info('Retrieved manpower:', ['manpower' => $manpower]);
 
-                $user = DB::table('user')
-                    ->select('*')
-                    ->where('email', '=', Session::get('user'))
-                    ->first();
+            $user = DB::table('user')
+                ->select('*')
+                ->where('email', '=', Session::get('user'))
+                ->first();
 
-                return view('user.edit', compact('id', 'candidates','agentsform', 'user', 'manpower'));
-            }
-        } else {
-            return redirect(url('/'));
+            return view('user.edit', compact('id', 'candidates','agentsform', 'user', 'manpower'));
         }
+    } else {
+        return redirect(url('/'));
     }
+}
 
     public function view($id, Request $request){
         if(Session::get('user')){
@@ -375,15 +402,14 @@ class UserController extends Controller
     public function delete($id, Request $request) {
         if(Session::get('user')){
         $candidate = Candidates::find($id);
-        // dd($id, $candidate);
         if ($candidate) {
-            $target = Visa::where('candidate_id', $id)->update(['is_delete' => 1]);
+            $target = (Visa::where('candidate_id', $id)->delete());
             $flag = DB::table('candidates')
                 ->where('id', $candidate->id)
                 ->update(['is_delete' => 1]);
         
             if($flag){
-                if($target=1){
+                if($target = 1){
                     return response()->json(['message'=>'Visa And Candidate Deleted', 'success'=>true]);
                 }
                 else{
@@ -406,7 +432,6 @@ class UserController extends Controller
         return redirect(url('/'));
     }
     }
-   
     public function addisa($id, Request $request){
         if(Session::get('user')){
             if($request->isMethod('GET')){

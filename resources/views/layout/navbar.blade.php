@@ -1,7 +1,7 @@
 <div class="bg-[#0b7f96]">
-  <nav class="container mx-auto px-4 py-2 flex items-center justify-between">
+  <nav class="w-[90%] mx-auto py-2 flex items-center justify-between">
     <div class="flex items-center">
-      <a href="{{ route('user/index') }}" class="text-lg font-semibold  hover:text-blue-200 mr-4">
+      <a href="{{ route('user/index') }}" class="text-lg font-semibold bg-white rounded-lg p-2 hover:text-blue-200 mr-4">
         <img src="{{ asset('./assets/images/logo.png') }}" width="100px" id="up" height="100" class="w-[200px] h-auto object-contain" />
       </a>
       <a href="{{ route('user/embassy_list') }}" class="text-lg font-semibold text-white hover:text-blue-200 mr-4 flex items-center">
