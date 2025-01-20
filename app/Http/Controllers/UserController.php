@@ -6,6 +6,7 @@ use App\Models\Candidates;
 use App\Models\Manpower;
 use App\Models\Visa;
 use App\Models\User;
+use App\Models\Agents;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -23,9 +24,10 @@ class UserController extends Controller
            
             $query = DB::table('candidates')
             ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
-            ->select('candidates.*', 'visas.visa_no', 'visas.mofa_no', 'visas.spon_id','visas.prof_name_english')
-            ->where('candidates.agency', '=', Session::get('user'));
-            // ->where('candidates.is_delete', 0);
+            ->select('candidates.*', 'visas.visa_no', 'visas.mofa_no', 'visas.spon_id', 'visas.prof_name_english')
+            ->where('candidates.agency', '=', Session::get('user'))
+            ->where('candidates.is_delete', 0)
+            ->orderBy('candidates.created_at', 'desc');
 
             $agents = DB::table('agents')
                 ->select('*')
@@ -38,19 +40,28 @@ class UserController extends Controller
                 ->where('is_delete', '=', 0)->get();
          
 
-            $query->orderBy('candidates.created_at', 'desc');
-
-           
             $candidates = $query->paginate(10);
 
-            // Calculate the serial numbers based on the total collection
-            $totalCount = $candidates->total(); // Total records in the collection
-            $startNumber = $totalCount - (($candidates->currentPage() - 1) * $candidates->perPage()); // Starting number for the current page
+            // Total records in the entire collection (not just the current page)
+            $totalCount = $candidates->total(); 
 
+            // Starting number for serial numbers for the current page
+            $startNumber = $totalCount - (($candidates->currentPage() - 1) * $candidates->perPage());
+
+            // Assign serial numbers and enrich data
             foreach ($candidates as $candidate) {
+                $candidate->agent = Agents::where('id', $candidate->agent)->value('agent_name');
                 $candidate->serial_number = $startNumber--; // Assign serial numbers in descending order
             }
 
+            $maxSlNumber = DB::table('candidates')
+                ->where('agency', '=', Session::get('user')) // Optional condition if needed
+                ->where('is_delete', 0) // Ensure deleted records are excluded
+                ->max('sl_number'); // Get the maximum sl_number
+
+            // dd($maxSlNumber);
+
+            // dd($candidates);
             if ($request->has('search')) {
                 $searchTerm = $request->input('search');
                 
@@ -84,7 +95,7 @@ class UserController extends Controller
             $user = DB::table('user')->select('*')->where('email', '=', Session::get('user'))->first();
             // dd($totalCount);
 
-            return view('user.index', compact('candidates','agentsform','agents','user', 'totalCount'));
+            return view('user.index', compact('candidates','agentsform','agents','user', 'maxSlNumber'));
         }
         else {
             DB::beginTransaction();
@@ -276,7 +287,7 @@ class UserController extends Controller
             ->select('candidates.*', 'visas.visa_no', 'visas.mofa_no', 'visas.spon_id', 'visas.prof_name_english')
             ->where('candidates.agency', '=', Session::get('user'))
             ->where('candidates.is_delete', 0)
-            ->whereNotNull('visas.candidate_id')
+            // ->whereNotNull('visas.candidate_id')
             ->orderBy('candidates.created_at', 'desc')
             ->get(); // Using get() instead of paginate()
         

@@ -77,14 +77,17 @@
 
             <datalist id="candidates">
                 @foreach ($candidates as $candidate)
+                    @if (!$candidate->visa_no)
+                        @continue
+                    @endif
                     <option data-id="{{ $candidate->id }}">
-                        <p class="text-danger text-red-700 font-bold text-xl">Serial no:
-                            {{ $candidate->sl_number ?? $candidate->serial_number }},</p>
-                        <b class="text-danger">Passport no: {{ $candidate->passport_number }},</b>
+                        Serial no: {{ $candidate->sl_number ?? $candidate->serial_number }}, 
+                        Passport no: {{ $candidate->passport_number }},
                         Candidate Name: {{ $candidate->name }}
                     </option>
                 @endforeach
             </datalist>
+            
 
 
             <button class="btn btn-primary mr-2" onclick="printtable()">Print</button>

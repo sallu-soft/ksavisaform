@@ -345,7 +345,7 @@
                         <div class="">
                             <div class="px-10 gap-x-10 grid md:grid-cols-2">
                               <div class="py-1">
-                                <input type="hidden" name="sl_number" value="{{$totalCount+1}}" />
+                                <input type="hidden" name="sl_number" value="{{$maxSlNumber+1}}" />
                                 <div class="font-semibold text-lg">Agent <span class="text-red-500">*</span></div>
                                 <select class="form-control select2" id="agent_id" name="agent_id" required>
                                     <option value="" disabled selected>Select Agent</option>
@@ -367,7 +367,7 @@
                                 <div class="py-1">
                                     <div class="font-semibold text-lg">Passport Number <span
                                             class="text-red-500">*</span></div>
-                                    <input type="text" class="form-control uppercase " id="pnumber"
+                                    <input type="text" class="form-control uppercase " id="pnumber" autocomplete="off"
                                         name="pnumber" minlength="0" maxlength="9" required placeholder="">
                                 </div>
                                 <div class="py-1">
@@ -381,7 +381,7 @@
                                             <label for="ten">10 years</label>
                                         </div>
                                     </div>
-                                    <input type="text" class="form-control uppercase " id="pass_issue_date"
+                                    <input type="text" class="form-control uppercase " id="pass_issue_date" autocomplete="off"
                                         placeholder="" name="pass_issue_date">
                                 </div>
                                 <div class="py-1">
@@ -392,7 +392,7 @@
                                 <div class="py-1">
                                     <div class="font-semibold text-lg">Date Of Birth <span
                                             class="text-red-500">*</span></div>
-                                    <input type="text" class="form-control uppercase" id="date_of_birth" required
+                                    <input type="text" class="form-control uppercase" id="date_of_birth" required autocomplete="off"
                                         name="date_of_birth" placeholder="">
                                 </div>
                                 <div class="py-1">
@@ -672,17 +672,17 @@
                     <th scope="col" class="text-lg">Profession</th>
 
                     <th scope="col">Application (MOFA) <br /> Number</th>
+                    <th scope="col" class="w-[120px]">Agent</th>
                     <th scope="col" class="w-[120px]">Actions</th>
                 </tr>
             </thead>
             <tbody class="bg-gray-400">
-                @php
-                    $serial = 1; // Initialize serial number
-                @endphp
+                
                 {{-- @foreach ($candidates as $index => $candidate) --}}
                 @foreach ($candidates as $index => $candidate)
 
                     @php
+                       
                         $dob = $candidate->date_of_birth;
                         $birthdate = new DateTime($dob);
                         $currentDate = new DateTime();
@@ -738,6 +738,7 @@
                     <tr class="bg-gray-700 td-bg my-auto">
                         {{-- <td>{{ $candidates->total() - ($loop->index + (($candidates->currentPage() - 1) * $candidates->perPage())) }}</td> --}}
                         <th scope="col" class=""><span>{{ $candidate->sl_number ?? $candidate->serial_number }}</span></th>
+                        {{-- <th scope="col" class=""><span>{{ $serial }}</span></th> --}}
                         <td>
                             {{ date('d-m-Y', strtotime($candidate->created_at)) }}<br />
                             {{ date('H:m', strtotime($candidate->created_at)) }}
@@ -756,6 +757,7 @@
                         </td>
                         <td>{{ $candidate->prof_name_english }}</td>
                         <td>{{ $candidate->mofa_no }}</td>
+                        <td>{{ $candidate->agent }}</td>
                         <td scope="col" class="p-1">
                             @if (!$candidate->visa_no)
                                 <div class="2xl:text-lg text-sm cursor-pointer">
