@@ -8,7 +8,7 @@
     <div class="w-[60%] mx-auto shadow-lg rounded-lg pb-2 mt-4">
   
       @foreach ($candidates as $candidate)@endforeach
-      <div class="py-2 px-4 text-xl font-semibold w-full rounded-lg shadow-md text-[#082F2C] bg-[#ADCCC8]">Enter Visa For <span class="font-bold px-2 rounded-lg py-1  text-2xl">{{$candidate->name}}</span></div>
+      <div class="py-2 px-4 text-xl font-semibold w-full rounded-t-lg shadow-md text-white bg-[#275E8B]">Enter Visa For <span class="font-bold px-2 rounded-lg py-1  text-2xl">{{$candidate->name}}</span></div>
       {{-- foreac
       @php
   dd($candidate);

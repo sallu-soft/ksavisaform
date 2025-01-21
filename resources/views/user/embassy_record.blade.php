@@ -61,9 +61,9 @@
     </form>
 </div></div>
     <div class="datelist">
-      <table class="table stripe w-[50%] bg-white shadow-lg mx-auto mt-10  no-footer dataTable passenger-table" id="simpleTable">
-        <thead class="bg-blue-300 thed">
-          <tr class="">
+      <table class="table stripe w-[50%] shadow-lg mx-auto mt-10  no-footer dataTable passenger-table" id="simpleTable">
+        <thead class="!text-white !bg-[#275E8B] thed">
+          <tr class=" !text-white !bg-[#275E8B]">
             <th scope="col">Date</th>
             <th scope="col" class="text-center">Total Submitted Passport</th>
             <th scope="col" class="text-center">Actions</th>

@@ -115,11 +115,11 @@
     <div class="modal fade" id="user" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog max-w-[900px]">
             <div class="modal-content max-w-[900px]">
-                <div class="modal-header bg-indigo-300">
-                    <h5 class="modal-title text-black font-semibold" id="exampleModalLabel">Update User</h5>
+                <div class="modal-header  bg-[#275E8B]">
+                    <h5 class="modal-title text-white font-semibold" id="exampleModalLabel">Update User</h5>
                     <button type="button"
-                        class="btn-close bg-red-800 flex justify-center items-center font-bold bg-white p-2"
-                        data-bs-dismiss="modal" aria-label="Close">X</button>
+                        class="btn-close bg-red-800 flex justify-center bg-white items-center font-bold bg-white p-2"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body pt-0">
                     {{-- <div class="text-center bg-white py-2 text-xl uppercase rounded-b-xl mb-2">{{$user->licence_name}}-(RL-{{$user->rl_no}})</div> --}}
@@ -265,9 +265,9 @@
     <div class="modal fade " id="agentModal" tabindex="-1" aria-labelledby="agentModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
-                <div class="modal-header bg-indigo-300">
-                    <h5 class="modal-title" id="agentModalLabel">Add New Agent</h5>
-                    {{-- <button type="button" class="btn-close btn text-red-700 font-bold" data-bs-dismiss="modal" aria-label="Close">X</button> --}}
+                <div class="modal-header bg-[#275E8B]">
+                    <h5 class="modal-title text-white" id="agentModalLabel">Add New Agent</h5>
+                    <button type="button" class="btn-close !text-white bg-white font-bold" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
 
@@ -331,10 +331,10 @@
         aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
-                <div class="modal-header bg-[#289788] text-white">
+                <div class="modal-header bg-[#275E8B] text-white">
                     <h5 class="modal-title" id="exampleModalLabel">Add New Candidate</h5>
-                    <button type="button" class="btn-close btn text-white font-bold" data-bs-dismiss="modal"
-                        aria-label="Close">X</button>
+                    <button type="button" class="btn-close bg-white btn text-white font-bold" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
 
 
@@ -769,7 +769,7 @@
                             @if (!$candidate->manpower_id)
                                 <div class="2xl:text-lg text-sm cursor-pointer">
                                     <a href="{{ route('user/manpoweradd', ['id' => $candidate->id]) }}"
-                                        class="fw-semibold text-primary"><i
+                                    class="fw-semibold text-violet-700"><i
                                             class="bi bi-file-earmark-plus mr-1"></i>Manpower</a>
                                 </div>
                             @endif
@@ -782,7 +782,7 @@
                                     class="fw-semibold text-danger"><i class="bi bi-trash mr-1"></i>Delete</a>
                             </div>
                             @if (!$candidate->visa_no)
-                                <div class="2xl:text-lg text-sm fw-semibold text-warning cursor-pointer"
+                                <div class="2xl:text-lg text-sm fw-semibold text-teal-700 cursor-pointer"
                                     data-bs-toggle="modal" data-bs-target="#printModal">
                                     <i class="bi bi-printer-fill mr-1"></i>Print
                                 </div>
@@ -816,7 +816,7 @@
                             @else
                                 <div class="2xl:text-lg text-sm">
                                     <a href="{{ route('user/print', ['id' => $candidate->id]) }}"
-                                        class="fw-semibold text-warning"><i
+                                        class="fw-semibold text-teal-700"><i
                                             class="bi bi-printer-fill mr-1"></i>Print</a>
                                 </div>
                             @endif
