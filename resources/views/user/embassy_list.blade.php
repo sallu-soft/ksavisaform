@@ -227,7 +227,7 @@
                         class=" [&>th]:border [&>th]:border-black [&>th]:py-0 text-md font-semibold text-center [&>th]:font-bold">
 
 
-                        <th colspan="7" class="border border-black">إلغاء / Cancelation</th>
+                        <th colspan="7" contenteditable="true" class="border border-black">إلغاء / Cancelation</th>
 
                     </tr>
                 </thead>

@@ -72,7 +72,7 @@ class UserController extends Controller
                     ->where('candidates.agency', '=', Session::get('user'))
                     ->where(function ($query) use ($searchTerm) {
                         $query->where('candidates.name', 'like', '%' . $searchTerm . '%')
-                            ->orWhere('candidates.id', 'like', '%' . $searchTerm . '%')
+                            ->orWhere('candidates.sl_number', 'like', '%' . $searchTerm . '%')
                             ->orWhere('candidates.passport_number', 'like', '%' . $searchTerm . '%');
                     });
             
