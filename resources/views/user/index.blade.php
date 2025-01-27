@@ -159,29 +159,9 @@
 
                     </div>
 
-                    <div class="w-full flex flex-wrap py-3 gap-3">
-                        <div class="w-full rounded-lg md:w-[49%] text-xl font-semibold shadow-lg flex">
-                            <p
-                                class="w-1/4 flex items-center justify-center bg-indigo-400 rounded-l-lg pl-2 text-white">
-                                Phone</p>
-                            <p class="p-3 uppercase pl-2 w-3/4 flex items-center justify-center text-2xl">
-                                {{ $user->phone }}</p>
-                        </div>
-
-                        <div class="w-full rounded-lg md:w-[49%] text-xl font-semibold shadow-lg flex">
-                            <p
-                                class="w-1/4 flex items-center justify-center bg-indigo-400 rounded-l-lg text-white text-center">
-                                Office Address</p>
-                            <p class="p-3 pl-2 w-3/4 text-center overflow-hidden uppercase">{{ $user->office_address }}
-                            </p>
-                        </div>
-
-
-                    </div>
-
-
-                    <form action="{{ route('user/update') }}">
+                    <form action="{{ route('user/update') }}" method="POST">
                         @csrf
+
                         <div class="row">
                             <div class="col">
                                 <div class="form-outline ">
@@ -196,19 +176,7 @@
                                             echo '<label class="form-label" for="form6Example4">Agency Owner Phone Number</label><input type="text" id="form6Example4" class="form-control" name="phone"/>';
                                         }
                                     @endphp
-                                    {{-- <label class="form-label" for="form6Example4">Agency Owner Phone Number</label> --}}
-                                    {{-- @php
-                        // dd($user->phone);
-                        if($user->phone){
-                          echo '
-                       
-                          ';
-
-                        }
-                        else {
-                          echo '<input type="text" id="form6Example4" class="form-control" name="phone"/>';           
-                        }
-                      @endphp --}}
+                                 
                                 </div>
                             </div>
                         </div>
@@ -246,12 +214,76 @@
                                 }
                             @endphp
                         </div>
-                        <div class="text-center"> <button type="submit"
-                                class="bg-[#289788] text-center hover:bg-[#074f56] px-4 py-1 rounded text-white font-semibold">
-                                Save
-                            </button></div>
 
+                        <div class="row">
+                            <!-- First Column -->
+                            <div class="col-md-6 mb-3">
+                                <label for="rl_no_bangla" class="form-label">RL Number (Bangla)</label>
+                                <input 
+                                    type="text" 
+                                    id="rl_no_bangla" 
+                                    class="form-control" 
+                                    name="rl_no_bangla" 
+                                    placeholder="Enter RL Number in Bangla" 
+                                    value="{{ $user->rl_no_bangla ?? '' }}">
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="rl_name_bangla" class="form-label">RL Name (Bangla)</label>
+                                <input 
+                                    type="text" 
+                                    id="rl_name_bangla" 
+                                    class="form-control" 
+                                    name="rl_name_bangla" 
+                                    placeholder="Enter RL Name in Bangla" 
+                                    value="{{ $user->rl_name_bangla ?? '' }}">
+                            </div>
+                            
+                            <!-- Second Column -->
+                            <div class="col-md-6 mb-3">
+                                <label for="owner_name_bangla" class="form-label">Owner Name (Bangla)</label>
+                                <input 
+                                    type="text" 
+                                    id="owner_name_bangla" 
+                                    class="form-control" 
+                                    name="owner_name_bangla" 
+                                    placeholder="Enter Owner Name in Bangla" 
+                                    value="{{ $user->owner_name_bangla ?? '' }}">
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="owner_name_english" class="form-label">Owner Name (English)</label>
+                                <input 
+                                    type="text" 
+                                    id="owner_name_english" 
+                                    class="form-control" 
+                                    name="owner_name_english" 
+                                    placeholder="Enter Owner Name in English" 
+                                    value="{{ $user->owner_name_english ?? '' }}">
+                            </div>
+                            
+                            <!-- Full-Width Field -->
+                            <div class="col-12 mb-3">
+                                <label for="office_address_bangla" class="form-label">Office Address (Bangla)</label>
+                                <input 
+                                    type="text" 
+                                    id="office_address_bangla" 
+                                    class="form-control" 
+                                    name="office_address_bangla" 
+                                    placeholder="Enter Office Address in Bangla" 
+                                    value="{{ $user->office_address_bangla ?? '' }}">
+                            </div>
+                        </div>
+                    
+                        <div class="text-center">
+                            <button 
+                                type="submit" 
+                                class="btn btn-primary px-4 py-2">
+                                Save
+                            </button>
+                        </div>
                     </form>
+                    
                 </div>
                 {{-- <div class="modal-footer">
             <button type="button" class="md:text-lg text-md cursor-pointer bg-green-700 p-1 px-2 rounded-lg text-white bg-indigo-600 text-white" data-bs-dismiss="modal">Close</button>

@@ -36,10 +36,10 @@
                 <div class="font-bold text-lg">Sponsor Name (Arabic)</div>
                 <input type="text" id="spon_name_arabic" name="spon_name_arabic" class="form-control p-2 rounded-lg w-full uppercase" placeholder="" />
               </div>
-              {{-- <div class="py-2 flex flex-col gap-2">
+              <div class="py-2 flex flex-col gap-2">
                 <div class="font-bold text-lg">Sponsor Name (English)</div>
                 <input type="text" id="spon_name_english" name="spon_name_english" class="form-control p-2 rounded-lg w-full uppercase" placeholder="" />
-              </div> --}}
+              </div>
               <div class="py-2 flex flex-col gap-2">
                 <div class="font-bold text-lg">Profession (Arabic)</div>
                 <input type="text" id="prof_name_arabic" name="prof_name_arabic" class="form-control p-2 rounded-lg w-full uppercase" placeholder="" />

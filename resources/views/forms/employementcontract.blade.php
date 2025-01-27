@@ -20,14 +20,26 @@
             </div>
     
     
-            <datalist id="candidates">
+            {{-- <datalist id="candidates">
                 @foreach ($candidates as $candidate)
                     <option value="{{ $candidate->candidate_id }}">
                         <b class="text-danger">Passport no: {{ $candidate->passport_number }},</b>
                         Candidate Name: {{ $candidate->name }}
                     </option>
                 @endforeach
-            </datalist>
+            </datalist> --}}
+            <datalist id="candidates">
+              @foreach ($candidates as $candidate)
+                  @if (!$candidate->manpower_id)
+                      @continue
+                  @endif
+                  <option data-id="{{ $candidate->candidate_id }}">
+                      Serial no: {{ $candidate->sl_number ?? $candidate->id }}, 
+                      Passport no: {{ $candidate->passport_number }},
+                      Candidate Name: {{ $candidate->name }}
+                  </option>
+              @endforeach
+          </datalist>
     
     
             <button class="btn btn-primary" onclick="printtable()">Print</button>
@@ -183,11 +195,16 @@
 
 
         function getdata() {
-            var id = document.getElementById('candidate').value;
+            
+            let input = document.getElementById('candidate');
+                let selectedOption = getSelectedOption(input);
 
+               if(selectedOption){
+                    let candidateId = selectedOption.getAttribute('data-id');
+                    console.log(candidateId);
             // Define the routes to fetch
-            const embassyRoute = '/user/embassy/' + id;
-            const manpowerRoute = '/user/manpower/' + id;
+            const embassyRoute = '/user/embassy/' + candidateId;
+            const manpowerRoute = '/user/manpower/' + candidateId;
 
             // Fetch both routes concurrently
             Promise.all([
@@ -208,8 +225,8 @@
 
                  // Merge the two objects
                 const mergedData = { ...embassyData[0], ...manpowerData[0] };
-                // console.log(mergedData);
-                $('#first-party').html(mergedData.spon_name_arabic);
+                console.log(mergedData);
+                $('#first-party').html(mergedData.spon_name_english);
                 $('#second-party').html(mergedData.name);
                 $('#passport_no').html(mergedData.passport_number);
                 $('#profession').html(mergedData.prof_name_arabic);
@@ -220,10 +237,18 @@
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
-            });
+            });}
         }
 
-      
+        function getSelectedOption(inputElement) {
+                let options = inputElement.list.options; // Get all options in the datalist
+                for (let option of options) {
+                    if (option.value === inputElement.value) {
+                        return option; // Return the matching option element
+                    }
+                }
+                return null; // Return null if no match is found
+            }
 
         function printtable() {
             // Get the content of the printable section

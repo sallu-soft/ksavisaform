@@ -417,6 +417,14 @@
                                     <input type="text" id="visa_exp_date" name="visa_exp_date" class="form-control p-2 rounded-lg w-full uppercase" 
                                         required placeholder="DD-MM-YYYY" value="{{ old('visa_exp_date', $manpower->visa_exp_date ?? '') }}" />
                                 </div>
+                                <div class="py-2 flex flex-col gap-2">
+                                  <div class="font-bold text-lg">Bank Name</div>
+                                  <input type="text" id="bank_name" name="bank_name" class="form-control p-2 rounded-lg w-full uppercase" placeholder="" value="{{ old('bank_name', $manpower->bank_name ?? '') }}" />
+                              </div>
+                              <div class="py-2 flex flex-col gap-2">
+                                  <div class="font-bold text-lg">Bank Account No</div>
+                                  <input type="text" id="bank_acc_no" name="bank_acc_no" class="form-control p-2 rounded-lg w-full uppercase" placeholder="" value="{{ old('bank_acc_no', $manpower->bank_acc_no ?? '') }}" />
+                              </div>
                             </div>
                     
                             <div class="text-center pt-3">

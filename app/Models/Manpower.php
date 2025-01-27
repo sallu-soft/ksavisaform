@@ -20,6 +20,8 @@ class Manpower extends Model
         'visa_no',
         'visa_issued_date',
         'visa_exp_date',
+        'bank_name',
+        'bank_acc_no',
         'is_delete',
     ];
 }

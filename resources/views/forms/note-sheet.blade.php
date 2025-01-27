@@ -81,7 +81,7 @@
       >
         <p class=" font-bangla  text-[13px]">
           <span contentEditable="true">।</span> রিক্রুটিং এজেন্সী 
-          সাল্লু এজেন্সী (লাইসেন্স নম্বরঃ ২০২২) এর ব্যবস্থাপনা
+          {{$user->rl_name_bangla}} ({{$user->rl_no_bangla}}) এর ব্যবস্থাপনা
           পরিচালক সৌদিআরব গামি ২ জন 
           পুরুষ/মহিলা কর্মীর অনুকুলে একক বহির্গমন ছাড়পত্র
           গ্রহনের জন্য আবেদনপত্রসহ নিম্নে বর্ণিত কাগজপত্রাদি দাখিল করেছেন।
@@ -176,9 +176,8 @@
                 <p>(৩৫০০+১০০০)= ৪৫০০</p>
               </td>
               <td rowspan='3'>
-                <p>
-                    <!-- {toBengaliNumber(passengers?.length)} -->
-                    12
+                <p id="candidate_no">
+                    
                 </p>
               </td>
               <td>
@@ -340,12 +339,19 @@
         //             console.error(error);
         //         });
         // }
-        
+        function getTotalRows() {
+    var tbody = document.getElementById('first_table_notesheet');  // Get the table body by its ID
+    var rows = tbody.getElementsByTagName('tr');  // Get all rows (tr elements) in the table body
+    return rows.length;  // Return the total number of rows
+}
         function addRowToTable(data, highlight = false) {
             var tbody = document.getElementById('first_table_notesheet');
+            var candidate_no = document.getElementById('candidate_no');
+            var totalRows = getTotalRows();
+            candidate_no.innerHTML = totalRows + 1;
             var tr = document.createElement('tr');
             tr.classList.add('[&>td]:border', '[&>td]:border-black', '[&>td]:py-', 'text-[11px]', 'text-center', 'relative', 'group');
-
+            
             var td1 = document.createElement('td');
             var td2 = document.createElement('td');
             var td3 = document.createElement('td');
@@ -393,16 +399,11 @@
             td2.innerHTML = (data.name || '');
             td3.innerHTML = data.passport_number || '';
             td4.innerHTML = data.certificate_no || '';
+            td5.innerHTML = (data.bank_name || '') + '<br>' + (data.bank_acc_no || '');
             td6.innerHTML = data.medical_center || '';
             td7.innerHTML = data.ffc_name || '';
 
-            // Create an input field for td5
-            var input = document.createElement('input');
-            input.type = 'text';
-            input.classList.add('form-input', 'text-center', 'w-full'); // Add custom classes if needed
-            input.value = data.someValue || ''; // Replace `someValue` with the data field for the input, if any
-
-            td5.appendChild(input); // Append the input field to td5
+            
 
 
             tr.appendChild(td1);
@@ -414,6 +415,15 @@
             tr.appendChild(td7);
 
             tbody2.appendChild(tr);
+
+            // var totalAmount = 0;
+            // data.forEach(row => {
+            //     if (row.amount) {
+            //         totalAmount += parseFloat(row.amount);  // Summing up the amount field
+            //     }
+            // });
+            // candidate_no.innerHTML = totalAmount;
+
         }
 
         function printtable() {

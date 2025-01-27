@@ -48,6 +48,14 @@
                     <div class="font-bold text-lg">Visa Expiration Date <span class="text-red-500">*</span></div>
                     <input type="text" id="visa_exp_date" name="visa_exp_date" class="form-control p-2 rounded-lg w-full uppercase" required placeholder="DD-MM-YYYY" />
                 </div>
+                <div class="py-2 flex flex-col gap-2">
+                    <div class="font-bold text-lg">Bank Name</div>
+                    <input type="text" id="bank_name" name="bank_name" class="form-control p-2 rounded-lg w-full uppercase" placeholder="" />
+                </div>
+                <div class="py-2 flex flex-col gap-2">
+                    <div class="font-bold text-lg">Bank Account No</div>
+                    <input type="text" id="bank_acc_no" name="bank_acc_no" class="form-control p-2 rounded-lg w-full uppercase" placeholder="" />
+                </div>
             </div>
             <div class="text-center pt-3">
                 <button

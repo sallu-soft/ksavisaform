@@ -223,7 +223,7 @@ class UserController extends Controller
                 $visa->spon_id = strtoupper($request->input('spon_id'));
                 $visa->spon_name_arabic = strtoupper($request->input('spon_name_arabic'));
                 $visa->salary = strtoupper($request->input('salary'));
-                // $visa->spon_name_english = strtoupper($request->input('spon_name_english'));
+                $visa->spon_name_english = strtoupper($request->input('spon_name_english'));
                 $visa->prof_name_arabic = strtoupper($request->input('prof_name_arabic'));
                 $visa->prof_name_english = strtoupper($request->input('prof_name_english'));
                 $visa->mofa_no = strtoupper($request->input('mofa_no'));
@@ -569,6 +569,8 @@ class UserController extends Controller
                     $manpower->ffc_name = strtoupper($request->input('ffc_name'));
                     $manpower->reg_id = strtoupper($request->input('reg_id'));
                     $manpower->visa_no = strtoupper($request->input('visa_no'));
+                    $manpower->bank_name = strtoupper($request->input('bank_name'));
+                    $manpower->bank_acc_no = strtoupper($request->input('bank_acc_no'));
                     $manpower->candidate_id = $id;
     
                     // Check if visa_issued_date is provided and valid
@@ -649,7 +651,8 @@ class UserController extends Controller
             $manpower->ffc_name = strtoupper($request->input('ffc_name'));
             $manpower->reg_id = strtoupper($request->input('reg_id'));
             $manpower->visa_no = strtoupper($request->input('visa_no'));
-
+            $manpower->bank_name = strtoupper($request->input('bank_name'));
+            $manpower->bank_acc_no = strtoupper($request->input('bank_acc_no'));
             // Update dates if provided
             if ($request->input('visa_issued_date')) {
                 $manpower->visa_issued_date = (new DateTime($request->input('visa_issued_date')))->format('Y-m-d');
@@ -696,12 +699,12 @@ class UserController extends Controller
                 $visa->prof_name_english = $request->input('prof_name_english');
                 $visa->mofa_no = $request->input('mofa_no');
 
-                $mofaDate = \DateTime::createFromFormat('Y-m-d', $request->mofa_date);
-            if ($mofaDate !== false) {
-                $visa->mofa_date = $mofaDate->format('Y-m-d');
-            } else {
+            //     $mofaDate = \DateTime::createFromFormat('Y-m-d', $request->mofa_date);
+            // if ($mofaDate !== false) {
+            //     $visa->mofa_date = $mofaDate->format('Y-m-d');
+            // } else {
            
-            }
+            // }
 
                 // $visa->mofa_date = $request->input('mofa_date');
                 $visa->okala_no = $request->input('okala_no');
@@ -744,6 +747,58 @@ class UserController extends Controller
         
     }
 
+    // public function update(Request $request){
+    //     if(Session::get('user')){
+    //         $name = request('uname');
+    //         $phn = request('wsphn');
+    //         // $arabic_name = request('arabic_name');
+    //         $agphn = request('phone');
+    //         $email = session('user');
+    //         $user = User::where('email', $email)->first();
+    //         if($user){
+
+    //             if(!empty($agphn)){
+    //                 $user->embassy_man_name = $name;
+    //                 $user->embassy_man_phone = $phn;
+    //                 $user->phone = $agphn;
+    //                 // $user->arabic_name = $arabic_name;
+    //             }
+    //             else{
+    //                 $user->embassy_man_name = $name;
+    //                 $user->embassy_man_phone = $phn;
+    //             }
+                
+    //             if($user->save()){
+    //                 return redirect()->route('user/index')->with('success', 'User created successfully');
+    
+    //             }
+    //             else{
+    //                 return response()->json([
+    //                     'title'=> 'Error',
+    //                     'success' => false,
+    //                     'icon' => 'error',
+    //                     'message' => 'Internal error',
+                        
+    //                 ]);
+    //             }
+    //         }
+    //         else{
+    //             return response()->json([
+    //                 'title'=> 'Error',
+    //                 'success' => false,
+    //                 'icon' => 'error',
+    //                 'message' => 'User Not Found ',
+                    
+    //             ]);
+    //         }
+    //     }
+    //     else{
+    //         return redirect(url('/'));
+    //     }
+    //     // dd($request->all());
+        
+    // }  
+
     public function update(Request $request){
         if(Session::get('user')){
             $name = request('uname');
@@ -753,6 +808,13 @@ class UserController extends Controller
             $email = session('user');
             $user = User::where('email', $email)->first();
             if($user){
+                     // Update new fields
+                $user->rl_no_bangla = $request->input('rl_no_bangla');
+                $user->rl_name_bangla = $request->input('rl_name_bangla');
+                $user->owner_name_bangla = $request->input('owner_name_bangla');
+                $user->owner_name_english = $request->input('owner_name_english');
+                $user->office_address_bangla = $request->input('office_address_bangla');
+
 
                 if(!empty($agphn)){
                     $user->embassy_man_name = $name;
@@ -794,8 +856,7 @@ class UserController extends Controller
         }
         // dd($request->all());
         
-    }  
-
+    }
     public function printer($id){
         if(Session::get('user')){
             $candidates = DB::table('candidates')

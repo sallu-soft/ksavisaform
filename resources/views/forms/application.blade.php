@@ -78,7 +78,7 @@
 
   <div id="printable-section">
     <div class="container mx-auto">
-        <div class="px-[50px] pt-[200px] text-13 leading-5 font-bangla" contenteditable="true" ref={componentRef}>
+        <div class=" pt-[200px] text-13 font-medium text-black leading-5 font-bangla" contenteditable="true" ref={componentRef}>
             <p>
                 বরাবর
                 <br />
@@ -99,30 +99,17 @@
                 </span>
             </p>
             <br />
-            <p class="text-justify">
+            <p class="text-justify text-[14px] text-black font-medium">
                 জনাব, <br />
                 বিনীত নিবেদন এই যে, নিম্নে বর্ণিত
-                <div class="overflow-x-auto mb-4">
-                    <table class="w-fit text-sm border-collapse border border-gray-300" id="application_table">
-                        <thead>
-                            <tr class="">
-                                <th class="border border-gray-300 px-4 py-1 text-center">ক্রমিক নং</th>
-                                <th class="border border-gray-300 px-4 py-2 text-center">কর্মীর নাম</th>
-                                <th class="border border-gray-300 px-4 py-2 text-center">পাসপোর্ট নম্বর</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        
-                        </tbody>
-                    </table>
-                </div>
+                
                 
                 সৌদিআরব গমনেচ্ছু 
                 <span id="counting"></span>
                 জন পুরুস/মহিলা কর্মী তাদের স্ব-স্ব
                 উদ্যোগে সংগৃহীত ভিসা, মূলপাসপোর্ট ও চুক্তিপত্রসহ অন্যান্য কাগজপত্রাদি
-                আমার রিক্রুটিং এজেন্সী <span class="">{{$user->licence_name}}</span> (আর এল-
-                <span class=""> {{$user->rl_no}} </span>
+                আমার রিক্রুটিং এজেন্সী <span class="">{{$user->rl_name_bangla}}</span> (আর এল-
+                <span class=""> {{$user->rl_no_bangla}} </span>
                 )এর মাধ্যমে বহির্গমন ছাড়পত্র গ্রহনের জন্য জমা দিয়েছে। কর্মীদের নিকট
                 হতে প্রাপ্ত ভিসাসহ নিম্নেবর্ণিত কাগজপত্রাদি এমবস্থায় দাখিল করলাম।
                 ভিসাগুলো আমার অফিসে পরীক্ষান্তে সঠিক পাওয়া গিয়েছে এবং কর্মীদের ভিসা ও
@@ -159,20 +146,47 @@
                         <li>০৬। কর্মীর ডাটা শীট।</li>
                     </ul>
                 </div>
-                <div class="w-1/2 mt-14">
-                    <ul>
+                <div class="w-1/2 ">
+                    <ul class="flex flex-col gap-y-2">
                         <li>
                             রিক্রুটিং এজেন্সির নামঃ 
                             <span class="">
-                                {{$user->licence_name}} - {{$user->rl_no}}
+                                {{$user->rl_name_bangla}} - {{$user->rl_no_bangla}}
                             </span>
                         </li>
-                        <li>মালিকের নামঃ- {{$user->embassy_man_name}} </li>
-                        <li class="">মালিকের স্বাক্ষর ও সীলঃ</li>
-                        <li>তারিখঃ---------------</li>
-                        <li>মোবাইল নম্বরঃ {{$user->phone}}</li>
+                        <li>মালিকের নামঃ- {{$user->owner_name_bangla}} </li>
+                        {{-- <li class="mt-10">মালিকের স্বাক্ষর ও সীলঃ</li>
+                        <li>তারিখঃ_____________</li>
+                        <li>মোবাইল নম্বরঃ {{$user->phone}}</li> --}}
                     </ul>
                 </div>
+                
+            </div>
+            <div class="w-1/2 px-8 py-4">
+                <ul class="flex flex-col gap-y-2">
+                    <li>
+                        প্রতিনিধির নামঃ 
+                            {{$user->embassy_man_name}}
+                    </li>
+                    <li>মোবাইল নং- {{$user->embassy_man_phone}} </li>
+                    {{-- <li class="mt-10">মালিকের স্বাক্ষর ও সীলঃ</li>
+                    <li>তারিখঃ_____________</li>
+                    <li>মোবাইল নম্বরঃ {{$user->phone}}</li> --}}
+                </ul>
+            </div>
+            <div class="overflow-x-auto my-6 mb-4">
+                <table class="w-fit text-sm border-collapse border border-gray-300" id="application_table">
+                    <thead>
+                        <tr class="">
+                            <th class="border border-gray-300 px-4 py-1 text-center">ক্রমিক নং</th>
+                            <th class="border border-gray-300 px-4 py-2 text-center">কর্মীর নাম</th>
+                            <th class="border border-gray-300 px-4 py-2 text-center">পাসপোর্ট নম্বর</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

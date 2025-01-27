@@ -76,11 +76,11 @@
   </div>
 
   <div class="container w-max" id="printable-section">
-    <div class=" bg-white px-7  pb-10" contentEditable="true">
-        <div class="h-[1300px] pt-[360px] relative">
+    <div class=" bg-white  pb-0" contentEditable="true">
+        <div class="h-[1320px] pt-[360px] relative">
           <p class="text-center text-lg px-7 underline font-bangla">
             নিম্নলিখিত সৌদিআরবগামী <span id="counting"></span> জন কর্মী প্রেরণ সংক্রান্ত
-            রিক্রুটিং এজেন্সী {{$user->licence_name}} (আর এল- {{$user->rl_no}}) এর
+            রিক্রুটিং এজেন্সী {{$user->rl_name_bangla}} (আর এল- {{$user->rl_no_bangla}}) এর
             অঙ্গীকারনামা।
           </p>
 
@@ -103,14 +103,14 @@
           </table>
   
           <p class="text-[12px] text-justify w-[95%] pl-7 leading-5 font-bangla ">
-            আমি {{ $user->licence_name }} (আরএল-{{ $user->rl_no }})
+            আমি {{ $user->rl_name_bangla }} (আরএল-{{ $user->rl_no_bangla }})
             স্বত্ত্বাধিকারী/ব্যবস্থাপনা অংশীদার /ব্যবস্থাপনা পরিচালক এই মর্মে
             অঙ্গীকার করছি যে, চাকুরীর উদ্দেশ্যে সৌদিআরব গামী দেশের বিভিন্ন
             নিয়োগকর্তার অধীনে বর্ণিত <span id="footer_Dynamic_count"></span> জন কর্মীর একক বহির্গমন ছাড়পত্র
             গ্রহণের নিমিত্তে কর্মীদের ভিসা, চুক্তিপত্রসহ অন্যান্য প্রয়োজনীয়
             কাগজপত্রাদি দাখিল করলাম, যা সঠিক আছে।
           </p>
-          <h3 class="text-center text-xl absolute bottom-1 right-7">
+          <h3 class="text-center text-xl absolute bottom-[3px] right-1">
             চলমান পাতা - ২
           </h3>
         </div>
@@ -143,11 +143,11 @@
           <p class="text-[16px] leading-8 ">
             উপর্যুক্ত অঙ্গীকার নামায় বর্ণিত বিষয়ের কোন ব্যত্যয় ঘটলে প্রবাসীকল্যাণ
             ও বৈদেশিক কর্মসংস্থান মন্ত্রণালয় অথবা জনশক্তি কর্মসংস্থান ও
-            প্রশিক্ষণব্যুরো আমার বা আমার রিক্রুটিংএজেন্সীর বিরুদ্ধে{" "}
+            প্রশিক্ষণব্যুরো আমার বা আমার রিক্রুটিংএজেন্সীর বিরুদ্ধে
             <span class="font-semibold">
-              {" "}
+              
               বৈদেশিক কর্মসংসস্থান ও অভিবাসী আইন-২০১৩
-            </span>{" "}
+            </span>
             অনুযায়ী যে কোনব্যবস্থা গ্রহণ করতে পারবে।
             <br />
             <br /> এই অঙ্গীকারনামা আমি সেচ্ছায়, স্বজ্ঞানে, সুস্থ্য মস্তিস্কে এবং
@@ -155,9 +155,9 @@
           </p>
           <div class="flex flex-end justify-end mr-10">
             <p class="text-start px-10 text-lg pt-[2rem] font-bangla leading-10">
-                রিক্রুটিং এজেন্সীর নাম : {{ $user->licence_name }}
+                রিক্রুটিং এজেন্সীর নাম : {{ $user->rl_name_bangla }}
                 <br />
-                মালিকের নাম : {{ $user->embassy_man_name }}
+                মালিকের নাম : {{ $user->owner_name_bangla }}
                 <br />
                 <span class="">মালিকের স্বাক্ষর ও সীল :</span>
                 <br />
@@ -314,7 +314,7 @@
 
             td4.innerHTML = data.visa_no || ''; // Visa number
 
-            td5.innerHTML = data.spon_name_english || ''; // Employer name
+            td5.innerHTML = data.company_name || ''; // Employer name
             td5.classList.add('uppercase'); // Add uppercase styling
 
             td6.innerHTML = data.prof_name_english || ''; // Job position
