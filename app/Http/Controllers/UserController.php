@@ -22,12 +22,27 @@ class UserController extends Controller
        
         if($request->isMethod('GET')){
            
+            // $query = DB::table('candidates')
+            // ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
+            // ->select('candidates.*', 'visas.visa_no', 'visas.mofa_no', 'visas.spon_id', 'visas.prof_name_english')
+            // ->where('candidates.agency', '=', Session::get('user'))
+            // ->where('candidates.is_delete', 0)
+            // ->orderBy('candidates.created_at', 'desc');
             $query = DB::table('candidates')
-            ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
-            ->select('candidates.*', 'visas.visa_no', 'visas.mofa_no', 'visas.spon_id', 'visas.prof_name_english')
-            ->where('candidates.agency', '=', Session::get('user'))
-            ->where('candidates.is_delete', 0)
-            ->orderBy('candidates.created_at', 'desc');
+    ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
+    ->leftJoin('manpower', 'candidates.id', '=', 'manpower.candidate_id') // Join with manpower
+    ->select(
+        'candidates.*',
+        'visas.visa_no',
+        'visas.mofa_no',
+        'visas.spon_id',
+        'visas.prof_name_english',
+        'manpower.visa_issued_date',
+        'manpower.visa_exp_date' // Add visa_issued_date from manpower
+    )
+    ->where('candidates.agency', '=', Session::get('user'))
+    ->where('candidates.is_delete', 0)
+    ->orderBy('candidates.created_at', 'desc');
 
             $agents = DB::table('agents')
                 ->select('*')
@@ -82,7 +97,10 @@ class UserController extends Controller
             
                 // Paginate the query
                 $candidates = $query->paginate(10);
-            
+                foreach ($candidates as $candidate) {
+                    $candidate->agent = Agents::where('id', $candidate->agent)->value('agent_name');
+                    $candidate->serial_number = $startNumber--; // Assign serial numbers in descending order
+                }
                 // Calculate the serial numbers based on the total collection
                 $totalCount = $candidates->total(); // Total records in the collection
                 $startNumber = $totalCount - (($candidates->currentPage() - 1) * $candidates->perPage()); // Starting number for the current page

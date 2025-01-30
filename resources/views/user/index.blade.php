@@ -316,12 +316,12 @@
                                 </div>
                                 <div class="py-1">
                                     <div class="font-semibold text-lg">Agent's Phone Number</div>
-                                    <input type="number" class="form-control uppercase" required id="agent_phone"
+                                    <input type="number" class="form-control uppercase" id="agent_phone"
                                         name="agent_phone" placeholder="">
                                 </div>
                                 <div class="py-1">
                                     <div class="font-semibold text-lg">Agent's Email</div>
-                                    <input type="email" class="form-control" required id="agent_email"
+                                    <input type="email" class="form-control" id="agent_email"
                                         name="agent_email" placeholder="">
                                 </div>
                                 <div class="py-1">
@@ -581,11 +581,11 @@
                                 </div>
                                 <div class="py-1">
                                     <div class="font-semibold text-lg">Police Clearence No</div>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control uppercase" id="police_licence"
+                                    <div class="input-group border border-gray-200 rounded-lg">
+                                        <input type="text" class="form-control border-none focus:outline-none uppercase" id="police_licence"
                                             placeholder="" name="police_licence">
                                         <button type="button"
-                                            class="rounded-lg bg-indigo-500 text-white p-2 text-md font-semibold"
+                                            class="rounded-r-lg bg-indigo-500 text-white p-2 text-md font-semibold"
                                             onclick="SearchPC()">Search</button>
                                     </div>
                                 </div>
@@ -697,14 +697,14 @@
                 <tr class="bg-[#f9f9f9]">
                     <th scope="col">Serial <br /> Number</th>
                     <th scope="col">Creation <br /> Date</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Passport <br /> Number</th>
+                    <th scope="col" class="w-[250px]">Name</th>
+                    
                     <th scope="col">DOB</th>
                     <th scope="col" style="">VISA/Sponsor <br /> Number</th>
-                    <th scope="col" class="text-lg">Profession</th>
+                    <th scope="col" class="text-lg">Medical Info</th>
 
-                    <th scope="col">Application (MOFA) <br /> Number</th>
-                    <th scope="col" class="w-[120px]">Agent</th>
+                    <th scope="col">Profession/MOFA No</th>
+                   
                     <th scope="col" class="w-[120px]">Actions</th>
                 </tr>
             </thead>
@@ -725,6 +725,14 @@
                             $age .= $years . ' year' . ($years > 1 ? 's' : '');
                         }
                     @endphp
+                   @php
+                   $visaExpDate = \Carbon\Carbon::parse($candidate->visa_exp_date);
+                   $daysLeft = $visaExpDate->diffInDays(\Carbon\Carbon::now(), false);
+               @endphp
+                   @php
+                   $medicalExpDate = \Carbon\Carbon::parse($candidate->medical_expire_date);
+                   $medicalDaysLeft = $medicalExpDate->diffInDays(\Carbon\Carbon::now(), false);
+               @endphp
 
                     <!-- Add Candidate Visa Modal -->
                     <div class="modal fade" id="addVisaModal" tabindex="-1" aria-labelledby="addVisaModalLabel"
@@ -776,20 +784,41 @@
                             {{ date('H:m', strtotime($candidate->created_at)) }}
                         </td>
                         <td><a href="{{ route('user/view', ['id' => $candidate->id]) }}"
-                                class="font-semibold hover:font-bold cursor-pointer hover:text-blue-400 ">{{ $candidate->name }}</a>
+                                class="font-semibold hover:font-bold cursor-pointer hover:text-blue-400 text-xl">{{ $candidate->name }}</a><br/>
+                                <p class="text-md mt-2 font-semibold">{{ $candidate->passport_number }}</p><br/><strong>Agent : </strong>{{ $candidate->agent }}
                         </td>
-                        <td>{{ $candidate->passport_number }}</td>
+                        
                         <td>
                             {{ date('d-m-Y', strtotime($candidate->date_of_birth)) }}
                             <br /><span class="font-semibold">Age</span>: {{ $age }}
                         </td>
                         <td>
+                            
                             <strong>Visa No:</strong> {{ $candidate->visa_no }} <br />
-                            <strong>Sponsor ID:</strong> {{ $candidate->spon_id }}
+                            <strong>Sponsor ID:</strong> {{ $candidate->spon_id }}<br/>
+                            <strong>Issued Visa Date:</strong> @if (!empty($candidate->visa_issued_date))
+                            {{ date('d-m-Y', strtotime($candidate->visa_issued_date)) }}
+                        @endif<br/>
+                            <p class="text-red-600 font-semibold text-md">
+                                @if($daysLeft <= 0)
+                                    {{ $daysLeft }} days remaining
+                                @endif
+                            </p>
                         </td>
-                        <td>{{ $candidate->prof_name_english }}</td>
-                        <td>{{ $candidate->mofa_no }}</td>
-                        <td>{{ $candidate->agent }}</td>
+                        <td>{{ $candidate->medical_center }}<br/>
+                            <strong>Issued Date:</strong> @if (!empty($candidate->medical_issue_date))
+                            {{ date('d-m-Y', strtotime($candidate->medical_issue_date)) }}
+                        @endif<br/>
+                            <p class="text-red-600 font-semibold text-md">
+                                @if($medicalDaysLeft <= 0)
+                                    {{ $medicalDaysLeft }} days remaining
+                                @endif
+                            </p>
+                        </td>
+                        <td>
+                            <strong>Profession:</strong> {{ $candidate->prof_name_english }} <br />
+                            <strong>MOFA No:</strong> {{ $candidate->mofa_no }}
+                        </td>
                         <td scope="col" class="p-1">
                             @if (!$candidate->visa_no)
                                 <div class="2xl:text-lg text-sm cursor-pointer">
