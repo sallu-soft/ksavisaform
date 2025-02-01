@@ -898,12 +898,12 @@
 
     </div>
     <a
-          href="https://wa.me/+8801609317035"
-          rel="noopener noreferrer"
-          target="_blank"
-          class="fixed bottom-10 right-10 text-6xl text-green-600"
-        >
-        <i class="bi bi-whatsapp"></i>
+  href="https://web.whatsapp.com/send?phone=8801609317035"
+  rel="noopener noreferrer"
+  target="_blank"
+  class="fixed bottom-10 right-10 text-6xl text-green-600"
+>
+  <i class="bi bi-whatsapp"></i>
 </a>
     <div id="preloader"></div>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
