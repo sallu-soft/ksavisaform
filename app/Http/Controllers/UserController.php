@@ -83,7 +83,14 @@ class UserController extends Controller
                 // Build the query
                 $query = DB::table('candidates')
                     ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
-                    ->select('candidates.*', 'visas.visa_no', 'visas.mofa_no', 'visas.spon_id', 'visas.prof_name_english')
+                    ->leftJoin('manpower', 'candidates.id', '=', 'manpower.candidate_id')
+                    ->select('candidates.*', 
+                    'visas.visa_no', 
+                    'visas.mofa_no', 
+                    'visas.spon_id',
+                     'visas.prof_name_english',
+                     'manpower.visa_issued_date',
+                    'manpower.visa_exp_date')
                     ->where('candidates.agency', '=', Session::get('user'))
                     ->where(function ($query) use ($searchTerm) {
                         $query->where('candidates.name', 'like', '%' . $searchTerm . '%')
