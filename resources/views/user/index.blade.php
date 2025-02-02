@@ -75,9 +75,13 @@
         table.table-bordered.dataTable thead tr:first-child th,
         table.table-bordered.dataTable thead tr:first-child td {
             border-top-width: 1px;
-            background-color: lightgray;
+            
         }
-
+        /* table.table-bordered.dataTable thead tr:first-child th:hover,
+        table.table-bordered.dataTable thead tr:hover {
+            background-color: #a85454; 
+            transition: background-color 0.3s ease;
+        } */
         .dropdown-menu.show {
             display: block;
         }
@@ -118,7 +122,7 @@
                 <div class="modal-header  bg-[#275E8B]">
                     <h5 class="modal-title text-white font-semibold" id="exampleModalLabel">Update User</h5>
                     <button type="button"
-                        class="btn-close bg-red-800 flex justify-center bg-white items-center font-bold bg-white p-2"
+                        class="btn-close bg-red-800 flex justify-center bg-red-600 !bg-red-600  items-center font-bold text-white !text-white p-2"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body pt-0">
@@ -299,7 +303,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-[#275E8B]">
                     <h5 class="modal-title text-white" id="agentModalLabel">Add New Agent</h5>
-                    <button type="button" class="btn-close !text-white bg-white font-bold" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close !text-white !bg-red-600 font-bold" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
 
@@ -365,7 +369,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-[#275E8B] text-white">
                     <h5 class="modal-title" id="exampleModalLabel">Add New Candidate</h5>
-                    <button type="button" class="btn-close bg-white btn text-white font-bold" data-bs-dismiss="modal"
+                    <button type="button" class="btn-close !bg-red-600 bg-red-500 !bg-white btn text-white font-bold" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
 
@@ -618,7 +622,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="viewAgentModalLabel">Agent Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close !bg-red-600" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="agentDetails">
 
@@ -634,33 +638,33 @@
 
         <div class="flex justify-end gap-2 md:gap-3">
             <button type="button" data-toggle="tooltip" data-placement="bottom" title="Add Agent"
-                class="bg-indigo-500 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 mr-2 py-2 rounded-md mb-2"
+                class="bg-pink-600 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 mr-2 py-2 rounded-md mb-2"
                 data-bs-toggle="modal" data-bs-target="#agentModal">
                 Add Agent
             </button>
             
 
             <button type="button" data-toggle="tooltip" data-placement="bottom" title="Add Canddidates Passport"
-                class="bg-indigo-500 text-white font-semibold mr-2 text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2"
+                class="bg-pink-600 text-white font-semibold mr-2 text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2"
                 data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Add candidate
             </button>
             <a href="{{ route('agents') }}" data-toggle="tooltip" data-placement="bottom" title="Agents">
               <button type="button"
-                  class="bg-yellow-500 mr-2 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2">
+                  class="bg-pink-600 mr-2 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2">
                   Agents List
               </button>
           </a>
             <a href="{{ route('agent_candidate') }}" data-toggle="tooltip" data-placement="bottom" title="Report">
                 <button type="button"
-                    class="bg-yellow-500 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2">
+                    class="bg-pink-600 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2">
                     Report
                 </button>
             </a>
 
             <!-- Dropdown Button -->
             <div class="relative">
-                <button class="bg-blue-500 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2"
+                <button class="bg-pink-600 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2"
                     id="dropdownButton" aria-expanded="false" data-toggle="tooltip" data-placement="bottom"
                     title="More Actions">
                     Manpower Forms
@@ -684,15 +688,15 @@
     </div>
     
 
-    <div class="table-responsive rounded-lg bg-[#275E8B] my-5 w-[98%] xl:w-[90%] mx-auto shadow-lg main-datatable ">
-        <form method="GET" action="{{ route('user/index') }}">
+    <div class="table-responsive rounded-lg  my-5 w-[98%] xl:w-[90%] mx-auto shadow-lg main-datatable">
+        <form method="GET" class="bg-[#275E8B] py-2" action="{{ route('user/index') }}">
             <div class="flex w-[50%] my-3 mx-auto gap-4 ">
                 <input type="text" class="form-control" name="search" placeholder="Search"
                     value="{{ request('search') }}">
                 <button type="submit" class="text-white px-4 rounded-lg bg-indigo-500">Search</button>
             </div>
         </form>
-        <table class="table stripe  no-footer dataTable passenger-table" id="candidatetable">
+        <table class=" no-footer dataTable " id="candidatetable">
             <thead class="bg-[#f9f9f9] thed">
                 <tr class="bg-[#f9f9f9]">
                     <th scope="col">Serial <br /> Number</th>
@@ -708,7 +712,7 @@
                     <th scope="col" class="w-[120px]">Actions</th>
                 </tr>
             </thead>
-            <tbody class="bg-gray-400">
+            <tbody class="cantab">
                 
                 {{-- @foreach ($candidates as $index => $candidate) --}}
                 @foreach ($candidates as $index => $candidate)
@@ -775,11 +779,11 @@
                         </div>
                     </div>
                     @if($candidate->is_delete == 0)
-                    <tr class="bg-gray-700 td-bg my-auto">
+                    <tr class=" my-auto border hover:bg-gray-200 border-gray-300 [&>td]:border-t [&>td]:border-gray-300">
                         {{-- <td>{{ $candidates->total() - ($loop->index + (($candidates->currentPage() - 1) * $candidates->perPage())) }}</td> --}}
-                        <th scope="col" class=""><span>{{ $candidate->sl_number ?? $candidate->serial_number }}</span></th>
+                        <td scope="col" class=""><span>{{ $candidate->sl_number ?? $candidate->serial_number }}</span></td>
                         {{-- <th scope="col" class=""><span>{{ $serial }}</span></th> --}}
-                        <td>
+                        <td class="">
                             {{ date('d-m-Y', strtotime($candidate->created_at)) }}<br />
                             {{ date('H:m', strtotime($candidate->created_at)) }}
                         </td>

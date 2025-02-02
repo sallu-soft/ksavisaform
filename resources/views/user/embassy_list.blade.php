@@ -237,9 +237,9 @@
 
                 </tbody>
                 <tbody>
-                    <tr class="[&>td]:border [&>td]:border-black [&>td]:p-0 text-lg text-center relative group">
+                    <tr class="[&>td]:border [&>td]:border-black text-lg text-center relative group">
 
-                        <td colspan="5" contentEditable class="font-bold text-xl text-end px-5" id="totalCancel">
+                        <td colspan="5" contentEditable class="font-bold text-xl text-end pr-5 " id="totalCancel">
 
                         </td>
                         <td>المجموع</td>
