@@ -638,33 +638,33 @@
 
         <div class="flex justify-end gap-2 md:gap-3">
             <button type="button" data-toggle="tooltip" data-placement="bottom" title="Add Agent"
-                class="bg-pink-600 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 mr-2 py-2 rounded-md mb-2"
+                class="bg-rose-500 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 mr-2 py-2 rounded-md mb-2"
                 data-bs-toggle="modal" data-bs-target="#agentModal">
                 Add Agent
             </button>
             
 
             <button type="button" data-toggle="tooltip" data-placement="bottom" title="Add Canddidates Passport"
-                class="bg-pink-600 text-white font-semibold mr-2 text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2"
+                class="bg-rose-500 text-white font-semibold mr-2 text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2"
                 data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Add candidate
             </button>
             <a href="{{ route('agents') }}" data-toggle="tooltip" data-placement="bottom" title="Agents">
               <button type="button"
-                  class="bg-pink-600 mr-2 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2">
+                  class="bg-rose-500 mr-2 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2">
                   Agents List
               </button>
           </a>
             <a href="{{ route('agent_candidate') }}" data-toggle="tooltip" data-placement="bottom" title="Report">
                 <button type="button"
-                    class="bg-pink-600 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2">
+                    class="bg-rose-500 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2">
                     Report
                 </button>
             </a>
 
             <!-- Dropdown Button -->
             <div class="relative">
-                <button class="bg-pink-600 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2"
+                <button class="bg-rose-500 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2"
                     id="dropdownButton" aria-expanded="false" data-toggle="tooltip" data-placement="bottom"
                     title="More Actions">
                     Manpower Forms
@@ -1134,13 +1134,13 @@
                 dateFormat: 'dd/mm/yy',
                 onSelect: function(selectedDate) {
                     var issueDate = $(this).datepicker('getDate');
-                    issueDate.setMonth(issueDate.getMonth() + 2);
+                    issueDate.setMonth(issueDate.getMonth() + 3);
                     issueDate.setDate(issueDate.getDate() - 1);
                     var formattedDate = $.datepicker.formatDate('dd/mm/yy', issueDate);
                     $('#medical_expire_date').val(formattedDate);
                 }
             });
-
+            
 
             $('#pass_issue_date').datepicker({
                 dateFormat: 'dd/mm/yy',
