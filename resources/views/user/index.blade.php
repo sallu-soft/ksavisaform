@@ -99,7 +99,7 @@
     @include('layout.head')
 </head>
 
-<body>
+<body class="bg-[#f2f9fc]">
 
     @include('layout.navbar')
     <div class="container-fluid">
@@ -299,7 +299,7 @@
 
 
     <div class="modal fade " id="agentModal" tabindex="-1" aria-labelledby="agentModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-[#275E8B]">
                     <h5 class="modal-title text-white" id="agentModalLabel">Add New Agent</h5>
@@ -323,21 +323,21 @@
                                     <input type="number" class="form-control uppercase" id="agent_phone"
                                         name="agent_phone" placeholder="">
                                 </div>
-                                <div class="py-1">
+                                {{-- <div class="py-1">
                                     <div class="font-semibold text-lg">Agent's Email</div>
                                     <input type="email" class="form-control" id="agent_email"
                                         name="agent_email" placeholder="">
-                                </div>
+                                </div> --}}
                                 <div class="py-1">
                                     <div class="font-semibold text-lg">Agent's Address</div>
                                     <input type="text" class="form-control uppercase" id="agent_address"
                                         name="agent_address" placeholder="">
                                 </div>
-                                <div class="py-1">
+                                {{-- <div class="py-1">
                                     <div class="font-semibold text-lg">Agent's Emergency Phone No</div>
                                     <input type="text" class="form-control uppercase" id="agent_e_phone"
                                         name="agent_e_phone" placeholder="">
-                                </div>
+                                </div> --}}
                                 <div class="py-1">
                                     <div class="font-semibold text-lg">Agent's Picture</div>
                                     <input type="file" class="form-control" id="agent_picture"
@@ -383,13 +383,18 @@
                               <div class="py-1">
                                 <input type="hidden" name="sl_number" value="{{$maxSlNumber+1}}" />
                                 <div class="font-semibold text-lg">Agent <span class="text-red-500">*</span></div>
-                                <select class="form-control select2" id="agent_id" name="agent_id" required>
+                                <div class="flex items-center justify-center gap-2">
+                                <select class="form-control select2 w-[70%]" id="agent_id" name="agent_id" required>
                                     <option value="" disabled selected>Select Agent</option>
                                     @foreach ($agentsform as $agent)
                                         <option value="{{ $agent->id }}">{{ $agent->agent_name }}</option>
                                     @endforeach
                                     <!-- Add more options as needed -->
                                 </select>
+                                <button type="button"
+                                            class="rounded-md w-[28%] bg-indigo-500 text-white p-2 text-md font-semibold"
+                                            data-bs-toggle="modal" data-bs-target="#agentModal">Add Agent</button>
+                            </div>
                               </div>
                               <div class="py-1">
                                     <div class="font-semibold text-lg">Candidate Name <span
@@ -637,34 +642,42 @@
     <div class="w-[90%] mx-auto my-5 hello">
 
         <div class="flex justify-end gap-2 md:gap-3">
-            <button type="button" data-toggle="tooltip" data-placement="bottom" title="Add Agent"
-                class="bg-rose-500 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 mr-2 py-2 rounded-md mb-2"
+            {{-- <button type="button" data-toggle="tooltip" data-placement="bottom" title="Add Agent"
+                class="bg-blue-400 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 mr-2 py-2 rounded-md mb-2"
                 data-bs-toggle="modal" data-bs-target="#agentModal">
                 Add Agent
-            </button>
+            </button> --}}
             
 
             <button type="button" data-toggle="tooltip" data-placement="bottom" title="Add Canddidates Passport"
-                class="bg-rose-500 text-white font-semibold mr-2 text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2"
+                class="bg-blue-400 text-white font-semibold mr-2 text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2"
                 data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Add candidate
             </button>
-            <a href="{{ route('agents') }}" data-toggle="tooltip" data-placement="bottom" title="Agents">
-              <button type="button"
-                  class="bg-rose-500 mr-2 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2">
-                  Agents List
-              </button>
-          </a>
-            <a href="{{ route('agent_candidate') }}" data-toggle="tooltip" data-placement="bottom" title="Report">
-                <button type="button"
-                    class="bg-rose-500 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2">
-                    Report
-                </button>
-            </a>
+           
+            
 
             <!-- Dropdown Button -->
             <div class="relative">
-                <button class="bg-rose-500 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2"
+                <button class="bg-blue-400 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2"
+                    id="dropdownReportButton" aria-expanded="false" data-toggle="tooltip" data-placement="bottom"
+                    title="More Actions">
+                    Reports
+                </button>
+                <!-- Dropdown Menu -->
+                <ul id="dropdownMenu1" class="absolute hidden bg-white shadow-md rounded-md w-48 mt-2 right-0 z-10">
+                    <li><a class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-gray-200"
+                        href="{{ route('user/embassy_report') }}">Embassy Repport</a></li>
+                    <li><a class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-gray-200"
+                        href="{{ route('agents') }}">Agents List</a></li>
+                    <li><a class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-gray-200"
+                        href="{{ route('agent_candidate') }}">Passenger Summary</a></li>
+                   
+                </ul>
+            </div>
+            <!-- Dropdown Button -->
+            <div class="relative">
+                <button class="bg-blue-400 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2"
                     id="dropdownButton" aria-expanded="false" data-toggle="tooltip" data-placement="bottom"
                     title="More Actions">
                     Manpower Forms
@@ -688,7 +701,7 @@
     </div>
     
 
-    <div class="table-responsive rounded-lg  my-5 w-[98%] xl:w-[90%] mx-auto shadow-lg main-datatable">
+    <div class="table-responsive rounded-lg bg-[#DFE8EF]  my-5 w-[98%] xl:w-[90%] mx-auto shadow-lg main-datatable">
         <form method="GET" class="bg-[#275E8B] py-2" action="{{ route('user/index') }}">
             <div class="flex w-[50%] my-3 mx-auto gap-4 ">
                 <input type="text" class="form-control" name="search" placeholder="Search"
@@ -779,7 +792,7 @@
                         </div>
                     </div>
                     @if($candidate->is_delete == 0)
-                    <tr class=" my-auto border hover:bg-gray-200 border-gray-300 [&>td]:border-t [&>td]:border-gray-300">
+                    <tr class=" my-auto border hover:bg-gray-200 border-gray-600 [&>td]:border-t [&>td]:border-gray-600">
                         {{-- <td>{{ $candidates->total() - ($loop->index + (($candidates->currentPage() - 1) * $candidates->perPage())) }}</td> --}}
                         <td scope="col" class=""><span>{{ $candidate->sl_number ?? $candidate->serial_number }}</span></td>
                         {{-- <th scope="col" class=""><span>{{ $serial }}</span></th> --}}
@@ -955,6 +968,23 @@
                 dropdownMenu.classList.add('hidden');
             }
         });
+
+
+        const dropdownReportButton = document.getElementById('dropdownReportButton');
+        const dropdownMenu1 = document.getElementById('dropdownMenu1');
+
+        dropdownReportButton.addEventListener('click', () => {
+            const isExpanded = dropdownMenu1.classList.contains('hidden');
+            // Toggle the visibility of the dropdown
+            dropdownMenu1.classList.toggle('hidden', !isExpanded);
+        });
+
+        // Close the dropdown if clicked outside
+        document.addEventListener('click', (event) => {
+            if (!dropdownReportButton.contains(event.target) && !dropdownMenu1.contains(event.target)) {
+                dropdownMenu1.classList.add('hidden');
+            }
+        });
     </script>
     <script>
         function showAlert() {
@@ -1076,42 +1106,7 @@
         }
 
         $(document).ready(function() {
-            // $('#candidatetable').DataTable();
-            // $('.select2').select2();
-            //  $('#agent_id').select2();
-            // $('#exampleModal').on('shown.bs.modal', function (e) {
-            //     $('.select2').select2();
-            // });
-
-
-            // $('.delete-form').submit(function(e) {
-            //   e.preventDefault();
-            //   const form = this;
-            //   const confirmMessage = $(this).data('confirm-message') || 'Are you sure you want to delete this agent?';
-
-            //     if (confirm(confirmMessage)) {
-            //         $.ajax({
-            //             url: $(form).attr('action'),
-            //             type: 'POST',
-            //             data: $(form).serialize(),
-            //             success: function (response) {
-            //               console.log(response);
-            //                 Swal.fire({
-            //                     title: response.title,
-            //                     text: response.message,
-            //                     icon: response.icon,
-            //                 });
-            //                 setTimeout(function() {
-            //                     window.location.href = response.redirect_url;
-            //                 }, 3000);
-            //             },
-            //             error: function (xhr) {
-            //                 alert('An error occurred. Please try again.');
-            //             }
-            //         });
-            //     }
-            // });
-
+          
             $('.view-agent-btn').click(function(e) {
                 e.preventDefault();
                 var agentId = $(this).data('agent-id');
@@ -1453,6 +1448,25 @@
 
             return year + '-' + month + '-' + day;
         }
+        document.addEventListener("DOMContentLoaded", function () {
+    const candidateModalEl = document.getElementById("exampleModal");
+    const agentModalEl = document.getElementById("agentModal");
+
+    const candidateModal = new bootstrap.Modal(candidateModalEl);
+    const agentModal = new bootstrap.Modal(agentModalEl);
+
+    document.querySelector("[data-bs-target='#agentModal']").addEventListener("click", function (event) {
+        event.preventDefault();
+        
+        // Close Candidate Modal before opening Agent Modal
+        candidateModal.hide();
+        
+        // Open Agent Modal
+        setTimeout(() => {
+            agentModal.show();
+        }, 300); // Delay to ensure smooth transition
+    });
+});
     </script>
 
 </body>
