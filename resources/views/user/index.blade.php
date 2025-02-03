@@ -649,8 +649,14 @@
             </button> --}}
             
 
+            <button type="button" class="bg-blue-400 text-white font-semibold mr-2 text-md 2xl:text-xl px-8 2xl:px-8 py-2 rounded-md mb-2">
+                
+                <a href="{{ route('user/embassy_list') }}" >
+                    Create Embassy List
+                  </a>
+            </button>
             <button type="button" data-toggle="tooltip" data-placement="bottom" title="Add Canddidates Passport"
-                class="bg-blue-400 text-white font-semibold mr-2 text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2"
+                class="bg-blue-400 text-white font-semibold mr-2 text-md 2xl:text-xl px-8 2xl:px-8 py-2 rounded-md mb-2"
                 data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Add candidate
             </button>
@@ -659,7 +665,7 @@
 
             <!-- Dropdown Button -->
             <div class="relative">
-                <button class="bg-blue-400 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2"
+                <button class="bg-blue-400 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-8 py-2 rounded-md mb-2"
                     id="dropdownReportButton" aria-expanded="false" data-toggle="tooltip" data-placement="bottom"
                     title="More Actions">
                     Reports
@@ -677,7 +683,7 @@
             </div>
             <!-- Dropdown Button -->
             <div class="relative">
-                <button class="bg-blue-400 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-14 py-2 rounded-md mb-2"
+                <button class="bg-blue-400 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-8 py-2 rounded-md mb-2"
                     id="dropdownButton" aria-expanded="false" data-toggle="tooltip" data-placement="bottom"
                     title="More Actions">
                     Manpower Forms

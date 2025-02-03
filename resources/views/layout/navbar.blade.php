@@ -4,10 +4,10 @@
       <a href="{{ route('user/index') }}" class="text-lg font-semibold bg-white rounded-lg p-2 hover:text-blue-200 mr-4">
         <img src="{{ asset('./assets/images/logo.png') }}" width="100px" id="up" height="100" class="w-[200px] h-auto object-contain" />
       </a>
-      <a href="{{ route('user/embassy_list') }}" class="text-lg font-semibold text-white hover:text-blue-200 mr-4 flex items-center">
+      {{-- <a href="{{ route('user/embassy_list') }}" class="text-lg font-semibold text-white hover:text-blue-200 mr-4 flex items-center">
         <i class="fas fa-list-alt text-xl mr-2"></i>
         <span class="hidden md:block">Create Embassy List</span>
-      </a>
+      </a> --}}
       {{-- <a href="{{ route('user/embassy_report') }}" class="text-lg font-semibold text-white hover:text-blue-200 flex items-center">
         <i class="fas fa-list-alt text-xl mr-2"></i>
         <span class="hidden md:block">Embassy Report</span>
