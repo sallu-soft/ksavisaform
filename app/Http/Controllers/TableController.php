@@ -102,4 +102,43 @@ use Illuminate\Support\Facades\View;
           $view = View::make('user.embassy_list_report', compact('records', 'date'));
           return $view;
       }
+      public function withAgentReport(Request $request)
+      {
+          $date = $request->query('date');
+  
+          // Validate the date format
+           // Get the user from the session
+   
+    $user = Session::get('user');
+    // If the user is not found, redirect with an error
+    if (!$user) {
+        return redirect()->back()->with('error', 'User not found.');
+    }
+
+    // Validate the date format
+    try {
+        $parsedDate = Carbon::createFromFormat('Y-m-d', $date, 'UTC');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Invalid date format.');
+    }
+
+    // Fetch the records associated with the authenticated user and the provided date
+    // $records = VisaRecord::where('user', $user) // Filter by user_id
+    //             ->whereDate('date', $date) // Filter by date
+    //             ->get();
+
+    $records = VisaRecord::select('visa_record.*', 'agents.agent_name')
+    ->leftJoin('candidates', function ($join) {
+        $join->on(DB::raw("BINARY visa_record.passport_no"), '=', DB::raw("BINARY candidates.passport_number"));
+    })
+    ->leftJoin('agents', function ($join) {
+        $join->on(DB::raw("BINARY candidates.agent"), '=', DB::raw("BINARY agents.id"));
+    })
+    ->where('visa_record.user', $user)
+    ->whereDate('visa_record.date', $date)
+    ->get();
+    // dd($records);
+          $view = View::make('user.embassy_list_agentReport', compact('records', 'date'));
+          return $view;
+      }
 }

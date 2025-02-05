@@ -348,15 +348,15 @@ class UserController extends Controller
                 ->select(DB::raw('DATE(date) as record_date'), DB::raw('COUNT(*) as total_records'))
                 ->where('user', $userEmail)
                 ->groupBy('record_date');
-    
-            // If a search date is provided, filter by the search date
-            if ($searchDate) {
-                $query->whereDate('date', $searchDate);
-            }
-    
-            // Execute the query
-            $records = $query->get();
-    
+            
+        
+        // If a search date is provided, filter by the search date
+        if ($searchDate) {
+            $query->whereDate('visa_record.date', $searchDate);
+        }
+        
+        // Execute the query
+        $records = $query->get();
             // Return the view with the records and user information
             return view('user.embassy_record', compact('records', 'user'));
         } else {

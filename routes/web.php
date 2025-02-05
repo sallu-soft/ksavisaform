@@ -100,6 +100,7 @@ Route::get('/application', [FormController::class, 'application'])->name('applic
 
 Route::post('/save-table-data', [TableController::class, 'saveTableData']);
 Route::get('/embassy_report_datewise/print', [TableController::class, 'printReport'])->name('embassy_report_datewise/print');
+Route::get('/embassy_report_datewise/agent', [TableController::class, 'withAgentReport'])->name('embassy_report_datewise/agent');
 
 
 Route::any('/user/embassy_report', [UserController::class, 'embassy_report'])->name('user/embassy_report');
