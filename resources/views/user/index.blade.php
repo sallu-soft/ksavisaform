@@ -416,9 +416,9 @@
                                         <div class="text-lg font-semibold">Passport Issue Date </div>
                                         <div class="text-md font-semibold">
                                             <input type="radio" id="five" name="passDate" value="five"
-                                                checked />
+                                                 />
                                             <label for="five" class="mr-4">5 years</label>
-                                            <input type="radio" id="ten" name="passDate" value="ten" />
+                                            <input type="radio" id="ten" checked name="passDate" value="ten" />
                                             <label for="ten">10 years</label>
                                         </div>
                                     </div>

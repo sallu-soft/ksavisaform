@@ -134,8 +134,8 @@
                         <td class="">{{ $record->sponsor_name }}</td>
                         <td>{{ $record->passport_no }}</td>
                         <td>{{ $slNo++ }}</td>
-                        {{-- 
-                        <td class="p-2">
+                        
+                        {{-- <td class="p-2">
                             <a href="{{ route('edit', ['id' => $record->id]) }}" class="text-blue-500 hover:underline">Edit</a>
                             <a href="{{ route('delete', ['id' => $record->id]) }}" class="text-red-500 hover:underline">Delete</a>
                         </td> --}}
@@ -160,12 +160,16 @@
                         <td>{{ $slNo++ }}</td>
                         {{-- <td>{{ $record->sl }}</td>
                         <td class="p-2">No actions available</td> --}}
+                        {{-- <td class="p-2">
+                            <a href="{{ route('edit', ['id' => $record->id]) }}" class="text-blue-500 hover:underline">Edit</a>
+                            <a href="{{ route('delete', ['id' => $record->id]) }}" class="text-red-500 hover:underline">Delete</a>
+                        </td> --}}
                     </tr>
                 @endif
             @endforeach
         </tbody>
         <tbody>
-            <tr class="[&>td]:border [&>td]:border-black [&>td]:p-0 text-lg text-center relative group">
+            <tr class="[&>td]:border [&>td]:border-black [&>td]:px-5 text-lg text-center relative group">
                 <td colspan="5" contentEditable class="font-bold text-xl text-end px-5" id="totalCancel">
                     {{$records->count()}}
                 </td>
