@@ -134,6 +134,7 @@
                         <td class="">{{ $record->sponsor_name }}</td>
                         <td>{{ $record->passport_no }}</td>
                         <td>{{ $slNo++ }}</td>
+                        <td>{{ $record->agent_name }}</td>
                         {{-- 
                         <td class="p-2">
                             <a href="{{ route('edit', ['id' => $record->id]) }}" class="text-blue-500 hover:underline">Edit</a>
@@ -150,7 +151,6 @@
         </thead>
         <tbody id="table_cancel_body">
             @foreach($records as $record)
-            dd($record)
                 @if($record->is_cancelled == 1)
                     <tr class="[&>td]:border [&>td]:border-black [&>td]:p-1 text-sm text-center relative group">
                         <td>{{ $record->profession }}</td>
@@ -165,7 +165,7 @@
             @endforeach
         </tbody>
         <tbody>
-            <tr class="[&>td]:border [&>td]:border-black [&>td]:p-0 text-lg text-center relative group">
+            <tr class="[&>td]:border [&>td]:border-black [&>td]:px-5 text-lg text-center relative group">
                 <td colspan="5" contentEditable class="font-bold text-xl text-end px-5" id="totalCancel">
                     {{$records->count()}}
                 </td>

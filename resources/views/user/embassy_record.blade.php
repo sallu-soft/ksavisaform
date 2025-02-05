@@ -51,7 +51,7 @@
 
 <body>
     @include('layout.navbar')
-    <div class="flex justify-between items-center w-[50%] mx-auto mt-3">    <h2 class=" font-semibold py-2 text-2xl">Embassy Record List</h2>
+    <div class="flex justify-between items-center xl:w-[65%] w-[90%] mx-auto mt-3">    <h2 class=" font-semibold py-2 text-2xl">Embassy Record List</h2>
 
 <!-- Search Form -->
 <div class="  py-2">
@@ -61,7 +61,7 @@
     </form>
 </div></div>
     <div class="datelist">
-      <table class="table stripe w-[50%] shadow-lg mx-auto mt-10  no-footer dataTable passenger-table" id="simpleTable">
+      <table class="table stripe xl:w-[65%] w-[90%] shadow-lg mx-auto mt-10  no-footer dataTable passenger-table" id="simpleTable">
         <thead class="!text-white !bg-[#275E8B] thed">
           <tr class=" !text-white !bg-[#275E8B]">
             <th scope="col">Date</th>
