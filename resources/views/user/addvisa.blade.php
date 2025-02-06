@@ -3,7 +3,7 @@
 <head>
     @include('layout.head')
 </head>
-<body>
+<body class="bg-[#f2f9fc]">
   @include('layout.navbar')
     <div class="w-[60%] mx-auto shadow-lg rounded-lg pb-2 mt-4">
   

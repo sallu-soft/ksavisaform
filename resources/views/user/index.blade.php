@@ -125,7 +125,7 @@
                         class="btn-close bg-red-800 flex justify-center bg-red-600 !bg-red-600  items-center font-bold text-white !text-white p-2"
                         data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body pt-0">
+                <div class="modal-body pt-0 bg-[#f2f9fc]">
                     {{-- <div class="text-center bg-white py-2 text-xl uppercase rounded-b-xl mb-2">{{$user->licence_name}}-(RL-{{$user->rl_no}})</div> --}}
 
 
@@ -307,7 +307,7 @@
                 </div>
 
 
-                <div class="modal-body">
+                <div class="modal-body bg-[#f2f9fc]">
                     <form class="row g-3" id="addagent" action="{{ route('agent/index') }}" method="post"
                         enctype="multipart/form-data">
                         @csrf
@@ -374,8 +374,8 @@
                 </div>
 
 
-                <div class="modal-body">
-                    <form class="row g-3" id="addcandidate" action="{{ route('user/index') }}" method="post">
+                <div class="modal-body bg-[#f2f9fc]">
+                    <form class="row g-3 " id="addcandidate" action="{{ route('user/index') }}" method="post">
                         @csrf
 
                         <div class="">
