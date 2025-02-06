@@ -414,13 +414,13 @@ class UserController extends Controller
         $candidate = Candidates::find($id);
         // dd($id, $candidate);
         if ($candidate) {
-            $target = Visa::where('candidate_id', $id)->update(['is_delete' => 1]);
+            $target = Visa::where('candidate_id', $id)->delete();
             $flag = DB::table('candidates')
                 ->where('id', $candidate->id)
-                ->update(['is_delete' => 1]);
+                ->delete();
         
             if($flag){
-                if($target=1){
+                if($target){
                     return response()->json(['message'=>'Visa And Candidate Deleted', 'success'=>true]);
                 }
                 else{
