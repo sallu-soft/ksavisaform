@@ -354,11 +354,18 @@ class UserController extends Controller
         if ($searchDate) {
             $query->whereDate('visa_record.date', $searchDate);
         }
-        
+        $candidates = DB::table('candidates')
+            ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
+            ->select('candidates.*', 'visas.visa_no', 'visas.mofa_no', 'visas.spon_id', 'visas.prof_name_english')
+            ->where('candidates.agency', '=', Session::get('user'))
+            ->where('candidates.is_delete', 0)
+            // ->whereNotNull('visas.candidate_id')
+            ->orderBy('candidates.created_at', 'desc')
+            ->get();
         // Execute the query
         $records = $query->get();
             // Return the view with the records and user information
-            return view('user.embassy_record', compact('records', 'user'));
+            return view('user.embassy_record', compact('records','user'));
         } else {
             return redirect(url('/'));
         }

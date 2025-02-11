@@ -697,7 +697,7 @@
                     <li><a class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-gray-200"
                             href="{{ route('contract') }}">Contract</a></li>
                     <li><a class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-gray-200"
-                            href="{{ route('stemp_paper') }}">Stemp Paper</a></li>
+                            href="{{ route('stemp_paper') }}">Stamp Paper</a></li>
                     <li><a class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-gray-200"
                             href="{{ route('application') }}">Application</a></li>
                 </ul>
