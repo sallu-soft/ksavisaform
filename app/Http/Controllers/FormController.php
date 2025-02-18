@@ -54,8 +54,8 @@ class FormController extends Controller
       {
         if(Session::get('user')){
           $candidates = DB::table('candidates')
-                    ->leftJoin('manpower', 'candidates.id', '=', 'manpower.candidate_id')
-                    ->select('candidates.*', 'manpower.*')
+                    ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
+                    ->select('candidates.*', 'visas.*')
                     ->where('candidates.agency', '=', Session::get('user'))
                     ->get();
         // dd($candidates);

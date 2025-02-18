@@ -13,33 +13,36 @@
                 <div>
                     <label for="pass" class="form-label">Select by passport number/Name</label>
                     <input list="candidates" name="candidate" id="candidate" class="form-control" onchange="getdata()">
-                    <input list="candidates" name="cancelInput" id="cancelInput" class="form-control hidden"
-                        onchange="getCanceldata()">
+                   
                 </div>
               
             </div>
-    
-    
-            {{-- <datalist id="candidates">
-                @foreach ($candidates as $candidate)
-                    <option value="{{ $candidate->candidate_id }}">
-                        <b class="text-danger">Passport no: {{ $candidate->passport_number }},</b>
-                        Candidate Name: {{ $candidate->name }}
-                    </option>
-                @endforeach
-            </datalist> --}}
             <datalist id="candidates">
               @foreach ($candidates as $candidate)
-                  @if (!$candidate->manpower_id)
+                  @if ($candidate->visa_no && $candidate->spon_name_english)
+                      <option data-id="{{ $candidate->candidate_id }}">
+                          Serial no: {{ $candidate->sl_number ?? $candidate->id }}, 
+                          Passport no: {{ $candidate->passport_number }},
+                          Candidate Name: {{ $candidate->name }}
+                      </option>
+                  @endif
+              @endforeach
+          </datalist>
+    
+            
+            {{-- <datalist id="candidates">
+              @foreach ($candidates as $candidate)
+                  @if (!$candidate->visa_no && $candidate->spon_name_english==null)
                       @continue
                   @endif
+                  
                   <option data-id="{{ $candidate->candidate_id }}">
                       Serial no: {{ $candidate->sl_number ?? $candidate->id }}, 
                       Passport no: {{ $candidate->passport_number }},
                       Candidate Name: {{ $candidate->name }}
                   </option>
               @endforeach
-          </datalist>
+          </datalist> --}}
     
     
             <button class="btn btn-primary" onclick="printtable()">Print</button>
