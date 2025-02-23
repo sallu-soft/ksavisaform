@@ -122,7 +122,7 @@
         </div>
 
 
-        <div class="table-responsive rounded-lg bg-[#DFE8EF]  my-5 w-[98%] xl:w-[90%] mx-auto shadow-lg main-datatable">
+        <div class="table-responsive rounded-lg bg-[#DFE8EF]  my-5 w-[98%] xl:w-[97%] mx-auto shadow-lg main-datatable">
             <form method="GET" class="bg-[#275E8B] py-2" action="{{ route('user/index') }}">
                 <div class="flex w-[50%] my-3 mx-auto gap-4 ">
                     <input type="text" class="form-control" name="search" placeholder="Search"
@@ -137,7 +137,7 @@
                         <th scope="col">Creation <br /> Date</th>
                         <th scope="col" class="w-[250px]">Name</th>
 
-                        <th scope="col">DOB</th>
+                        <th scope="col" class="w-[80px]">DOB</th>
                         <th scope="col" style="">VISA/Sponsor <br /> Number</th>
                         <th scope="col" class="text-lg">Medical Info</th>
 
@@ -237,8 +237,8 @@
                                 <td>
 
                                     <strong>Visa No:</strong> {{ $candidate->visa_no }} <br />
-                                    <strong>Sponsor ID:</strong> {{ $candidate->spon_id }}<br />
-                                    <strong>Issued Visa Date:</strong>
+                                    <strong>ID:</strong> {{ $candidate->spon_id }}<br />
+                                    <strong>Issued Visa:</strong>
                                     @if (!empty($candidate->visa_issued_date))
                                         {{ date('d-m-Y', strtotime($candidate->visa_issued_date)) }}
                                     @endif
@@ -856,24 +856,29 @@
             return year + '-' + month + '-' + day;
         }
         document.addEventListener("DOMContentLoaded", function() {
-            const candidateModalEl = document.getElementById("exampleModal");
-            const agentModalEl = document.getElementById("agentModal");
-      
-            const candidateModal = new bootstrap.Modal(candidateModalEl);
-            const agentModal = new bootstrap.Modal(agentModalEl);
-      
-            document.querySelector("[data-bs-target='#agentModal']").addEventListener("click", function(event) {
-                event.preventDefault();
-      
-                // Close Candidate Modal before opening Agent Modal
-                candidateModal.hide();
-      
-                // Open Agent Modal
-                setTimeout(() => {
-                    agentModal.show();
-                }, 300); // Delay to ensure smooth transition
-            });
-        });
+    const candidateModalEl = document.getElementById("exampleModal");
+    const agentModalEl = document.getElementById("agentModal");
+
+    const candidateModal = new bootstrap.Modal(candidateModalEl);
+    const agentModal = new bootstrap.Modal(agentModalEl);
+
+    document.querySelector("[data-bs-target='#agentModal']").addEventListener("click", function(event) {
+        event.preventDefault();
+
+        // Close Candidate Modal before opening Agent Modal
+        candidateModal.hide();
+
+        // Wait until Candidate Modal is fully closed
+        candidateModalEl.addEventListener("hidden.bs.modal", function() {
+            agentModal.show();
+        }, { once: true }); // Runs only once to prevent multiple triggers
+    });
+
+    // Remove any leftover backdrop when Agent Modal is closed
+    agentModalEl.addEventListener("hidden.bs.modal", function() {
+        document.querySelectorAll(".modal-backdrop").forEach(backdrop => backdrop.remove());
+    });
+});
       </script>
       {{-- Index file script --}}
 

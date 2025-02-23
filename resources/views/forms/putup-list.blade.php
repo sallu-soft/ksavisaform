@@ -66,7 +66,7 @@
   </script>
 
 <div class="container">
-    <div class="d-flex max-w-[1050px] mx-auto mt-2 bg-gray-200 rounded-lg px-2 py-1 items-center"
+    <div class="d-flex max-w-full mx-auto mt-2 bg-gray-200 rounded-lg px-2 py-1 items-center"
         style="justify-content: space-between;">
         <div class="flex items-center gap-3">
             <div>

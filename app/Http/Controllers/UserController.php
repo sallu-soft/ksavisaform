@@ -399,23 +399,33 @@ class UserController extends Controller
         }
     }
 
-    public function view($id, Request $request){
-        if(Session::get('user')){
-            if($request->isMethod('GET')){
-                $candidates = DB::table('candidates')
-                        ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
-                        ->select('candidates.*', 'visas.*')->where('candidates.id', '=', $id)
-                        ->get();
-                // dd($candidates); 
-                $user = DB::table('user')->select('*')->where('email', '=', Session::get('user'))->first();
-                return view('user.view', compact('id', 'candidates','user'));
+    public function view($id, Request $request)
+{
+    if (Session::get('user')) {
+        if ($request->isMethod('GET')) {
+            // Fetch candidate with visa details
+            $candidate = DB::table('candidates')
+                ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
+                ->select('candidates.*', 'visas.*')
+                ->where('candidates.id', $id)
+                ->first(); // Use first() instead of get()
+
+            // Fetch user details
+            $user = DB::table('users')
+                ->where('email', Session::get('user'))
+                ->first();
+
+            // Check if candidate exists
+            if (!$candidate) {
+                return redirect()->back()->with('error', 'Candidate not found');
             }
-        } else{
-            return redirect(url('/'));
+
+            return view('user.view', compact('id', 'candidate', 'user'));
         }
-        
-        
-    }
+    } 
+
+    return redirect(url('/'));
+}
     public function delete($id, Request $request) {
         if(Session::get('user')){
         $candidate = Candidates::find($id);

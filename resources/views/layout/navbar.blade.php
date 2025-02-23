@@ -571,13 +571,13 @@
       </div>
     </div>
       <!-- Middle Section: User Info -->
-      <div  class=" relative flex items-center gap-x-3">
-        <button  class="flex items-center gap-x-4 font-bold text-xl tracking-wide bg-white p-2 rounded-lg">
+      <div  class=" relative flex items-center gap-x-5">
+        <button  class="flex items-center gap-x-4 font-bold text-xl tracking-wide  bg-gray-100 px-4 py-2 rounded-lg">
            <div class="text-start"><div class="text-sm font-semibold text-gray-800">Next Payment In!</div><span class="animate-bounce font-bold text-lg text-red-600">
             {{ \Carbon\Carbon::parse($user->previous_month)->addDays(30)->format('d-m-Y') }}
         </span></div></button>
-        <button id="profileDropdownBtn" class="flex items-center gap-x-4 font-bold text-xl tracking-wide bg-white p-2 rounded-lg">
-            <span class="bg-gray-800 w-10 h-10 text-2xl text-white font-normal p-1 rounded-full">{{ !empty($user->licence_name) ? strtoupper($user->licence_name[0]) : '' }}</span><div class="text-start"><div class="text-sm font-semibold text-gray-800">Welcome Back!</div><span class="font-bold text-lg"> {{ $user->licence_name }} - {{ $user->rl_no }}</span></div></button>
+        <button id="profileDropdownBtn" class="flex items-center gap-x-4 font-bold text-xl tracking-wide  bg-gray-100 p-2 rounded-lg">
+            <span class="bg-gray-800 w-10 h-10 text-2xl text-white font-normal p-1 rounded-full ">{{ !empty($user->licence_name) ? strtoupper($user->licence_name[0]) : '' }}</span><div class="text-start"><div class="text-sm font-semibold text-gray-800">Welcome Back!</div><span class="font-bold text-lg"> {{ $user->licence_name }} - {{ $user->rl_no }}</span></div></button>
         
         <div id="profileDropdown" class="absolute top-16 right-0 bg-white text-gray-700 rounded-md shadow-md hidden w-48 transition-opacity opacity-0 duration-300">
             <button data-bs-target="#user" data-toggle="tooltip" data-placement="bottom" title="Edit Profile" data-bs-toggle="modal" class="w-full px-4 text-start py-2 hover:bg-gray-100"><i class="far fa-user mr-2"></i>Edit Profile</button>
