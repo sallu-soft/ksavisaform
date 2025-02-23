@@ -10,8 +10,9 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="path/to/bootstrap.min.css" rel="stylesheet">
     <script src="path/to/bootstrap.min.js"></script>
+   
     @include('layout.head')
-
+    
 
     <style>
         .banner {

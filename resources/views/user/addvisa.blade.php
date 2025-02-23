@@ -3,7 +3,9 @@
 <head>
     @include('layout.head')
 </head>
-<body class="bg-[#f2f9fc]">
+<body class="bg-[#f2f9fc] flex">
+  @include('layout.sidebar')
+  <div class="flex-1 xl:ml-[280px]">
   @include('layout.navbar')
     <div class="w-[60%] mx-auto shadow-lg rounded-lg pb-2 mt-4">
   
@@ -79,7 +81,7 @@
           </div>
       </form>
     </div>
-
+  </div>
     @include('layout.script')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -98,6 +100,7 @@
                     $('#spon_id').val(response.spon_id);
                     $('#visa_date').val(response.visa_date2);
                     $('#spon_name_arabic').val(response.spon_name_arabic);
+                    $('#spon_name_english').val(response.spon_name_english);
                     $('#prof_name_arabic').val(response.prof_name_arabic);
                     $('#salary').val(response.salary);
                     $('#okala_no').val(response.okala_no);

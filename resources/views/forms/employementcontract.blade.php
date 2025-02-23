@@ -3,7 +3,9 @@
 <head>
     @include('layout.head')
 </head>
-<body>
+<body class="flex">
+  @include('layout.sidebar')
+  <div class="flex-1 xl:ml-[280px]">
     @include('layout.navbar')
 
     <div class="container">
@@ -18,7 +20,7 @@
               
             </div>
             <datalist id="candidates">
-              @foreach ($candidates as $candidate)
+              @foreach ($candidates_manpower as $candidate)
                   @if ($candidate->visa_no && $candidate->spon_name_english)
                       <option data-id="{{ $candidate->candidate_id }}">
                           Serial no: {{ $candidate->sl_number ?? $candidate->id }}, 
@@ -118,7 +120,7 @@
               9. That the any other terms and conditions not mentioned in the
               demand letter shall be following as per Saudi Labour Laws.
             </p>
-            <p class="leading-10 text-xl pt-2">
+            <p class="leading-loose text-xl pt-2">
               Signature of the 1st party
               <br /> Name:………………………… <br />
               Sign:……………………………
@@ -184,7 +186,7 @@
     
   
     </div>
-
+  </div>
 
 
 

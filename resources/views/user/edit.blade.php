@@ -8,7 +8,9 @@
     @include('layout.head')
 </head>
 <body>
-    <main>
+    <main class="flex">
+      @include('layout.sidebar')
+      <div class="flex-1 xl:ml-[280px]">
       @include('layout.navbar')
         <div class="">
                 {{-- <h1 class="text-danger fw-bold text-center my-5">Edi</h1> --}}
@@ -445,6 +447,7 @@
                       </div>
                     </div>
                 @endif
+                  </div>
     </main>
     @include('layout.script')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

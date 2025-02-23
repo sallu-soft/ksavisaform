@@ -1,5 +1,13 @@
 {{-- <x-app-layout> --}}
+    <!DOCTYPE html>
+<html lang="en">
+<head>
     @include('layout.head')
+</head>
+<body class="bg-[#f2f9fc] flex">
+    @include('layout.sidebar')
+    <div class="flex-1 xl:ml-[280px]">
+    @include('layout.navbar')
     <div class=" bg-white px-4 rounded-lg flex items-center justify-between mt-3 py-2 mx-6 shadow-lg">
         {{-- <h3>fsdsdf</h3> --}}
         <form id="reportForm" action="{{ route('agent_candidate_report') }}" method="POST">
@@ -54,7 +62,7 @@
     <div class="reportdiv mt-5" id="reportdiv">
 
     </div>
-
+</div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
@@ -99,4 +107,6 @@
     window.history.back();
 }
     </script>
+    </body>
+    </html>
 {{-- </x-app-layout> --}}

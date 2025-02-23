@@ -30,8 +30,10 @@
   @include('layout.head')
 </head>
 
-<body class="">
-    @include('layout.navbar');
+<body class="flex">
+  @include('layout.sidebar')
+    <div class="flex-1 xl:ml-[280px]">
+    @include('layout.navbar')
     <h2 class=" w-[70%] mx-auto font-semibold py-2 text-2xl">Agents List</h2>
     <div class="w-[70%] mx-auto shadow-lg p-4 mt-4">
       
@@ -114,6 +116,7 @@
         });
     </script>
     @include('layout.script')
+  </div>
 </body>
 
 </html>

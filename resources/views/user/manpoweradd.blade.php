@@ -3,7 +3,9 @@
 <head>
     @include('layout.head')
 </head>
-<body>
+<body class="flex">
+    @include('layout.sidebar')
+    <div class="flex-1 xl:ml-[280px]">
   @include('layout.navbar')
     <div class="w-[60%] mx-auto shadow-lg rounded-lg pb-2 mt-4">
   
@@ -20,8 +22,8 @@
                     <input type="text" id="visa_no" name="visa_no" class="form-control p-2 rounded-lg w-full uppercase" required placeholder="" />
                 </div>
                 <div class="py-2 flex flex-col gap-2">
-                    <div class="font-bold text-lg">Company Name <span class="text-red-500">*</span></div>
-                    <input type="text" id="company_name" name="company_name" class="form-control p-2 rounded-lg w-full uppercase" required placeholder="" />
+                    <div class="font-bold text-lg">Company Name</div>
+                    <input type="text" id="company_name" name="company_name" class="form-control p-2 rounded-lg w-full uppercase" value="{{$candidate->spon_name_english}}" placeholder="" />
                 </div>
                 <div class="py-2 flex flex-col gap-2">
                     <div class="font-bold text-lg">Certificate No <span class="text-red-500">*</span></div>
@@ -149,5 +151,6 @@
             });
         });
     </script>
+    </div>
 </body>
 </html>

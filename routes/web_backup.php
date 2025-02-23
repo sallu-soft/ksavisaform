@@ -106,3 +106,65 @@ Route::get('/application', [FormController::class, 'application'])->name('applic
 
 Route::post('/save-table-data', [TableController::class, 'saveTableData']);
 Route::get('/embassy_report_datewise/print', [TableController::class, 'printReport'])->name('embassy_report_datewise/print');
+
+// <div class="flex justify-end gap-2 md:gap-3">
+                
+
+
+//                 <button type="button"
+//                     class="bg-blue-400 text-white font-semibold mr-2 text-md 2xl:text-xl px-8 2xl:px-8 py-2 rounded-md mb-2">
+
+//                     <a href="{{ route('user/embassy_list') }}">
+//                         Create Embassy List
+//                     </a>
+//                 </button>
+//                 <button type="button" data-toggle="tooltip" data-placement="bottom" title="Add Canddidates Passport"
+//                     class="bg-blue-400 text-white font-semibold mr-2 text-md 2xl:text-xl px-8 2xl:px-8 py-2 rounded-md mb-2"
+//                     data-bs-toggle="modal" data-bs-target="#exampleModal">
+//                     Add candidate
+//                 </button>
+
+
+
+//                 <!-- Dropdown Button -->
+//                 <div class="relative">
+//                     <button
+//                         class="bg-blue-400 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-8 py-2 rounded-md mb-2"
+//                         id="dropdownReportButton" aria-expanded="false" data-toggle="tooltip" data-placement="bottom"
+//                         title="More Actions">
+//                         Reports
+//                     </button>
+//                     <!-- Dropdown Menu -->
+//                     <ul id="dropdownMenu1" class="absolute hidden bg-white shadow-md rounded-md w-48 mt-2 right-0 z-10">
+//                         <li><a class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-gray-200"
+//                                 href="{{ route('user/embassy_report') }}">Embassy Repport</a></li>
+//                         <li><a class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-gray-200"
+//                                 href="{{ route('agents') }}">Agents List</a></li>
+//                         <li><a class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-gray-200"
+//                                 href="{{ route('agent_candidate') }}">Passenger Summary</a></li>
+
+//                     </ul>
+//                 </div>
+//                 <!-- Dropdown Button -->
+//                 <div class="relative">
+//                     <button
+//                         class="bg-blue-400 text-white font-semibold text-md 2xl:text-xl px-8 2xl:px-8 py-2 rounded-md mb-2"
+//                         id="dropdownButton" aria-expanded="false" data-toggle="tooltip" data-placement="bottom"
+//                         title="More Actions">
+//                         Manpower Forms
+//                     </button>
+//                     <!-- Dropdown Menu -->
+//                     <ul id="dropdownMenu" class="absolute hidden bg-white shadow-md rounded-md w-48 mt-2 right-0 z-10">
+//                         <li><a class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-gray-200"
+//                                 href="{{ route('note-sheet') }}">Note Sheet</a></li>
+//                         <li><a class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-gray-200"
+//                                 href="{{ route('putup-list') }}">Putup List</a></li>
+//                         <li><a class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-gray-200"
+//                                 href="{{ route('contract') }}">Contract</a></li>
+//                         <li><a class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-gray-200"
+//                                 href="{{ route('stemp_paper') }}">Stamp Paper</a></li>
+//                         <li><a class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-gray-200"
+//                                 href="{{ route('application') }}">Application</a></li>
+//                     </ul>
+//                 </div>
+//             </div>

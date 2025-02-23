@@ -3,7 +3,9 @@
 <head>
     @include('layout.head')
 </head>
-<body>
+<body class="flex">
+  @include('layout.sidebar')
+  <div class="flex-1 xl:ml-[280px]">
   @include('layout.navbar')
 
   <style>
@@ -62,7 +64,7 @@
 
 
         <datalist id="candidates">
-            @foreach ($candidates as $candidate)
+            @foreach ($candidates_manpower as $candidate)
                 <option value="{{ $candidate->candidate_id }}">
                     <b class="text-danger">Passport no: {{ $candidate->passport_number }},</b>
                     Candidate Name: {{ $candidate->name }}
@@ -190,7 +192,7 @@
         </div>      
       </div>
     </div>
-
+  </div>
     @include('layout.script')
 
 

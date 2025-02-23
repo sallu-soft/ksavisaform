@@ -69,11 +69,7 @@ class UserController extends Controller
                 $candidate->serial_number = $startNumber--; // Assign serial numbers in descending order
             }
 
-            $maxSlNumber = DB::table('candidates')
-                ->where('agency', '=', Session::get('user')) // Optional condition if needed
-                ->where('is_delete', 0) // Ensure deleted records are excluded
-                ->max('sl_number'); // Get the maximum sl_number
-
+            
             // dd($maxSlNumber);
 
             // dd($candidates);
@@ -117,7 +113,11 @@ class UserController extends Controller
                     $candidate->serial_number = $startNumber--; // Assign serial numbers in descending order
                 }
             }
-            
+            $maxSlNumber = DB::table('candidates')
+                ->where('agency', '=', Session::get('user')) // Optional condition if needed
+                ->where('is_delete', 0) // Ensure deleted records are excluded
+                ->max('sl_number'); // Get the maximum sl_number
+        
             $user = DB::table('user')->select('*')->where('email', '=', Session::get('user'))->first();
             // dd($totalCount);
 
@@ -567,8 +567,10 @@ class UserController extends Controller
         if (Session::get('user')) {
             if ($request->isMethod('GET')) {
                 $candidate = DB::table('candidates')
-                    ->where('candidates.id', '=', $id)
-                    ->first();
+    ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id') // Adjust the column based on your DB structure
+    ->where('candidates.id', '=', $id)
+    ->select('candidates.*', 'visas.spon_name_english') // Select all candidate fields + spon_name_english
+    ->first();
       
                 $user = DB::table('user')->select('*')
                     ->where('email', '=', Session::get('user'))
