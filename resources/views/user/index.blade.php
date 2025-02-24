@@ -120,8 +120,73 @@
             
 
         </div>
-
-
+        {{-- agent view modal --}}
+        {{-- <div class="modal fade" id="agentViewModal" tabindex="-1" aria-labelledby="agentViewModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-[#275E8B]">
+                        <h5 class="modal-title text-white" id="agentViewModalLabel">Agent Details</h5>
+                        <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+        
+                    <div class="modal-body bg-[#f2f9fc]">
+                        <div class="px-10 gap-x-10 grid md:grid-cols-2">
+                            <div class="py-1">
+                                <div class="font-semibold text-lg">Agent's Name</div>
+                                <p class="form-control uppercase" id="agent_name" value="" name="agent_name"></p>
+                            </div>
+                            
+                            <div class="py-1">
+                                <div class="font-semibold text-lg">Agent's Phone Number</div>
+                                <input type="number" class="form-control uppercase" id="agent_phone" value="" name="agent_phone">
+                            </div>
+                            
+                            <div class="py-1">
+                                <div class="font-semibold text-lg">Agent's Address</div>
+                                <input type="text" class="form-control uppercase" id="agent_address" value="" name="agent_address">
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="modal-footer">
+                        <button type="button" class="bg-[#074f56] p-3 rounded text-white font-semibold" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
+        <div class="modal fade" id="agentViewModal" tabindex="-1" aria-labelledby="agentViewModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-[#275E8B]">
+                        <h5 class="modal-title text-white" id="agentViewModalLabel">Agent Details</h5>
+                        <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+        
+                    <div class="modal-body bg-[#f2f9fc]">
+                        <div class="px-10 gap-x-10 grid md:grid-cols-2">
+                            <div class="py-1">
+                                <div class="font-semibold text-lg">Agent's Name</div>
+                                <p id="agent_name" class="text-gray-700 font-medium"></p>
+                            </div>
+                            
+                            <div class="py-1">
+                                <div class="font-semibold text-lg">Agent's Phone Number</div>
+                                <p id="agent_phone" class="text-gray-700 font-medium"></p>
+                            </div>
+                            
+                            <div class="py-1">
+                                <div class="font-semibold text-lg">Agent's Address</div>
+                                <p id="agent_address" class="text-gray-700 font-medium"></p>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="modal-footer">
+                        <button type="button" class="bg-[#074f56] p-3 rounded text-white font-semibold" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="table-responsive rounded-lg bg-[#DFE8EF]  my-5 w-[98%] xl:w-[97%] mx-auto shadow-lg main-datatable">
             <form method="GET" class="bg-[#275E8B] py-2" action="{{ route('user/index') }}">
                 <div class="flex w-[50%] my-3 mx-auto gap-4 ">
@@ -227,7 +292,9 @@
                                 <td><a href="{{ route('user/view', ['id' => $candidate->id]) }}"
                                         class="font-semibold hover:font-bold cursor-pointer hover:text-blue-400 text-xl">{{ $candidate->name }}</a><br />
                                     <p class="text-md mt-2 font-semibold">{{ $candidate->passport_number }}</p>
-                                    <br /><strong>Agent : </strong>{{ $candidate->agent }}
+                                    <br /><strong>Agent : </strong><a href="#" class="view-agent" data-agent-id="{{ $candidate->id }}" >
+                                        {{ $candidate->agent }}
+                                    </a>
                                 </td>
 
                                 <td>
@@ -439,7 +506,49 @@
             window.open(url, "_blank");
         }
       </script>
-      
+      <script>
+      document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".view-agent").forEach(button => {
+        button.addEventListener("click", function (e) {
+            e.preventDefault();
+            let agentId = this.getAttribute("data-agent-id");
+            console.log("Agent ID:", agentId);
+
+            if (!agentId) {
+                alert("Agent ID is missing.");
+                return;
+            }
+
+            let url = "{{ route('user.agent_view', ['id' => '__id__']) }}".replace('__id__', agentId);
+            console.log("Fetching data from:", url);
+
+            fetch(url)
+                .then(response => response.json())
+                .then(response => {
+                    console.log("Response Data:", response);
+
+                    if (response.success && response.agent) {
+                        // Set data inside the <p> tags
+                        document.getElementById("agent_name").innerHTML = response.agent.agent_name || "N/A";
+                        document.getElementById("agent_phone").textContent = response.agent.agent_phone || "N/A";
+                        document.getElementById("agent_address").textContent = response.agent.agent_address || "N/A";
+                        // document.getElementById("agent_name2").innerHTML = response.agent.agent_name || "N/A";
+
+                        // Open the modal
+                        let modal = new bootstrap.Modal(document.getElementById("agentViewModal"));
+                        modal.show();
+                    } else {
+                        alert("Agent not found!");
+                    }
+                })
+                .catch(error => {
+                    console.error("Fetch Error:", error);
+                    alert("An error occurred. Please try again.");
+                });
+        });
+    });
+});
+    </script>
       <script>
         document.addEventListener('DOMContentLoaded', function() {
             const agents = @json($agents->items());
@@ -513,23 +622,7 @@
       
         $(document).ready(function() {
       
-            $('.view-agent-btn').click(function(e) {
-                e.preventDefault();
-                var agentId = $(this).data('agent-id');
-      
-                $.ajax({
-                    url: '{{ route('agent.view', ':id') }}'.replace(':id', agentId),
-                    type: 'GET',
-                    success: function(response) {
-                        console.log(response.html);
-                        $('#agentDetails').html(response.html);
-                        $('#viewAgentModal').modal('show');
-                    },
-                    error: function(xhr) {
-                        console.error('Failed to fetch agent details');
-                    }
-                });
-            });
+           
       
             $('#medical_issue_date').datepicker({
                 dateFormat: 'dd/mm/yy',
@@ -876,7 +969,9 @@
 
     // Remove any leftover backdrop when Agent Modal is closed
     agentModalEl.addEventListener("hidden.bs.modal", function() {
+        
         document.querySelectorAll(".modal-backdrop").forEach(backdrop => backdrop.remove());
+        location.reload();
     });
 });
       </script>

@@ -1,34 +1,4 @@
-{{-- <div class="bg-[#0b7f96]">
-    <nav class="w-[90%] mx-auto py-3 flex items-center justify-between">
-      <div class="flex items-center gap-6">
-        <div class="text-white">
-          <p class="font-semibold">01609317035</p>
-          <p class="text-sm">contact.sallusoft@gmail.com</p>
-        </div>
-      </div>
-  
-      <div class="text-white font-bold text-xl">
-        {{ $user->licence_name }} - {{ $user->rl_no }}
-      </div>
-  
-      <div class="flex items-center space-x-4 relative">
-        <button class="text-white text-xl p-2 rounded-full hover:bg-gray-800 focus:outline-none focus:bg-gray-800 mr-4" data-bs-target="#user" data-toggle="tooltip" data-placement="bottom" title="Edit Profile" data-bs-toggle="modal">
-            <i class="far fa-user"></i>
-          </button>
-        
-        <button class="text-white text-xl p-2 rounded-full hover:bg-gray-700">
-          <i class="bi bi-bell"></i>
-        </button>
-  
-        <button class="text-white text-xl p-2 rounded-full hover:bg-gray-700">
-          <a href="{{ route('user/logout') }}">
-            <i class="bi bi-box-arrow-left"></i>
-          </a>
-        </button>
-  
-        
-    </nav>
-  </div> --}}
+
 
   
 
@@ -551,14 +521,14 @@
       window.open(url, "_blank");
   }
 </script> --}}
-<div class="bg-gradient-to-r from-[#1e3a8a] to-[#0f172a] shadow-lg">
+<div class="bg-gradient-to-r from-[#1e3a8a] to-[#0f172a] shadow-lg sticky top-0 z-50">
     <nav class="w-[90%] mx-auto py-3 flex items-center justify-between">
       <!-- Left Section -->
       <div  class="flex items-center gap-x-8">
       <div class="flex items-center gap-6 text-white border-r border-gray-100 pr-5">
         <div>
           <p class="font-normal text-md">For Support</p>
-          <p class="font-semibold text-md">📞 01609317035</p>
+          <p class="font-semibold text-md">📞 01888043572</p>
           <p class="text-sm opacity-80">📧 contact.sallusoft@gmail.com</p>
         </div>
       </div>

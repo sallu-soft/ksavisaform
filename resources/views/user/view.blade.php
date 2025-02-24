@@ -279,7 +279,91 @@
 
                             </div>
                         </div>
-
+                        @if($manpower)
+                  
+                    <div class="bg-white  shadow-2xl py-3 my-3 rounded-lg">
+                      <div class="flex text-white bg-[#ADCCC8] rounded-lg mx-3 p-3 text-xl  font-semibold justify-between items-center"><h2 class="text-black">Candidate Manpower Information</h2>
+                      </div> 
+                      <form id="manpowerinput" class="pt-4">
+                        @csrf
+                        <div class="row">
+                            {{-- <input type="hidden" name="candidate_id" id="candidate_id" value="{{ $candidate->id }}" /> --}}
+                            @if($manpower)
+                                <input type="hidden" name="manpower_id" id="manpower_id" value="{{ $manpower->id }}" />
+                            @endif
+                                            
+                            <div class="px-10 gap-x-10 grid md:grid-cols-2">
+                                <div class="py-2 flex flex-col gap-2">
+                                    <div class="font-bold text-lg">Passenger Number </div>
+                                    <input type="text" id="passenger_no" name="passenger_no" class="form-control p-2 rounded-lg w-full uppercase" 
+                                        required placeholder="" value="{{ old('passenger_no', $manpower->passenger_no ?? '') }}" />
+                                </div>
+                    
+                                <div class="py-2 flex flex-col gap-2">
+                                    <div class="font-bold text-lg">Company Name </div>
+                                    <input type="text" id="company_name" name="company_name" class="form-control p-2 rounded-lg w-full uppercase" 
+                                        required placeholder="" value="{{ old('company_name', $manpower->company_name ?? '') }}" />
+                                </div>
+                    
+                                <div class="py-2 flex flex-col gap-2">
+                                    <div class="font-bold text-lg">Certificate No </div>
+                                    <input type="text" id="certificate_no" name="certificate_no" class="form-control p-2 rounded-lg w-full uppercase" 
+                                        required placeholder="" value="{{ old('certificate_no', $manpower->certificate_no ?? '') }}" />
+                                </div>
+                    
+                                <div class="py-2 flex flex-col gap-2">
+                                    <div class="font-bold text-lg">FFC Name </div>
+                                    <input type="text" id="ffc_name" name="ffc_name" class="form-control p-2 rounded-lg w-full uppercase" 
+                                        required placeholder="" value="{{ old('ffc_name', $manpower->ffc_name ?? '') }}" />
+                                </div>
+                    
+                                <div class="py-2 flex flex-col gap-2">
+                                    <div class="font-bold text-lg">Registration ID </div>
+                                    <input type="text" id="reg_id" name="reg_id" class="form-control p-2 rounded-lg w-full uppercase" 
+                                        required placeholder="" value="{{ old('reg_id', $manpower->reg_id ?? '') }}" />
+                                </div>
+                    
+                                <div class="py-2 flex flex-col gap-2">
+                                    <div class="font-bold text-lg">Visa No </div>
+                                    <input type="text" id="visa_no" name="visa_no" class="form-control p-2 rounded-lg w-full uppercase" 
+                                        required placeholder="" value="{{ old('visa_no', $manpower->visa_no ?? '') }}" />
+                                </div>
+                    
+                                <div class="py-2 flex flex-col gap-2">
+                                    <div class="font-bold text-lg">Visa Issued Date </div>
+                                    <input type="text" id="visa_issued_date" name="visa_issued_date" class="form-control p-2 rounded-lg w-full uppercase" 
+                                        required placeholder="DD-MM-YYYY" value="{{ old('visa_issued_date', $manpower->visa_issued_date ?? '') }}" />
+                                </div>
+                    
+                                <div class="py-2 flex flex-col gap-2">
+                                    <div class="font-bold text-lg">Visa Expiration Date </div>
+                                    <input type="text" id="visa_exp_date" name="visa_exp_date" class="form-control p-2 rounded-lg w-full uppercase" 
+                                        required placeholder="DD-MM-YYYY" value="{{ old('visa_exp_date', $manpower->visa_exp_date ?? '') }}" />
+                                </div>
+                                <div class="py-2 flex flex-col gap-2">
+                                  <div class="font-bold text-lg">Bank Name</div>
+                                  <input type="text" id="bank_name" name="bank_name" class="form-control p-2 rounded-lg w-full uppercase" placeholder="" value="{{ old('bank_name', $manpower->bank_name ?? '') }}" />
+                              </div>
+                              <div class="py-2 flex flex-col gap-2">
+                                  <div class="font-bold text-lg">Bank Account No</div>
+                                  <input type="text" id="bank_acc_no" name="bank_acc_no" class="form-control p-2 rounded-lg w-full uppercase" placeholder="" value="{{ old('bank_acc_no', $manpower->bank_acc_no ?? '') }}" />
+                              </div>
+                            </div>
+                    
+                           
+                        </div>
+                    </form>
+                    
+                    </div>
+                  @else
+                    <div class="w-[60%] mx-auto m-5">
+                      <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg shadow-lg" role="alert">
+                          <strong class="font-bold">Notice:</strong>
+                          <span class="block sm:inline">No manpower information found for this candidate.</span>
+                      </div>
+                    </div>
+                @endif
+                  </div>
 
 
                     </div>

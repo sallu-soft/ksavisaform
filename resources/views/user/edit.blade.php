@@ -16,17 +16,10 @@
                 {{-- <h1 class="text-danger fw-bold text-center my-5">Edi</h1> --}}
                 <form class="row g-3 m-0" id="addcandidate"  method="post">
                     @csrf
-                    @foreach ($candidates as $candidate)
+                    
                     
                   
-
-
-
-
-               @php
-  // dd($candidate);
-               @endphp
-                <div class="mx-auto w-[60%]">
+                <div class="mx-auto w-[70%]">
                           
                   <div class="bg-white container shadow-2xl py-3 my-3 rounded-lg">
                     <div class="flex text-white bg-[#275E8B] rounded-t-lg p-3 text-xl  font-semibold justify-between items-center"><h2 class="">Edit Candidate Information</h2>
@@ -295,20 +288,20 @@
                           </div>
                           <div class="py-1">
                             <div class="font-bold text-lg">Visa Date (Hijri)</div>
-                            <input type="text" name="visa_date" id="visa_date" value="{{$candidate->visa_date2}}" class="p-2 rounded-lg w-full uppercase form-control" >
+                            <input type="text" name="visa_date" id="visa_date" value="{{$candidate->visa_date2 ?? ""}}" class="p-2 rounded-lg w-full uppercase form-control" >
                           </div>
                         
                           <div class="py-1">
                             <div class="font-bold text-lg">Sponsor Name (Arabic)</div>
-                            <input type="text" class="p-2 rounded-lg w-full uppercase form-control" id="spon_name_arabic" name="spon_name_arabic" value="{{$candidate->spon_name_arabic}}">
+                            <input type="text" class="p-2 rounded-lg w-full uppercase form-control" id="spon_name_arabic" name="spon_name_arabic" value="{{$candidate->spon_name_arabic ?? ""}}">
                           </div>
                           <div class="py-1">
                             <div class="font-bold text-lg">Sponsor Name (English)</div>
-                            <input type="text" class="p-2 rounded-lg w-full uppercase form-control" id="spon_name_english" name="spon_name_english" value="{{$candidate->spon_name_english}}" placeholder="Sponsor Name in (English)" />
+                            <input type="text" class="p-2 rounded-lg w-full uppercase form-control" id="spon_name_english" name="spon_name_english" value="{{$candidate->spon_name_english ?? ""}}" placeholder="Sponsor Name in (English)" />
                           </div>
                           <div class="py-1">
                             <div class="font-bold text-lg">Profession (Arabic)</div>
-                            <input type="text" name="prof_name_arabic" id="prof_name_arabic" value="{{$candidate->prof_name_arabic}}" class="p-2 rounded-lg w-full uppercase form-control" >
+                            <input type="text" name="prof_name_arabic" id="prof_name_arabic" value="{{$candidate->prof_name_arabic ?? ""}}" class="p-2 rounded-lg w-full uppercase form-control" >
                           </div>
                           <div class="py-1">
                             <div class="font-bold text-lg">Profession (English)</div>
@@ -316,19 +309,19 @@
                           </div>
                           <div class="py-1">
                             <div class="font-bold text-lg">Mofa No</div>
-                            <input type="text" class="p-2 rounded-lg w-full uppercase form-control" id="mofa_no" name="mofa_no" value="{{$candidate->mofa_no}}">
+                            <input type="text" class="p-2 rounded-lg w-full uppercase form-control" id="mofa_no" name="mofa_no" value="{{$candidate->mofa_no ?? ""}}">
                           </div>
                           <div class="py-1">
                             <div class="font-bold text-lg">Salary</div>
-                            <input type="text" class="p-2 rounded-lg w-full uppercase form-control" id="salary" name="salary" value="{{$candidate->salary}}">
+                            <input type="text" class="p-2 rounded-lg w-full uppercase form-control" id="salary" name="salary" value="{{$candidate->salary ?? ""}}">
                           </div>
                           <div class="py-1">
                             <div class="font-bold text-lg">Okala No</div>
-                            <input type="text" class="p-2 rounded-lg w-full uppercase form-control" id="okala_no" name="okala_no" value="{{$candidate->okala_no}}">
+                            <input type="text" class="p-2 rounded-lg w-full uppercase form-control" id="okala_no" name="okala_no" value="{{$candidate->okala_no ?? ""}}">
                           </div>
                           <div class="py-1">
                             <div class="font-bold text-lg">Musaned No</div>
-                            <input type="text" class="p-2 rounded-lg w-full uppercase form-control" id="musaned_no" name="musaned_no" value="{{$candidate->musaned_no}}">
+                            <input type="text" class="p-2 rounded-lg w-full uppercase form-control" id="musaned_no" name="musaned_no" value="{{$candidate->musaned_no ?? ""}}">
                           </div>
                       
                         </div>
@@ -348,10 +341,6 @@
                   
             
                 </div>
-
-
-
-                @endforeach
                 {{-- <button type="submit" style="padding:10px; background-color: cornflowerblue; border:none; border-radius:5px" class="" id="btn2">Save</button> --}}
 
                 </form>
@@ -359,7 +348,7 @@
           
         </div>
         @if($manpower)
-                  <div class="w-[60%] mx-auto mt-5">
+                  <div class="w-[70%] mx-auto mt-5">
                     <div class="bg-white container shadow-2xl py-3 my-3 rounded-lg">
                       <div class="flex text-white bg-[#275E8B] rounded-t-lg p-3 text-xl  font-semibold justify-between items-center"><h2 class="">Edit Candidate Manpower Information</h2>
                       </div> 
@@ -440,7 +429,7 @@
                     </div>
                   </div>
                   @else
-                    <div class="w-[60%] mx-auto m-5">
+                    <div class="w-[70%] mx-auto m-5">
                       <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg shadow-lg" role="alert">
                           <strong class="font-bold">Notice:</strong>
                           <span class="block sm:inline">No manpower information found for this candidate.</span>
