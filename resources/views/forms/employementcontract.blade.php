@@ -30,24 +30,7 @@
                   @endif
               @endforeach
           </datalist>
-    
-            
-            {{-- <datalist id="candidates">
-              @foreach ($candidates as $candidate)
-                  @if (!$candidate->visa_no && $candidate->spon_name_english==null)
-                      @continue
-                  @endif
-                  
-                  <option data-id="{{ $candidate->candidate_id }}">
-                      Serial no: {{ $candidate->sl_number ?? $candidate->id }}, 
-                      Passport no: {{ $candidate->passport_number }},
-                      Candidate Name: {{ $candidate->name }}
-                  </option>
-              @endforeach
-          </datalist> --}}
-    
-    
-            <button class="btn btn-primary" onclick="printtable()">Print</button>
+          <button class="btn btn-primary" onclick="printtable()">Print</button>
         </div>
     </div>
 

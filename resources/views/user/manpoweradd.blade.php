@@ -5,9 +5,9 @@
 </head>
 <body class="flex">
     @include('layout.sidebar')
-    <div class="flex-1 xl:ml-[280px]">
+    <div id="rightbar" class="flex-1 ml-[200px] md:ml-[240px] xl:ml-[280px]">
   @include('layout.navbar')
-    <div class="w-[60%] mx-auto shadow-lg rounded-lg pb-2 mt-4">
+    <div class="w-[80%] xl:w-[60%] mx-auto shadow-lg rounded-lg pb-2 mt-4">
   
       {{-- @foreach ($candidates as $candidate)@endforeach --}}
       <div class="py-2 px-4 text-xl font-semibold w-full rounded-t-lg shadow-md text-white bg-[#275E8B]">Enter Manpower For <span class="font-bold px-2 rounded-lg py-1  text-2xl">{{$candidate->name}}</span></div>

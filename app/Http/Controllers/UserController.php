@@ -365,10 +365,11 @@ class UserController extends Controller
         if (Session::get('user')) {
             if ($request->isMethod('GET')) {
                 $candidate = DB::table('candidates')
-                    ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
-                    ->select('candidates.*', 'visas.*')
-                    ->where('candidates.id', '=', $id)
-                    ->first();
+            ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
+            ->select('candidates.*', 'visas.*')
+            ->where('candidates.id', $id)
+            ->first();
+            // dd($candidate);
                 $agentsform = DB::table('agents')->where('user', Session::get('user'))->get();
                 $manpower = DB::table('manpower')
                     ->where('candidate_id', $id)
@@ -388,29 +389,26 @@ class UserController extends Controller
         }
     }
 
-    public function agent_view($id, Request $request)
-{
-    if (Session::get('user')) {
-        $candidate = DB::table('candidates')
-            ->select('candidates.*')
-            ->where('candidates.id', $id)
-            ->first();
-
-        if (!$candidate) {
-            return response()->json(['success' => false, 'message' => 'Candidate not found']);
+    public function agent_view($id) {
+        if (Session::get('user')) {
+            // Fetch the agent where candidate_id matches the given ID
+            $agent = Agents::where('candidate_id', $id)->get();
+            dd($agent);
+            // Check if the agent exists
+            if (!$agent) {
+                return redirect()->route('agent.index')->with('error', 'Agent not found');
+            }
+    
+            $html = view('agent.card', compact('agent'))->render();
+    
+            // Return the response as JSON
+            return response()->json([
+                'html' => $html,
+            ], 200);
+        } else {
+            return redirect()->route('login');  // Redirect to the login route
         }
-
-        $agent = DB::table('agents')->where('id', $candidate->agent)->first();
-
-        if (!$agent) {
-            return response()->json(['success' => false, 'message' => 'Agent not found']);
-        }
-
-        return response()->json(['success' => true, 'agent' => $agent]);
     }
-
-    return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
-}
 
     public function view($id, Request $request)
     {
@@ -903,16 +901,21 @@ class UserController extends Controller
     public function printer($id)
     {
         if (Session::get('user')) {
-            $candidates = DB::table('candidates')
-                ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
-                ->select('candidates.*', 'visas.*')->where('candidates.id', '=', $id)
-                ->get();
-
+            // $candidates = DB::table('candidates')
+            //     ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
+            //     ->select('candidates.*', 'visas.*')->where('candidates.id', '=', $id)
+            //     ->get();
+            $candidate = DB::table('candidates')
+            ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
+            ->select('candidates.*', 'visas.*')
+            ->where('candidates.id', $id)
+            ->first();
+            // dd($candidate);
 
             $agencyemail = Session::get('user');
             $agency = User::select('*')->where('email', '=', $agencyemail)->get();
             // dd(1,$candidates, $agency);        
-            return view('user.print', compact('id', 'candidates', 'agency'));
+            return view('user.print', compact('id', 'candidate', 'agency'));
         } else {
             return redirect(url('/'));
         }

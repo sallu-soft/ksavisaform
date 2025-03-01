@@ -9,49 +9,7 @@
     @include('layout.sidebar')
     <div class="flex-1 xl:ml-[280px]">
     @include('layout.navbar')
-    <style>
-        @font-face {
-            font-family: arbFont;
-            src: url("path/to/font-file.woff");
-        }
-
-        @font-face {
-            font-family: "Times New Roman", Times, serif;
-            src: url("../asset/css/times new roman.ttf");
-        }
-
-        .print {
-            font-family: "Times New Roman", Times, serif;
-        }
-
-        .arb {
-            font-family: arb Arial, sans-serif;
-        }
-
-        @media print {
-            .noPrint {
-                display: none;
-            }
-        }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
-    <!-- tailwind css cdn -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            important: true,
-            theme: {
-                extend: {
-                    colors: {
-                        clifford: "#da373d",
-                    },
-                    backgroundImage: {
-                        "hero-pattern": "url('/asset/image/hero1.jpg')",
-                    },
-                },
-            },
-        };
-    </script>
+    
 
     <div class="container">
         <div class="d-flex mx-auto mt-2 bg-gray-200 rounded-lg px-2 py-1 items-center"
@@ -81,7 +39,7 @@
         </div>
     </div>
 
-    <div class="mt-5" id="printable-section">
+    <div class="mt-5 " id="printable-section">
         <div class="">
             <div class="p-[50px] pl-[50px] w-full bg-white mb-10 text-[12px] " contentEditable="true">
                 <p class=" font-bangla  text-[13px]">
@@ -122,7 +80,7 @@
                 <h1 class="text-[14px] font-semibold font-bangla">
                     <span contentEditable="true">।</span> কর্মীর বিবরণঃ
                 </h1>
-                <table class="w-full ">
+                <table class="w-full">
                     <thead>
                         <tr
                             class="[&>td]:border [&>td]:border-black [&>td]:py-1  text-[11px] font-semibold text-center font-bangla">
@@ -481,25 +439,45 @@
     return number >= 0 && number <= 100 ? banglaWords[number] : number;
 }
 
+        // function printtable() {
+        //     // Save the original display style of the body
+        //     const bodyElements = document.body.children;
+
+        //     // Hide all elements except the printable section
+        //     for (let i = 0; i < bodyElements.length; i++) {
+        //         if (bodyElements[i].id !== 'printable-section') {
+        //             bodyElements[i].style.display = 'none';
+        //         }
+        //     }
+
+        //     // Trigger print
+        //     window.print();
+
+        //     // Restore all elements to their original display state
+        //     for (let i = 0; i < bodyElements.length; i++) {
+        //         bodyElements[i].style.display = '';
+        //     }
+        // }
         function printtable() {
-            // Save the original display style of the body
-            const bodyElements = document.body.children;
+    const printableSection = document.getElementById('printable-section');
 
-            // Hide all elements except the printable section
-            for (let i = 0; i < bodyElements.length; i++) {
-                if (bodyElements[i].id !== 'printable-section') {
-                    bodyElements[i].style.display = 'none';
-                }
-            }
+    if (!printableSection) {
+        console.error("No element found with ID 'printable-section'");
+        return;
+    }
 
-            // Trigger print
-            window.print();
+    const originalContent = document.body.innerHTML;
+    const printContent = printableSection.innerHTML;
 
-            // Restore all elements to their original display state
-            for (let i = 0; i < bodyElements.length; i++) {
-                bodyElements[i].style.display = '';
-            }
-        }
+    // Replace body content with printable section
+    document.body.innerHTML = printContent;
+
+    window.print(); // Trigger print
+
+    // Restore the original content
+    document.body.innerHTML = originalContent;
+    location.reload(); // Reload to restore events and styles
+}
     </script>
 </body>
 

@@ -59,8 +59,7 @@
 
 <body style="position: relative;">
     <!-- @php
-        
-        $dob = $candidate->date_of_birth;
+        $dob = $candidates[0]->date_of_birth;
         $birthdate = new DateTime($dob);
         $currentDate = new DateTime();
 
@@ -105,14 +104,14 @@
 
 
                 <svg id="barcode1" class="w-[270px]">
-                    {{ $candidate->visa_date2 ?? "" }}
+                    <!--<span class=' w-[190px] absolute bottom-[-10px] left-8 text-center'>    Visa Date:  {{ $candidates[0]->visa_date2 }}</span>-->
                 </svg>
 
 
             </div>
             <div class="w-[300px] text-end text-xl">
                 <p class="font-bold text-4xl">
-                    {{ $candidate->mofa_no ?? "" }}
+                    {{ $candidates[0]->mofa_no }}
                 </p>
 
                 <p class="text-lg arb">
@@ -130,7 +129,7 @@
         </div>
 
         <?php
-        // dd($candidate)
+        // dd($candidates[0])
         ?>
         <div class="border-b border-black pb-1 flex flex-wrap items-center ">
             <div class="basis-1/12">
@@ -138,11 +137,11 @@
             </div>
             <div class="flex flex-row justify-center basis-10/12 ">
                 <span class="text-2xl font-semibold pr-3 uppercase" contentEditable="true">
-                    {{ $candidate->name }} S/O {{ $candidate->father }}
+                    {{ $candidates[0]->name }} S/O {{ $candidates[0]->father }}
                 </span>
                 {{-- S/O
               <span class="text-2xl font-semibold">
-                {{$candidate->father}}
+                {{$candidates[0]->father}}
               </span> --}}
             </div>
             <div class="arb flex text-lg font-semibold text-end justify-end basis-1/12">
@@ -155,7 +154,7 @@
             </div>
             <div class="basis-4/6">
                 <p class="text-xl font-semibold pl-2" contentEditable="true">
-                    {{ $candidate->mother }}
+                    {{ $candidates[0]->mother }}
                 </p>
             </div>
             <div class="flex text-xl font-semibold text-end justify-end basis-1/6 arb">
@@ -172,7 +171,7 @@
             <div class="border-r border-black basis-1/6">
                 <p class="text-lg font-bold text-center" contentEditable="true">
                     <?php
-                    $inputDate = $candidate->date_of_birth;
+                    $inputDate = $candidates[0]->date_of_birth;
                     
                     // Convert the date format
                     $formattedDate = date('d-m-Y', strtotime($inputDate));
@@ -190,7 +189,7 @@
             </div>
             <div class="border-r border-black basis-1/6">
                 <p class="text-lg font-bold text-center">
-                    {{ $candidate->place_of_birth }}
+                    {{ $candidates[0]->place_of_birth }}
                 </p>
             </div>
             <div class="flex text-lg font-semibold text-end justify-end pl-3 basis-1/6">
@@ -224,7 +223,7 @@
                 <p class="text-lg w-full">Sex:</p>
             </div>
             <div class="border-r border-black basis-1/6">
-                <p class="text-xl font-bold text-center"> {{ $candidate->gender }}</p>
+                <p class="text-xl font-bold text-center"> {{ $candidates[0]->gender }}</p>
             </div>
             <div class="flex text-lg font-semibold text-end justify-en border-r border-black basis-1/6">
                 <p class="pl-3 arb"> :الجنس </p>
@@ -234,7 +233,7 @@
             </div>
             <div class="border-r border-black basis-1/6">
                 <p class="text-xl font-bold text-center">
-                    {{ $candidate->married }}
+                    {{ $candidates[0]->married }}
                 </p>
             </div>
             <div class="flex text-lg font-semibold text-end justify-end basis-1/6 arb">
@@ -258,7 +257,7 @@
             </div>
             <div class="border-r border-black basis-1/6">
                 <p class="text-lg font-bold text-center">
-                    {{ $candidate->religion }}
+                    {{ $candidates[0]->religion }}
                 </p>
             </div>
             <div class="flex text-lg font-semibold text-end justify-end basis-1/6 arb">
@@ -307,13 +306,13 @@
   
             <div  class=" border-black basis-1/6">
               <p class="text-xl font-bold">
-                {{$candidate->prof_name_english}}
+                {{$candidates[0]->prof_name_english}}
               </p>
             </div> --}}
 
             <div class=" border-black basis-3/6">
                 <p class="text-xl font-bold text-end arb">
-                    {{ $candidate->prof_name_arabic ?? ""}}
+                    {{ $candidates[0]->prof_name_arabic }}
                 </p>
             </div>
             <div class="flex text-lg font-semibold text-end justify-end basis-1/6">
@@ -335,7 +334,7 @@
 
             <div class=" border-black basis-3/6">
                 <p class="text-xl font-bold uppercase">
-                    {{ $candidate->prof_name_english ?? "" }}
+                    {{ $candidates[0]->prof_name_english }}
 
                 </p>
             </div>
@@ -348,7 +347,7 @@
             </div>
             <div class="border-r border-black basis-6/12 flex items-center justify-center">
                 <p class="text-lg text-center   uppercase">
-                    {{ $candidate->address }}
+                    {{ $candidates[0]->address }}
                 </p>
             </div>
             <div class=" text-lg font-semibold text-end border-black basis-2/12">
@@ -443,7 +442,7 @@
             <div class="border-r border-black basis-3/12">
                 <p class="text-2xl font-bold text-center  py-1" contentEditable="true">
                     <?php
-                    $inputDate = $candidate->passport_issue_date;
+                    $inputDate = $candidates[0]->passport_issue_date;
                     
                     // Convert the date format
                     $formattedDate = date('d-m-Y', strtotime($inputDate));
@@ -456,7 +455,7 @@
             <div class="flex text-2xl font-bold   border-r border-black basis-4/12">
                 <p class="ml-[5rem]  py-1" contentEditable="true">
                     <?php
-                    $inputDate = $candidate->passport_expire_date;
+                    $inputDate = $candidates[0]->passport_expire_date;
                     
                     // Convert the date format
                     $formattedDate = date('d-m-Y', strtotime($inputDate));
@@ -468,7 +467,7 @@
             </div>
             <div class="border-black basis-3/12">
                 <p class="text-2xl font-bold w-full py-1 text-center">
-                    {{ $candidate->passport_number }}
+                    {{ $candidates[0]->passport_number }}
                 </p>
             </div>
         </div>
@@ -704,7 +703,7 @@
             <div class="flex text-[16px] text-end border-black w-full justify-start basis-5/12">
                 Name:
                 <span class="mx-auto font-bold text-xl">
-                    {{ $candidate->name }}
+                    {{ $candidates[0]->name }}
                 </span>
                 : الاسم
             </div>
@@ -723,7 +722,7 @@
                 <p class="text-xl"> Date :</p>
 
                 <p class="text-xl font-bold pl-2">
-                    {{ $candidate->visa_date2 ?? ''}}
+                    {{ $candidates[0]->visa_date2 }}
                 </p>
                 <p class="mr-3 arb">: التاريخ </p>
             </div>
@@ -749,7 +748,7 @@
             </div>
             <div class=" basis-8/12 text-2xl font-bold text-end border-black ">
                 <p class="text-end px-1 arb pr-2">
-                    {{ $candidate->spon_name_arabic ?? '' }}
+                    {{ $candidates[0]->spon_name_arabic }}
                 </p>
             </div>
             <div class="basis-2/12  text-xl  text-end arb">
@@ -764,7 +763,7 @@
                 <p class="mr-5 arb">:التاريخ </p>
             </div>
             <div class="flex text-xl font-semibold text-end border-black w-full justify-between pl-3 basis-6/12">
-                Visa No : <p class="font-bold text-xl mr-10">{{ $candidate->visa_no ?? ''}}</p>
+                Visa No : <p class="font-bold text-xl mr-10">{{ $candidates[0]->visa_no }}</p>
                 <p class="arb"> :أشربرقم</p>
             </div>
         </div>
@@ -792,7 +791,7 @@
                 <div class="flex text-xl flex-col justify-center text-end basis-6/12">
                     <div class="flex justify-center">
                         <p class="mb-4 ml-4 font-semibold">
-                            {{ $candidate->spon_id ?? ' '}}
+                            {{ $candidates[0]->spon_id }}
                         </p>
                         <p class="mb-4 ml-14 arb">رقم الكفيل</p>
                     </div>
@@ -849,27 +848,27 @@
                 </h2>
                 :
                 <span class="font-bold pl-2 arb">
-                    {{ $candidate->spon_name_arabic ?? ' ' }}
+                    {{ $candidates[0]->spon_name_arabic }}
                 </span>
             </li>
             <li class=" flex p-1 bordered ">
                 <h2 class="w-[30rem]">2. VISA NUMBER & DATE </h2>:
                 <span class="font-bold pl-2">
-                    {{ $candidate->visa_no }} DATE- {{ $candidate->visa_date2 ?? '' }}
+                    {{ $candidates[0]->visa_no }} DATE- {{ $candidates[0]->visa_date2 }}
 
                 </span>
             </li>
             <li class=" flex p-1 bordered ">
                 <h2 class="w-[30rem]">3. FULL NAME OF THE EMPLOYEE </h2>:
                 <span class="font-bold pl-2">
-                    {{ $candidate->name }}
+                    {{ $candidates[0]->name }}
                 </span>
             </li>
             <li class=" flex p-1 bordered ">
                 <h2 class="w-[30rem]">4. PASSPORT NO. WITH DATE </h2>:
                 <span class="font-bold pl-2">
-                    {{ $candidate->passport_number }} DATE <?php
-                    $inputDate = $candidate->passport_issue_date ?? ' ';
+                    {{ $candidates[0]->passport_number }} DATE <?php
+                    $inputDate = $candidates[0]->passport_issue_date;
                     
                     // Convert the date format
                     $formattedDate = date('d-m-Y', strtotime($inputDate));
@@ -882,12 +881,12 @@
             <li class=" flex p-1 bordered ">
                 <h2 class="w-[30rem]">5. PROFESSION </h2>:
                 <span class="font-bold pl-2 arb">
-                    {{ $candidate->prof_name_arabic ?? '' }}
+                    {{ $candidates[0]->prof_name_arabic }}
                 </span>
             </li>
             <li class=" flex p-1 bordered ">
                 <h2 class="w-[30rem]">6. RELIGION </h2>:
-                <span class="font-bold pl-2">{{ $candidate->religion ?? ' '}}</span>
+                <span class="font-bold pl-2">{{ $candidates[0]->religion }}</span>
             </li>
         </ol>
         <br />
@@ -925,7 +924,7 @@
                 First Party
             </div>
             <div class="basis-6/12 flex text-2xl font-semibold p-1 arb">
-                : {{ $candidate->spon_name_arabic ?? '' }}
+                : {{ $candidates[0]->spon_name_arabic }}
             </div>
 
 
@@ -933,20 +932,20 @@
                 Second Party
             </div>
             <div class="basis-6/12 flex text-2xl font-semibold p-1 uppercase">
-                : {{ $candidate->name }}
+                : {{ $candidates[0]->name }}
 
             </div>
             <div class="basis-6/12 flex text-2xl font-semibold p-1">
                 Passport No
             </div>
             <div class="basis-6/12 flex text-2xl font-semibold p-1 uppercase">
-                : {{ $candidate->passport_number }}
+                : {{ $candidates[0]->passport_number }}
             </div>
             <div class="basis-6/12 flex text-2xl font-semibold p-1">
                 Profession
             </div>
             <div class="basis-6/12 flex text-2xl font-semibold p-1 uppercase">
-                : {{ $candidate->prof_name_english ?? ' ' }}
+                : {{ $candidates[0]->prof_name_english }}
             </div>
             <div class="basis-6/12 flex text-2xl font-semibold p-1">
                 Nationality
@@ -959,11 +958,11 @@
             <li class="text-xl py-3">
                 1. The 2nd party is employed by the first party as
                 <strong class="text-2xl uppercase">
-                    {{ $candidate->prof_name_english ?? ' ' }}
+                    {{ $candidates[0]->prof_name_english }}
                 </strong>
                 with a monthly salary
                 <strong contentEditable="true">
-                    SR{{ $candidate->salary ?? ' ' }}
+                    SR{{ $candidates[0]->salary }}
                 </strong>
                 payable by the end of each month
             </li>
@@ -1071,7 +1070,7 @@
                     <td class="uppercase"></td>
                     <td class="uppercase"></td>
                     <td class="uppercase font-bold text-xl ">
-                        {{ $candidate->mofa_no ?? ' '}}
+                        {{ $candidates[0]->mofa_no }}
                     </td>
                     <td class=" font-bold text-xl text-end">Mofa No./<span class="arb"> رقم إنجاز </span></td>
                 </tr>
@@ -1079,7 +1078,7 @@
                     <td class="uppercase"></td>
                     <td class="uppercase"></td>
                     <td class="uppercase font-bold text-xl">
-                        {{ $candidate->visa_no ?? ' '}}
+                        {{ $candidates[0]->visa_no }}
                     </td>
                     <td class=" font-bold text-xl text-end">
 
@@ -1089,7 +1088,7 @@
                 <tr class="[&>td]:border [&>td]:border-black [&>td]:p-2 text-base text-center relative group">
                     <td class="uppercase"></td>
                     <td class="uppercase"></td>
-                    <td class="uppercase font-bold text-xl">{{ $candidate->name }}</td>
+                    <td class="uppercase font-bold text-xl">{{ $candidates[0]->name }}</td>
                     <td class=" font-bold text-xl text-end">
 
                         Passport Name/ <span class="arb"> الاسم في الجواز
@@ -1099,7 +1098,7 @@
                     <td class="uppercase"></td>
                     <td class="uppercase"></td>
                     <td class="uppercase font-bold text-xl">
-                        {{ $candidate->passport_number }}
+                        {{ $candidates[0]->passport_number }}
                     </td>
                     <td class=" font-bold text-xl text-end">
 
@@ -1111,7 +1110,7 @@
                     <td class="uppercase"></td>
                     <td class="uppercase font-bold text-xl">
                         <?php
-                        $inputDate = $candidate->passport_expire_date ?? ' ';
+                        $inputDate = $candidates[0]->passport_expire_date;
                         
                         // Convert the date format
                         $formattedDate = date('d-m-Y', strtotime($inputDate));
@@ -1131,7 +1130,7 @@
                     <td class="uppercase font-bold text-xl">
                         <p>
                             <?php
-                            $inputDate = $candidate->date_of_birth;
+                            $inputDate = $candidates[0]->date_of_birth;
                             
                             // Convert the date format
                             $formattedDate = date('d-m-Y', strtotime($inputDate));
@@ -1148,14 +1147,14 @@
                 <tr class="[&>td]:border [&>td]:border-black [&>td]:p-2 text-base text-center relative group">
                     <td class="uppercase"></td>
                     <td class="uppercase"></td>
-                    <td class="uppercase font-bold text-xl">{{ $candidate->gender }}</td>
+                    <td class="uppercase font-bold text-xl">{{ $candidates[0]->gender }}</td>
                     <td class=" font-bold text-xl text-end"> Sex/ <span class="arb">الجنس </span></td>
                 </tr>
                 <tr class="[&>td]:border [&>td]:border-black [&>td]:p-2 text-base text-center relative group">
                     <td class="uppercase"></td>
                     <td class="uppercase"></td>
                     <td class="uppercase font-bold text-xl">
-                        {{ $candidate->musaned_no ?? ' ' }}
+                        {{ $candidates[0]->musaned_no }}
                     </td>
                     <td class=" font-bold text-xl text-end"> Musaned/<span class="arb"> مساند </span></td>
                 </tr>
@@ -1163,14 +1162,14 @@
                     <td class="uppercase"></td>
                     <td class="uppercase"></td>
                     <td class="uppercase font-bold text-xl">
-                        {{ $candidate->okala_no ?? ' ' }}
+                        {{ $candidates[0]->okala_no }}
                     </td>
                     <td class=" font-bold text-xl text-end">Wakala/<span class="arb"> الوكالة </span></td>
                 </tr>
                 <tr class="[&>td]:border [&>td]:border-black [&>td]:p-2 text-base text-center relative group">
                     <td class="uppercase"></td>
                     <td class="uppercase"></td>
-                    <td class=" font-bold text-xl" contentEditable="true">{{ $candidate->medical_center }}
+                    <td class=" font-bold text-xl" contentEditable="true">{{ $candidates[0]->medical_center }}
                        
                     </td>
                     <td class=" font-bold text-xl text-end"> Medical/ <span class="arb">المديكل </span></td>
@@ -1179,7 +1178,7 @@
                     <td class="uppercase"></td>
                     <td class="uppercase"></td>
                     <td class="uppercase font-bold text-xl" contentEditable="true">
-                        {{ $candidate->police ??  ''}}
+                        {{ $candidates[0]->police }}
                     </td>
                     <td class=" font-bold text-xl text-end">
 
@@ -1190,7 +1189,7 @@
                     <td class="uppercase"></td>
                     <td class="uppercase"></td>
                     <td class="uppercase font-bold text-xl" contentEditable="true">
-                        {{ $candidate->driving_licence ?? ' ' }}
+                        {{ $candidates[0]->driving_licence }}
                     </td>
                     <td class=" font-bold text-xl text-end">Driving License/<span class="arb">الرخصة </span></td>
                 </tr>
@@ -1198,7 +1197,7 @@
                     <td class="uppercase"></td>
                     <td class="uppercase"></td>
                     <td class="uppercase font-bold text-xl arb" contentEditable="true">
-                        {{ $candidate->prof_name_arabic ?? ' ' }}
+                        {{ $candidates[0]->prof_name_arabic }}
                     </td>
                     <td class=" font-bold text-xl text-end"> Profession/<span class="arb">المهنة </span></td>
                 </tr>
@@ -1221,7 +1220,7 @@
         </table>
         <div class="flex justify-end items-end pt-1 px-5 flex-col mx-auto w-[770px] text-2xl leading-6 gap-y-6">
             <h2>
-                <span class="uppercase font-bold"> {{ $agency[0]->licence_name ?? '' }} </span>:
+                <span class="uppercase font-bold"> {{ $agency[0]->licence_name }} </span>:
                 <span class="arb"> اسم المكتب
                 </span>
             </h2>
@@ -1239,21 +1238,21 @@
     <script src="js/index.js"></script>
     @include('layout.script');
     <script>
-        JsBarcode("#barcode1", "{{ $candidate->visa_no }}", {
+        JsBarcode("#barcode1", "{{ $candidates[0]->visa_no }}", {
             fontSize: 25,
             height: 50,
             width: 3,
             format: "CODE128",
             textMargin: 1,
-            text: "Visa No: {{ $candidate->visa_no }}",
+            text: "Visa No: {{ $candidates[0]->visa_no }}",
         });;
-        JsBarcode("#passport_no", "{{ $candidate->passport_number }}", {
+        JsBarcode("#passport_no", "{{ $candidates[0]->passport_number }}", {
             fontSize: 20,
             width: 3,
             height: 50,
             format: "CODE128",
             textMargin: 1,
-            text: "Passport No: {{ $candidate->passport_number }}"
+            text: "Passport No: {{ $candidates[0]->passport_number }}"
         });;
     </script>
 </body>

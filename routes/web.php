@@ -59,7 +59,7 @@ Route::any('/user/manpoweredit/{id}', [UserController::class, 'manpower_edit'])-
 Route::get('/user/visasearch/{id}', [UserController::class, 'visa_search'])->name('user/visasearch');
 Route::any('/user/edit/{id}', [UserController::class, 'edit'])->name('user/edit');
 Route::any('/user/view/{id}', [UserController::class, 'view'])->name('user/view');
-Route::get('/agent/view/{id}', [UserController::class, 'agent_view'])->name('user.agent_view');
+Route::get('/agent_view/{id}', [UserController::class, 'agent_view'])->name('user.agent_view');
 
 Route::any('/user/personal_edit/{id}', [UserController::class, 'personal_edit'])->name('user/personal_edit');
 

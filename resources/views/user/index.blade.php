@@ -94,9 +94,9 @@
 </head>
 
 <body class="bg-[#f2f9fc] flex">
-    
-        @include('layout.sidebar')
-    <div class="flex-1 xl:ml-[280px]">
+
+    @include('layout.sidebar')
+    <div id="rightbar" class="flex-1 ml-[200px] md:ml-[240px] xl:ml-[280px]">
         @include('layout.navbar')
 
 
@@ -117,7 +117,7 @@
         <!-- End Hero -->
         <div class="w-[90%] mx-auto my-5 hello">
 
-            
+
 
         </div>
         {{-- agent view modal --}}
@@ -154,39 +154,43 @@
                 </div>
             </div>
         </div> --}}
-        <div class="modal fade" id="agentViewModal" tabindex="-1" aria-labelledby="agentViewModalLabel" aria-hidden="true">
+        <div class="modal fade" id="agentViewModal" tabindex="-1" aria-labelledby="agentViewModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header bg-[#275E8B]">
                         <h5 class="modal-title text-white" id="agentViewModalLabel">Agent Details</h5>
-                        <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close text-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
-        
+
                     <div class="modal-body bg-[#f2f9fc]">
                         <div class="px-10 gap-x-10 grid md:grid-cols-2">
                             <div class="py-1">
                                 <div class="font-semibold text-lg">Agent's Name</div>
                                 <p id="agent_name" class="text-gray-700 font-medium"></p>
                             </div>
-                            
+
                             <div class="py-1">
                                 <div class="font-semibold text-lg">Agent's Phone Number</div>
                                 <p id="agent_phone" class="text-gray-700 font-medium"></p>
                             </div>
-                            
+
                             <div class="py-1">
                                 <div class="font-semibold text-lg">Agent's Address</div>
                                 <p id="agent_address" class="text-gray-700 font-medium"></p>
                             </div>
                         </div>
                     </div>
-        
+
                     <div class="modal-footer">
-                        <button type="button" class="bg-[#074f56] p-3 rounded text-white font-semibold" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="bg-[#074f56] p-3 rounded text-white font-semibold"
+                            data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="table-responsive rounded-lg bg-[#DFE8EF]  my-5 w-[98%] xl:w-[97%] mx-auto shadow-lg main-datatable">
             <form method="GET" class="bg-[#275E8B] py-2" action="{{ route('user/index') }}">
                 <div class="flex w-[50%] my-3 mx-auto gap-4 ">
@@ -292,7 +296,8 @@
                                 <td><a href="{{ route('user/view', ['id' => $candidate->id]) }}"
                                         class="font-semibold hover:font-bold cursor-pointer hover:text-blue-400 text-xl">{{ $candidate->name }}</a><br />
                                     <p class="text-md mt-2 font-semibold">{{ $candidate->passport_number }}</p>
-                                    <br /><strong>Agent : </strong><a href="#" class="view-agent" data-agent-id="{{ $candidate->id }}" >
+                                    <br /><strong>Agent : </strong><a href="#" class="view-agent-btn"
+                                        data-bs-toggle="modal" data-agent-id="{{ $candidate->id }}">
                                         {{ $candidate->agent }}
                                     </a>
                                 </td>
@@ -407,578 +412,42 @@
             {{ $candidates->links() }}
         </div>
         
+        <div class="modal fade" id="viewAgentModal" tabindex="-1" aria-labelledby="viewAgentModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewAgentModalLabel">Agent Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="agentDetails">
 
-    </div>
+                    </div>
+                </div>
+            </div>
 
-    <a href="https://web.whatsapp.com/send?phone=8801609317035" rel="noopener noreferrer" target="_blank"
-        class="fixed bottom-10 right-10 text-6xl text-green-600">
-        <i class="bi bi-whatsapp"></i>
-    </a>
-    <div id="preloader"></div>
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+        </div>
 
-
-    
-    @include('layout.script')
-
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-   
-    <script>
-        const dropdownButton = document.getElementById('dropdownButton');
-        const dropdownMenu = document.getElementById('dropdownMenu');
-      
-        dropdownButton.addEventListener('click', () => {
-            const isExpanded = dropdownMenu.classList.contains('hidden');
-            // Toggle the visibility of the dropdown
-            dropdownMenu.classList.toggle('hidden', !isExpanded);
-        });
-      
-        // Close the dropdown if clicked outside
-        document.addEventListener('click', (event) => {
-            if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                dropdownMenu.classList.add('hidden');
-            }
-        });
-      
-      
-        const dropdownReportButton = document.getElementById('dropdownReportButton');
-        const dropdownMenu1 = document.getElementById('dropdownMenu1');
-      
-        dropdownReportButton.addEventListener('click', () => {
-            const isExpanded = dropdownMenu1.classList.contains('hidden');
-            // Toggle the visibility of the dropdown
-            dropdownMenu1.classList.toggle('hidden', !isExpanded);
-        });
-      
-        // Close the dropdown if clicked outside
-        document.addEventListener('click', (event) => {
-            if (!dropdownReportButton.contains(event.target) && !dropdownMenu1.contains(event.target)) {
-                dropdownMenu1.classList.add('hidden');
-            }
-        });
-      </script>
-      <script>
-        function showAlert() {
-            alert("Visa is not available! Please Enter Your Candidates Visa First for Print");
-            // You can perform other actions here as needed.
-        }
-      
-        function surity(id) {
-            let text = "Sure Want to delete!\nEither OK or Cancel.";
-            if (confirm(text)) {
-                let url = '/user/delete/' + id;
-                fetch(url, {
-                        method: 'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        },
-                    })
-                    .then(response => response.json())
-                    .then(response => {
-                        if (response.success) {
-                            alert(response.message, "Deleted Successfully");
-                            location.reload();
-      
-                        } else {
-                            alert(response.message, "Not Deleted");
-                            location.reload();
-                        }
-                    })
-                    .catch(error => {
-                        console.error("An error occurred:", error);
-                        // Handle any network or other errors here.
-                    });
-            } else {
-                console.log("You canceled!");
-            }
-      
-            return false; // Prevent the link from being followed immediately
-      
-        }
-      
-        function SearchPC() {
-            var PCInput = document.getElementById("police_licence").value.toUpperCase();
-            var url = `https://pcc.police.gov.bd/ords/f?p=500:50::::RP:P50_TOKEN_ID:${PCInput}`;
-      
-            // Open the link in a new tab
-            window.open(url, "_blank");
-        }
-      </script>
-      <script>
-      document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".view-agent").forEach(button => {
-        button.addEventListener("click", function (e) {
-            e.preventDefault();
-            let agentId = this.getAttribute("data-agent-id");
-            console.log("Agent ID:", agentId);
-
-            if (!agentId) {
-                alert("Agent ID is missing.");
-                return;
-            }
-
-            let url = "{{ route('user.agent_view', ['id' => '__id__']) }}".replace('__id__', agentId);
-            console.log("Fetching data from:", url);
-
-            fetch(url)
-                .then(response => response.json())
-                .then(response => {
-                    console.log("Response Data:", response);
-
-                    if (response.success && response.agent) {
-                        // Set data inside the <p> tags
-                        document.getElementById("agent_name").innerHTML = response.agent.agent_name || "N/A";
-                        document.getElementById("agent_phone").textContent = response.agent.agent_phone || "N/A";
-                        document.getElementById("agent_address").textContent = response.agent.agent_address || "N/A";
-                        // document.getElementById("agent_name2").innerHTML = response.agent.agent_name || "N/A";
-
-                        // Open the modal
-                        let modal = new bootstrap.Modal(document.getElementById("agentViewModal"));
-                        modal.show();
-                    } else {
-                        alert("Agent not found!");
-                    }
-                })
-                .catch(error => {
-                    console.error("Fetch Error:", error);
-                    alert("An error occurred. Please try again.");
-                });
-        });
-    });
-});
-    </script>
-      <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const agents = @json($agents->items());
-            const agentInput = document.getElementById('agentSearch');
-            const agentDropdown = document.getElementById('agentDropdown');
-            const agentIdInput = document.getElementById('agent_id');
-      
-            function filterOptions(search) {
-                agentDropdown.innerHTML = ''; // Clear previous options
-                const filteredAgents = agents.filter(agent =>
-                    agent.agent_name.toLowerCase().includes(search.toLowerCase())
-                );
-      
-                if (filteredAgents.length) {
-                    filteredAgents.forEach(agent => {
-                        const option = document.createElement('div');
-                        option.classList.add('dropdown-item');
-                        option.textContent = agent.agent_name;
-                        option.dataset.value = agent.id;
-                        option.addEventListener('click', () => {
-                            agentInput.value = agent.agent_name;
-                            agentIdInput.value = agent.id;
-                            agentDropdown.classList.remove('show');
-                        });
-                        agentDropdown.appendChild(option);
-                    });
-                } else {
-                    const noResult = document.createElement('div');
-                    noResult.classList.add('dropdown-item');
-                    noResult.textContent = 'No agents found';
-                    agentDropdown.appendChild(noResult);
-                }
-            }
-      
-            agentInput.addEventListener('input', function() {
-                const search = agentInput.value;
-                filterOptions(search);
-                agentDropdown.classList.add('show');
-            });
-      
-            document.addEventListener('click', function(e) {
-                if (!agentDropdown.contains(e.target) && e.target !== agentInput) {
-                    agentDropdown.classList.remove('show');
-                }
-            });
-        });
-      
-      
-      
-      
-        function deleteAgent(agentId) {
-            $.ajax({
-                url: `/agents/${agentId}`,
-                type: 'DELETE',
-                data: {
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    if (response.success) {
-                        alert(response.message);
-                        window.location.href = response.redirect_url;
-                    } else {
-                        alert(response.message);
-                    }
-                },
-                error: function(xhr) {
-                    alert('An error occurred. Please try again.');
-                }
-            });
-        }
-      
-        $(document).ready(function() {
-      
-           
-      
-            $('#medical_issue_date').datepicker({
-                dateFormat: 'dd/mm/yy',
-                onSelect: function(selectedDate) {
-                    var issueDate = $(this).datepicker('getDate');
-                    issueDate.setMonth(issueDate.getMonth() + 3);
-                    issueDate.setDate(issueDate.getDate() - 1);
-                    var formattedDate = $.datepicker.formatDate('dd/mm/yy', issueDate);
-                    $('#medical_expire_date').val(formattedDate);
-                }
-            });
-      
-      
-            $('#pass_issue_date').datepicker({
-                dateFormat: 'dd/mm/yy',
-                onSelect: function(selectedDate) {
-                    var issueDate = $(this).datepicker('getDate');
-                    var radioSelection = document.querySelector('input[name="passDate"]:checked').value;
-                    console.log(radioSelection);
-                    if (radioSelection === "ten") {
-                        issueDate.setFullYear(issueDate.getFullYear() + 10);
-                    } else if (radioSelection === "five") {
-                        issueDate.setFullYear(issueDate.getFullYear() + 5);
-                    } else {
-                        issueDate.setFullYear(issueDate.getFullYear() + 5);
-                    }
-                    issueDate.setDate(issueDate.getDate() - 1);
-                    var formattedDate = $.datepicker.formatDate('dd/mm/yy', issueDate);
-                    $('#pass_expire_date').val(formattedDate);
-                }
-            });
-      
-      
-            // $('#date_of_birth').datepicker({
-            //   dateFormat: 'dd/mm/yy',
-            //   onSelect: function(selectedDate) {
-            //         var dateOfBirth = $(this).datepicker('getDate');
-      
-            //         var formattedDate = $.datepicker.formatDate('dd/mm/yy',dateOfBirth);
-            //         $('#date_of_birth').val(formattedDate);
-            //   }
-            // });
-      
-            $('#date_of_birth').datepicker({
-                dateFormat: 'dd/mm/yy',
-                onSelect: function(selectedDate) {
-                    var selectedDateObject = $(this).datepicker('getDate');
-                    var currentDate = new Date();
-      
-                    // Calculate the age difference in years
-                    var ageDifferenceYears = currentDate.getFullYear() - selectedDateObject
-                        .getFullYear();
-      
-                    var ageDifference = currentDate - selectedDateObject;
-                    var ageDate = new Date(ageDifference);
-                    var years = ageDate.getUTCFullYear() - 1970;
-                    var months = ageDate.getUTCMonth();
-                    var days = ageDate.getUTCDate() - 1;
-      
-      
-                    // Check if the birthdate has occurred 21 or more years ago
-                    if (ageDifferenceYears > 21 || (ageDifferenceYears === 21 && (currentDate
-                            .getMonth() > selectedDateObject.getMonth() || (currentDate
-                                .getMonth() ===
-                                selectedDateObject.getMonth() && currentDate.getDate() >=
-                                selectedDateObject.getDate())))) {
-                        var formattedDate = $.datepicker.formatDate('dd/mm/yy', selectedDateObject);
-                        $('#date_of_birth').val(formattedDate);
-                    } else {
-                        // Display an error message or take some other action
-                        var ageString = years + " years, " + months + " months, " + days + " days";
-                        alert("You must be at least 21 years old. Your Age is " + ageString);
-                        $(this).val(''); // Clear the input field
-                    }
-                }
-            });
-      
-      
-      
-            $('#pass_expire_date').datepicker({
-                dateFormat: 'd/m/y'
-            });
-      
-            var apiUrl = window.location.origin + '/user/get';
-            var method = "GET";
-            var data = {
-      
-            };
-            var headers = {
-      
-            };
-      
-            callApi(apiUrl, method, data, headers);
-      
-        });
-        var dataObject = {};
-      
-        function callApi(apiUrl, method, data, headers) {
-            $.ajax({
-                url: apiUrl,
-                type: method,
-                data: data,
-                headers: headers,
-                dataType: "json",
-      
-                success: function(response) {
-                    // console.log(response);
-      
-                    for (var key in response.candidates) {
-                        var candidateValue = response.candidates[key];
-                        var userEmail = key;
-                        var combinedValue = {
-                            candidate: candidateValue,
-                            user: response.users[candidateValue] || null
-                        };
-                        dataObject[userEmail] = combinedValue;
-                    }
-                    // console.log(dataObject);
-                },
-                error: function(error) {
-                    console.error("Error calling API:", error);
-                }
-            });
-        }
-        $('#pnumber').on('change', function() {
-            var inputValue = $(this).val();
-            var foundObject = dataObject[inputValue];
-      
-            if (foundObject) {
-                // var email = Object.keys(foundObject)[0];
-                var email = foundObject.candidate;
-                // var licenceName = foundObject[email].user ? foundObject[email].user.licence_name : "Not available";
-                var licenceName = foundObject.user.licence_name ? foundObject.user.licence_name : "Not available";
-                alert(inputValue + " exists in database under: " + licenceName + '(' + foundObject.user.rl_no +
-                    ')' + ' Contact here: ' + email);
-      
-                $('#pnumber').val("");
-            } else {
-      
-            }
-        });
-      
-        $('#visainput').submit(function(e) {
-            e.preventDefault(); // Prevent the default form submission
-            var form = $(this);
-            var formData = form.serialize(); // Serialize the form data
-            // console.log(formData);
-            var id = (document.getElementById('candidate_id').value);
-            // console.log(id);
-            $.ajax({
-                url: "{{ url('user/visaadd') }}/" + id,
-      
-                method: form.attr('method'),
-                data: formData,
-                success: function(response) {
-      
-                    console.log(response);
-      
-                    Swal.fire({
-                        title: response.title,
-                        text: response.message,
-                        icon: response.icon,
-      
-                    });
-                    // if (response.redirect_url) {
-                    //     setTimeout(function() {
-                    //       var redirectUrl = window.location.origin + '/'+ response.redirect_url;
-                    //       window.location.href = redirectUrl;
-                    //     }, 2000);
-                    // }l
-      
-                },
-                error: function(response) {
-      
-                    console.log(response.title);
-                    Swal.fire({
-                        title: "Error",
-                        text: "Cannot add candidate\n 1: Complete all fields are required\n 2: Same ID check",
-                        icon: 'error',
-      
-                    });
-                    //   if (response.redirect_url) {
-                    //     setTimeout(function() {
-                    //       var redirectUrl = window.location.origin + '/'+ response.redirect_url;
-                    //       window.location.href = redirectUrl;
-                    //     }, 2000);
-                    // }l
-      
-      
-                }
-      
-            });
-        });
-      
-        $('#addcandidate').on('submit', function(e) {
-            e.preventDefault();
-      
-            var form = $(this);
-            var formData = form.serialize();
-            // console.log(formData);
-            $.ajax({
-                url: form.attr('action'),
-                method: form.attr('method'),
-                data: form.serialize(),
-                success: function(response) {
-      
-                    console.log(response);
-      
-                    Swal.fire({
-                        title: response.title,
-                        text: response.message,
-                        icon: response.icon,
-      
-                    });
-                    if (response.redirect_url) {
-                        setTimeout(function() {
-                            var redirectUrl = window.location.origin + '/' + response
-                                .redirect_url;
-                            window.location.href = redirectUrl;
-                        }, 3000);
-                    }
-      
-                },
-                error: function(response) {
-      
-                    console.log(response);
-                    var errorMessage = xhr.responseText;
-                    var regex = /SQLSTATE\[23000\]:.*Duplicate entry.*'(.+)' for key '(.+)'/;
-                    var matches = errorMessage.match(regex);
-                    var duplicateEntryValue = matches ? matches[1] : null;
-                    var duplicateEntryKey = matches ? matches[2] : null;
-      
-                    console.log("Duplicate Entry Value:", duplicateEntryValue);
-                    console.log("Duplicate Entry Key:", duplicateEntryKey);
-                    Swal.fire({
-                        title: "Error",
-                        text: "Cannot add candidate\n 1: Complete all fields are required\n 2: Same ID check",
-                        icon: 'error',
-      
-                    });
-                    if (response.redirect_url) {
-                        setTimeout(function() {
-                            var redirectUrl = window.location.origin + '/' + response
-                                .redirect_url;
-                            window.location.href = redirectUrl;
-                        }, 3000);
-                    }
-      
-                }
-            });
-        });
-        $('#addagent').on('submit', function(e) {
-            e.preventDefault();
-      
-            var form = $(this);
-            var formData = form.serialize();
-            // console.log(formData);
-            $.ajax({
-                url: form.attr('action'),
-                method: form.attr('method'),
-                data: form.serialize(),
-                success: function(response) {
-      
-                    console.log(response);
-      
-                    Swal.fire({
-                        title: response.title,
-                        text: response.message,
-                        icon: response.icon,
-      
-                    });
-                    if (response.redirect_url) {
-                        setTimeout(function() {
-                            var redirectUrl = window.location.origin + '/' + response
-                                .redirect_url;
-                            window.location.href = redirectUrl;
-                        }, 3000);
-                    }
-      
-                },
-                error: function(response) {
-      
-                    console.log(response);
-                    var errorMessage = xhr.responseText;
-                    var regex = /SQLSTATE\[23000\]:.*Duplicate entry.*'(.+)' for key '(.+)'/;
-                    var matches = errorMessage.match(regex);
-                    var duplicateEntryValue = matches ? matches[1] : null;
-                    var duplicateEntryKey = matches ? matches[2] : null;
-      
-                    console.log("Duplicate Entry Value:", duplicateEntryValue);
-                    console.log("Duplicate Entry Key:", duplicateEntryKey);
-                    Swal.fire({
-                        title: "Error",
-                        text: "Cannot add agent\n 1: Complete all fields are required\n 2: Same ID check",
-                        icon: 'error',
-      
-                    });
-                    if (response.redirect_url) {
-                        setTimeout(function() {
-                            var redirectUrl = window.location.origin + '/' + response
-                                .redirect_url;
-                            window.location.href = redirectUrl;
-                        }, 3000);
-                    }
-      
-                }
-            });
-        });
-        document.getElementById('pass_issue_date').addEventListener('change', function() {
-            var issueDate = new Date(this.value);
-            var expireDate = new Date(issueDate.getFullYear() + 10, issueDate.getMonth(), issueDate.getDate());
-            var formattedExpireDate = formatDate(expireDate);
-            console.log(formattedExpireDate);
-            document.getElementById('pass_expire_date').value = formattedExpireDate;
-        });
-      
-        function formatDate(date) {
-            date.setDate(date.getDate() - 1); // Subtract 1 day from the date
-      
-            var year = date.getFullYear();
-            var month = ('0' + (date.getMonth() + 1)).slice(-2);
-            var day = ('0' + date.getDate()).slice(-2);
-      
-            return year + '-' + month + '-' + day;
-        }
-        document.addEventListener("DOMContentLoaded", function() {
-    const candidateModalEl = document.getElementById("exampleModal");
-    const agentModalEl = document.getElementById("agentModal");
-
-    const candidateModal = new bootstrap.Modal(candidateModalEl);
-    const agentModal = new bootstrap.Modal(agentModalEl);
-
-    document.querySelector("[data-bs-target='#agentModal']").addEventListener("click", function(event) {
-        event.preventDefault();
-
-        // Close Candidate Modal before opening Agent Modal
-        candidateModal.hide();
-
-        // Wait until Candidate Modal is fully closed
-        candidateModalEl.addEventListener("hidden.bs.modal", function() {
-            agentModal.show();
-        }, { once: true }); // Runs only once to prevent multiple triggers
-    });
-
-    // Remove any leftover backdrop when Agent Modal is closed
-    agentModalEl.addEventListener("hidden.bs.modal", function() {
-        
-        document.querySelectorAll(".modal-backdrop").forEach(backdrop => backdrop.remove());
-        location.reload();
-    });
-});
-      </script>
-      {{-- Index file script --}}
+        <a href="https://web.whatsapp.com/send?phone=8801609317035" rel="noopener noreferrer" target="_blank"
+            class="fixed bottom-10 right-10 text-6xl text-green-600">
+            <i class="bi bi-whatsapp"></i>
+        </a>
+        <div id="preloader"></div>
+        <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+                class="bi bi-arrow-up-short"></i></a>
 
 
-    
+
+        @include('layout.script')
+
+
+
+
+        </script>
+
+
+
 
 </body>
 

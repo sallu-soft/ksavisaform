@@ -54,7 +54,7 @@
 <body class="flex">
     
         @include('layout.sidebar')
-    <div class="flex-1 xl:ml-[280px]">
+    <div id="rightbar" class="flex-1 ml-[200px] md:ml-[240px] xl:ml-[280px]">
         @include('layout.navbar')
         
 

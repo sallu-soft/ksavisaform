@@ -386,27 +386,27 @@
             tbody.appendChild(tr);
         }
 
-  
-        function printtable() {
-    // Save the original display style of the body
-    const bodyElements = document.body.children;
 
-    // Hide all elements except the printable section
-    for (let i = 0; i < bodyElements.length; i++) {
-        if (bodyElements[i].id !== 'printable-section') {
-            bodyElements[i].style.display = 'none';
-        }
+function printtable() {
+    const printableSection = document.getElementById('printable-section');
+
+    if (!printableSection) {
+        console.error("No element found with ID 'printable-section'");
+        return;
     }
 
-    // Trigger print
-    window.print();
+    const originalContent = document.body.innerHTML;
+    const printContent = printableSection.innerHTML;
 
-    // Restore all elements to their original display state
-    for (let i = 0; i < bodyElements.length; i++) {
-        bodyElements[i].style.display = '';
-    }
+    // Replace body content with printable section
+    document.body.innerHTML = printContent;
+
+    window.print(); // Trigger print
+
+    // Restore original content and reload the page to fix lost styles/events
+    document.body.innerHTML = originalContent;
+    location.reload();
 }
-
 
             // Function to convert English numbers to Bangla numbers
         // function englishToBanglaNumber(number) {

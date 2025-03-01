@@ -291,25 +291,7 @@
                     });
             }
 
-            function getCanceldata() {
-                var id = document.getElementById('cancelInput').value;
-
-                fetch('/user/embassy/' + id, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        addRowToTable(data[0], true); // Pass true to highlight row
-                        document.getElementById('cancelInput').value = null;
-                        updateTotalCount();
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            }
+            
 
 
             function addRowToTable(data, highlight = false) {
@@ -352,27 +334,46 @@
             }
 
 
+            // function printtable() {
+            //     // Save the original display style of the body
+            //     const bodyElements = document.body.children;
+
+            //     // Hide all elements except the printable section
+            //     for (let i = 0; i < bodyElements.length; i++) {
+            //         if (bodyElements[i].id !== 'printable-section') {
+            //             bodyElements[i].style.display = 'none';
+            //         }
+            //     }
+
+            //     // Trigger print
+            //     window.print();
+
+            //     // Restore all elements to their original display state
+            //     for (let i = 0; i < bodyElements.length; i++) {
+            //         bodyElements[i].style.display = '';
+            //     }
+            // }
+
             function printtable() {
-                // Save the original display style of the body
-                const bodyElements = document.body.children;
+    const printableSection = document.getElementById('printable-section');
 
-                // Hide all elements except the printable section
-                for (let i = 0; i < bodyElements.length; i++) {
-                    if (bodyElements[i].id !== 'printable-section') {
-                        bodyElements[i].style.display = 'none';
-                    }
-                }
+    if (!printableSection) {
+        console.error("No element found with ID 'printable-section'");
+        return;
+    }
 
-                // Trigger print
-                window.print();
+    const originalContent = document.body.innerHTML;
+    const printContent = printableSection.innerHTML;
 
-                // Restore all elements to their original display state
-                for (let i = 0; i < bodyElements.length; i++) {
-                    bodyElements[i].style.display = '';
-                }
-            }
+    // Replace body content with printable section
+    document.body.innerHTML = printContent;
 
+    window.print(); // Trigger print
 
+    // Restore the original content
+    document.body.innerHTML = originalContent;
+    location.reload(); // Reload to restore events and styles
+}
             // Function to convert English numbers to Bangla numbers
             function englishToBanglaNumber(number) {
                 const banglaNumbers = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];

@@ -5,7 +5,7 @@
 </head>
 <body class="bg-[#f2f9fc] flex">
   @include('layout.sidebar')
-  <div class="flex-1 xl:ml-[280px]">
+  <div id="rightbar" class="flex-1 ml-[200px] md:ml-[240px] xl:ml-[280px]">
   @include('layout.navbar')
     <div class="w-[60%] mx-auto shadow-lg rounded-lg pb-2 mt-4">
   

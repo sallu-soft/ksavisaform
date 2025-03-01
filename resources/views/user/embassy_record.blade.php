@@ -52,7 +52,7 @@
 
 <body class="flex">
   @include('layout.sidebar')
-  <div class="flex-1 xl:ml-[280px]">  
+  <div id="rightbar" class="flex-1 ml-[200px] md:ml-[240px] xl:ml-[280px]">  
     @include('layout.navbar')
     <div class="flex justify-between items-center xl:w-[65%] w-[90%] mx-auto mt-3">
         <h2 class=" font-semibold py-2 text-2xl">Embassy Record List</h2>
@@ -116,8 +116,8 @@
     <div id="reportdiv">
 
     </div>
-  </div>
-
+    </div>
+    @include('layout.script')
 </body>
 
 </html>
