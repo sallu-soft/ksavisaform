@@ -192,11 +192,10 @@
         </div>
 
         <div class="table-responsive rounded-lg bg-[#DFE8EF]  my-5 w-[98%] xl:w-[97%] mx-auto shadow-lg main-datatable">
-            <form method="GET" class="bg-[#275E8B] py-2" action="{{ route('user/index') }}">
-                <div class="flex w-[50%] my-3 mx-auto gap-4 ">
-                    <input type="text" class="form-control" name="search" placeholder="Search"
-                        value="{{ request('search') }}">
-                    <button type="submit" class="text-white px-4 rounded-lg bg-indigo-500">Search</button>
+            <form action="{{ route('user/index') }}" method="GET" class="mb-4">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Search by name, ID, passport..." value="{{ request('search') }}">
+                    <button type="submit" class="btn btn-primary">Search</button>
                 </div>
             </form>
             <table class=" no-footer dataTable " id="candidatetable">
@@ -217,7 +216,6 @@
                 </thead>
                 <tbody class="cantab">
 
-                    {{-- @foreach ($candidates as $index => $candidate) --}}
                     @foreach ($candidates as $index => $candidate)
                         @php
 

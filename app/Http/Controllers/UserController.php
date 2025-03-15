@@ -15,206 +15,307 @@ use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
+    // public function index(Request $request)
+    // {
+
+    //     if (Session::get('user')) {
+
+
+           
+    //         if ($request->isMethod('GET')) {
+    //             $searchTerm = $request->input('search');
+            
+    //             // Base Query for Candidates
+    //             $query = DB::table('candidates')
+    //                 ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
+    //                 ->leftJoin('manpower', 'candidates.id', '=', 'manpower.candidate_id')
+    //                 ->select(
+    //                     'candidates.*',
+    //                     'visas.visa_no',
+    //                     'visas.mofa_no',
+    //                     'visas.spon_id',
+    //                     'visas.prof_name_english',
+    //                     'manpower.visa_issued_date',
+    //                     'manpower.visa_exp_date'
+    //                 )
+    //                 ->where('candidates.agency', '=', Session::get('user'))
+    //                 ->where('candidates.is_delete', 0)
+    //                 ->orderBy('candidates.created_at', 'desc');
+            
+    //             // Apply Search Filter if Search Term Exists
+    //             if (!empty($searchTerm)) {
+    //                 $query->where(function ($q) use ($searchTerm) {
+    //                     $q->where('candidates.name', 'like', '%' . $searchTerm . '%')
+    //                         ->orWhere('candidates.sl_number', 'like', '%' . $searchTerm . '%')
+    //                         ->orWhere('candidates.id', 'like', '%' . $searchTerm . '%')
+    //                         ->orWhere('candidates.passport_number', 'like', '%' . $searchTerm . '%');
+    //                 });
+    //             }
+            
+    //             // Fetch Paginated Candidates
+    //             $candidates = $query->paginate(10);
+            
+    //             // Fetch Agents (Optimized)
+    //             $agents = DB::table('agents')
+    //                 ->select('*')
+    //                 ->where('user', '=', Session::get('user'))
+    //                 ->where('is_delete', '=', 0)
+    //                 ->paginate(10);
+            
+    //             $agentsform = $agents->items(); // Use same agents list for form
+            
+    //             // Fetch all agent names in a single query
+    //             $agentNames = Agents::whereIn('id', $candidates->pluck('agent'))->pluck('agent_name', 'id');
+            
+    //             // Calculate total records for serial number assignment
+    //             $totalCount = $candidates->total();
+    //             $startNumber = $totalCount - (($candidates->currentPage() - 1) * $candidates->perPage());
+            
+    //             // Assign agent names & serial numbers efficiently
+    //             foreach ($candidates as $candidate) {
+    //                 $candidate->agent = $agentNames[$candidate->agent] ?? null;
+    //                 $candidate->serial_number = $startNumber--; // Assign serial numbers in descending order
+    //             }
+            
+    //             // Get Maximum SL Number
+    //             $maxSlNumber = DB::table('candidates')
+    //                 ->where('agency', '=', Session::get('user'))
+    //                 ->where('is_delete', 0)
+    //                 ->max('sl_number');
+            
+    //             // Get User Data
+    //             $user = DB::table('user')->where('email', '=', Session::get('user'))->first();
+            
+    //             // Return View with Data
+    //             return view('user.index', compact('candidates', 'agentsform', 'agents', 'user', 'maxSlNumber'));
+    //         }
+            
+    //          else {
+    //             DB::beginTransaction();
+    //             $response = [
+    //                 'redirect_url' => 'user/index',
+    //             ];
+
+    //             try {
+    //                 // dd($request->all());
+    //                 $candidate = new Candidates();
+    //                 $candidate->name = strtoupper($request->pname);
+    //                 $candidate->agent = $request->agent_id;
+    //                 $candidate->sl_number = $request->sl_number;
+    //                 $candidate->passport_number = strtoupper($request->pnumber);
+    //                 // $candidate->passport_issue_date = date('Y-m-d', strtotime($request->pass_issue_date));
+    //                 // $candidate->passport_expire_date = date('Y-m-d', strtotime($request->pass_expire_date));
+    //                 $issueDate = \DateTime::createFromFormat('d/m/Y', $request->pass_issue_date);
+    //                 // dd($request->all(), $issueDate);
+    //                 if ($issueDate !== false) {
+    //                     $candidate->passport_issue_date = $issueDate->format('Y-m-d');
+    //                 } else {
+    //                 }
+
+
+    //                 $expireDate = \DateTime::createFromFormat('d/m/Y', $request->pass_expire_date);
+    //                 if ($expireDate !== false) {
+    //                     $candidate->passport_expire_date = $expireDate->format('Y-m-d');
+    //                 } else {
+    //                 }
+    //                 $birthDate = \DateTime::createFromFormat('d/m/Y', $request->date_of_birth);
+    //                 if ($birthDate !== false) {
+    //                     $candidate->date_of_birth = $birthDate->format('Y-m-d');
+    //                 } else {
+    //                 }
+    //                 // $candidate->date_of_birth = $request->date_of_birth;
+    //                 $candidate->place_of_birth = strtoupper($request->place_of_birth);
+    //                 $candidate->address = strtoupper($request->address);
+    //                 $candidate->father = strtoupper($request->father);
+    //                 $candidate->mother = strtoupper($request->mother);
+    //                 $candidate->religion = strtoupper($request->religion);
+    //                 $candidate->married = $request->married;
+    //                 $candidate->medical_center = strtoupper($request->medical_center_name);
+    //                 // $candidate->medical_issue_date = date('Y-m-d', strtotime($request->medical_issue_date));
+    //                 // $candidate->medical_expire_date = date('Y-m-d', strtotime($request->medical_expire_date));
+    //                 $issueDate = \DateTime::createFromFormat('d/m/Y', $request->medical_issue_date);
+    //                 if ($issueDate !== false) {
+    //                     $candidate->medical_issue_date = $issueDate->format('Y-m-d');
+    //                 } else {
+    //                 }
+
+
+    //                 $expireDate = \DateTime::createFromFormat('d/m/Y', $request->medical_expire_date);
+    //                 if ($expireDate !== false) {
+    //                     $candidate->medical_expire_date = $expireDate->format('Y-m-d');
+    //                 } else {
+    //                 }
+    //                 $candidate->police = strtoupper($request->police_licence);
+    //                 $candidate->driving_licence = strtoupper($request->driving_licence);
+    //                 $candidate->is_delete = 0;
+    //                 $candidate->gender = strtoupper($request->gender);
+
+    //                 $candidate->agency = Session::get('user');
+    //                 // dd($request->all(), $candidate);
+    //                 // Save the candidate
+    //                 if ($candidate->save()) {
+    //                     DB::commit();
+    //                     $response['title'] = 'Success';
+    //                     $response['success'] = true;
+    //                     $response['icon'] = 'success';
+    //                     $response['message'] = 'Successfully created';
+    //                 } else {
+    //                     $response['title'] = 'Error';
+    //                     $response['success'] = false;
+    //                     $response['icon'] = 'error';
+    //                     $response['message'] = 'Cannot add';
+    //                 }
+    //             } catch (\Exception $e) {
+    //                 DB::rollback();
+    //                 $response['title'] = 'Error';
+    //                 $response['success'] = false;
+    //                 $response['icon'] = 'error';
+    //                 $response['message'] = $e->getMessage(); // Get the actual error message
+    //             }
+
+    //             return response()->json($response);
+    //         }
+    //     } else {
+    //         // return view('welcome');
+    //         return redirect(url('/'));
+    //     }
+    // }
     public function index(Request $request)
-    {
-
-        if (Session::get('user')) {
-
-
-            if ($request->isMethod('GET')) {
-
-                // $query = DB::table('candidates')
-                // ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
-                // ->select('candidates.*', 'visas.visa_no', 'visas.mofa_no', 'visas.spon_id', 'visas.prof_name_english')
-                // ->where('candidates.agency', '=', Session::get('user'))
-                // ->where('candidates.is_delete', 0)
-                // ->orderBy('candidates.created_at', 'desc');
-                $query = DB::table('candidates')
-                    ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
-                    ->leftJoin('manpower', 'candidates.id', '=', 'manpower.candidate_id') // Join with manpower
-                    ->select(
-                        'candidates.*',
-                        'visas.visa_no',
-                        'visas.mofa_no',
-                        'visas.spon_id',
-                        'visas.prof_name_english',
-                        'manpower.visa_issued_date',
-                        'manpower.visa_exp_date' // Add visa_issued_date from manpower
-                    )
-                    ->where('candidates.agency', '=', Session::get('user'))
-                    ->where('candidates.is_delete', 0)
-                    ->orderBy('candidates.created_at', 'desc');
-
-                $agents = DB::table('agents')
-                    ->select('*')
-                    ->where('user', '=', Session::get('user'))
-                    ->where('is_delete', '=', 0)
-                    ->paginate(10);
-                $agentsform = DB::table('agents')
-                    ->select('*')
-                    ->where('user', '=', Session::get('user'))
-                    ->where('is_delete', '=', 0)->get();
-
-
-                $candidates = $query->paginate(10);
-
-                // Total records in the entire collection (not just the current page)
-                $totalCount = $candidates->total();
-
-                // Starting number for serial numbers for the current page
-                $startNumber = $totalCount - (($candidates->currentPage() - 1) * $candidates->perPage());
-
-                // Assign serial numbers and enrich data
-                foreach ($candidates as $candidate) {
-                    $candidate->agent = Agents::where('id', $candidate->agent)->value('agent_name');
-                    $candidate->serial_number = $startNumber--; // Assign serial numbers in descending order
-                }
-
-
-                // dd($maxSlNumber);
-
-                // dd($candidates);
-                if ($request->has('search')) {
-                    $searchTerm = $request->input('search');
-
-                    // Build the query
-                    $query = DB::table('candidates')
-                        ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
-                        ->leftJoin('manpower', 'candidates.id', '=', 'manpower.candidate_id')
-                        ->select(
-                            'candidates.*',
-                            'visas.visa_no',
-                            'visas.mofa_no',
-                            'visas.spon_id',
-                            'visas.prof_name_english',
-                            'manpower.visa_issued_date',
-                            'manpower.visa_exp_date'
-                        )
-                        ->where('candidates.agency', '=', Session::get('user'))
-                        ->where(function ($query) use ($searchTerm) {
-                            $query->where('candidates.name', 'like', '%' . $searchTerm . '%')
-                                ->orWhere('candidates.sl_number', 'like', '%' . $searchTerm . '%')
-                                ->orWhere('candidates.id', 'like', '%' . $searchTerm . '%')
-                                ->orWhere('candidates.passport_number', 'like', '%' . $searchTerm . '%');
-                        });
-
-                    // Order by the created_at field
-                    $query->orderBy('candidates.created_at', 'desc');
-
-                    // Paginate the query
-                    $candidates = $query->paginate(10);
-                    foreach ($candidates as $candidate) {
-                        $candidate->agent = Agents::where('id', $candidate->agent)->value('agent_name');
-                        $candidate->serial_number = $startNumber--; // Assign serial numbers in descending order
-                    }
-                    // Calculate the serial numbers based on the total collection
-                    $totalCount = $candidates->total(); // Total records in the collection
-                    $startNumber = $totalCount - (($candidates->currentPage() - 1) * $candidates->perPage()); // Starting number for the current page
-
-                    // Assign serial numbers to each candidate in the collection
-                    foreach ($candidates as $candidate) {
-                        $candidate->serial_number = $startNumber--; // Assign serial numbers in descending order
-                    }
-                }
-                $maxSlNumber = DB::table('candidates')
-                    ->where('agency', '=', Session::get('user')) // Optional condition if needed
-                    ->where('is_delete', 0) // Ensure deleted records are excluded
-                    ->max('sl_number'); // Get the maximum sl_number
-
-                $user = DB::table('user')->select('*')->where('email', '=', Session::get('user'))->first();
-                // dd($totalCount);
-
-                return view('user.index', compact('candidates', 'agentsform', 'agents', 'user', 'maxSlNumber'));
-            } else {
-                DB::beginTransaction();
-                $response = [
-                    'redirect_url' => 'user/index',
-                ];
-
-                try {
-                    // dd($request->all());
-                    $candidate = new Candidates();
-                    $candidate->name = strtoupper($request->pname);
-                    $candidate->agent = $request->agent_id;
-                    $candidate->sl_number = $request->sl_number;
-                    $candidate->passport_number = strtoupper($request->pnumber);
-                    // $candidate->passport_issue_date = date('Y-m-d', strtotime($request->pass_issue_date));
-                    // $candidate->passport_expire_date = date('Y-m-d', strtotime($request->pass_expire_date));
-                    $issueDate = \DateTime::createFromFormat('d/m/Y', $request->pass_issue_date);
-                    // dd($request->all(), $issueDate);
-                    if ($issueDate !== false) {
-                        $candidate->passport_issue_date = $issueDate->format('Y-m-d');
-                    } else {
-                    }
-
-
-                    $expireDate = \DateTime::createFromFormat('d/m/Y', $request->pass_expire_date);
-                    if ($expireDate !== false) {
-                        $candidate->passport_expire_date = $expireDate->format('Y-m-d');
-                    } else {
-                    }
-                    $birthDate = \DateTime::createFromFormat('d/m/Y', $request->date_of_birth);
-                    if ($birthDate !== false) {
-                        $candidate->date_of_birth = $birthDate->format('Y-m-d');
-                    } else {
-                    }
-                    // $candidate->date_of_birth = $request->date_of_birth;
-                    $candidate->place_of_birth = strtoupper($request->place_of_birth);
-                    $candidate->address = strtoupper($request->address);
-                    $candidate->father = strtoupper($request->father);
-                    $candidate->mother = strtoupper($request->mother);
-                    $candidate->religion = strtoupper($request->religion);
-                    $candidate->married = $request->married;
-                    $candidate->medical_center = strtoupper($request->medical_center_name);
-                    // $candidate->medical_issue_date = date('Y-m-d', strtotime($request->medical_issue_date));
-                    // $candidate->medical_expire_date = date('Y-m-d', strtotime($request->medical_expire_date));
-                    $issueDate = \DateTime::createFromFormat('d/m/Y', $request->medical_issue_date);
-                    if ($issueDate !== false) {
-                        $candidate->medical_issue_date = $issueDate->format('Y-m-d');
-                    } else {
-                    }
-
-
-                    $expireDate = \DateTime::createFromFormat('d/m/Y', $request->medical_expire_date);
-                    if ($expireDate !== false) {
-                        $candidate->medical_expire_date = $expireDate->format('Y-m-d');
-                    } else {
-                    }
-                    $candidate->police = strtoupper($request->police_licence);
-                    $candidate->driving_licence = strtoupper($request->driving_licence);
-                    $candidate->is_delete = 0;
-                    $candidate->gender = strtoupper($request->gender);
-
-                    $candidate->agency = Session::get('user');
-                    // dd($request->all(), $candidate);
-                    // Save the candidate
-                    if ($candidate->save()) {
-                        DB::commit();
-                        $response['title'] = 'Success';
-                        $response['success'] = true;
-                        $response['icon'] = 'success';
-                        $response['message'] = 'Successfully created';
-                    } else {
-                        $response['title'] = 'Error';
-                        $response['success'] = false;
-                        $response['icon'] = 'error';
-                        $response['message'] = 'Cannot add';
-                    }
-                } catch (\Exception $e) {
-                    DB::rollback();
-                    $response['title'] = 'Error';
-                    $response['success'] = false;
-                    $response['icon'] = 'error';
-                    $response['message'] = $e->getMessage(); // Get the actual error message
-                }
-
-                return response()->json($response);
-            }
-        } else {
-            // return view('welcome');
-            return redirect(url('/'));
-        }
+{
+    // Check if user is logged in
+    if (!Session::get('user')) {
+        return redirect(url('/'));
     }
+
+    // If GET request: Fetch Candidates List
+    if ($request->isMethod('GET')) {
+        $searchTerm = trim($request->input('search'));
+
+        // Base Query for Candidates
+        $query = DB::table('candidates')
+            ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id')
+            ->leftJoin('manpower', 'candidates.id', '=', 'manpower.candidate_id')
+            ->select(
+                'candidates.*',
+                'visas.visa_no',
+                'visas.mofa_no',
+                'visas.spon_id',
+                'visas.prof_name_english',
+                'manpower.visa_issued_date',
+                'manpower.visa_exp_date'
+            )
+            ->where('candidates.agency', '=', Session::get('user'))
+            ->where('candidates.is_delete', 0)
+            ->orderBy('candidates.created_at', 'desc');
+
+        // Apply Search Filter if Search Term Exists
+        if (!empty($searchTerm)) {
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('candidates.name', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('candidates.sl_number', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('candidates.id', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('candidates.passport_number', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        // Fetch Paginated Candidates
+        $candidates = $query->paginate(10);
+
+        // Fetch Agents (Optimized)
+        $agents = DB::table('agents')
+            ->where('user', '=', Session::get('user'))
+            ->where('is_delete', '=', 0)
+            ->paginate(10);
+
+        $agentsform = $agents->items(); // Use same agents list for form
+
+        // Fetch all agent names in a single query
+        $agentNames = Agents::whereIn('id', $candidates->pluck('agent'))->pluck('agent_name', 'id');
+
+        // Calculate total records for serial number assignment
+        $totalCount = $candidates->total();
+        $startNumber = $totalCount - (($candidates->currentPage() - 1) * $candidates->perPage());
+
+        // Assign agent names & serial numbers efficiently
+        foreach ($candidates as $candidate) {
+            $candidate->agent = $agentNames[$candidate->agent] ?? null;
+            $candidate->serial_number = $startNumber--; // Assign serial numbers in descending order
+        }
+
+        // Get Maximum SL Number
+        $maxSlNumber = DB::table('candidates')
+            ->where('agency', '=', Session::get('user'))
+            ->where('is_delete', 0)
+            ->max('sl_number');
+
+        // Get User Data
+        $user = DB::table('user')->where('email', '=', Session::get('user'))->first();
+
+        // Return View with Data
+        return view('user.index', compact('candidates', 'agentsform', 'agents', 'user', 'maxSlNumber'));
+    }
+
+    // If POST request: Create a New Candidate
+    DB::beginTransaction();
+    $response = ['redirect_url' => 'user/index'];
+
+    try {
+        $candidate = new Candidates();
+        $candidate->name = strtoupper($request->pname);
+        $candidate->agent = $request->agent_id;
+        $candidate->sl_number = $request->sl_number;
+        $candidate->passport_number = strtoupper($request->pnumber);
+        $candidate->place_of_birth = strtoupper($request->place_of_birth);
+        $candidate->address = strtoupper($request->address);
+        $candidate->father = strtoupper($request->father);
+        $candidate->mother = strtoupper($request->mother);
+        $candidate->religion = strtoupper($request->religion);
+        $candidate->married = $request->married;
+        $candidate->medical_center = strtoupper($request->medical_center_name);
+        $candidate->police = strtoupper($request->police_licence);
+        $candidate->driving_licence = strtoupper($request->driving_licence);
+        $candidate->is_delete = 0;
+        $candidate->gender = strtoupper($request->gender);
+        $candidate->agency = Session::get('user');
+
+        // Convert Date Formats Safely
+        $candidate->passport_issue_date = $this->convertDate($request->pass_issue_date);
+        $candidate->passport_expire_date = $this->convertDate($request->pass_expire_date);
+        $candidate->date_of_birth = $this->convertDate($request->date_of_birth);
+        $candidate->medical_issue_date = $this->convertDate($request->medical_issue_date);
+        $candidate->medical_expire_date = $this->convertDate($request->medical_expire_date);
+
+        // Save the Candidate
+        if ($candidate->save()) {
+            DB::commit();
+            return response()->json([
+                'title' => 'Success',
+                'success' => true,
+                'icon' => 'success',
+                'message' => 'Successfully created'
+            ]);
+        } else {
+            throw new \Exception('Cannot add candidate');
+        }
+    } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json([
+            'title' => 'Error',
+            'success' => false,
+            'icon' => 'error',
+            'message' => $e->getMessage()
+        ]);
+    }
+}
+
+/**
+ * Convert date from 'd/m/Y' format to 'Y-m-d' format safely
+ */
+private function convertDate($date)
+{
+    $formattedDate = \DateTime::createFromFormat('d/m/Y', $date);
+    return $formattedDate ? $formattedDate->format('Y-m-d') : null;
+}
 
     public function logout()
     {
@@ -293,7 +394,7 @@ class UserController extends Controller
             return redirect(url('/'));
         }
     }
-
+// 
     public function embassy_list()
     {
         if (Session::get('user')) {
