@@ -217,7 +217,7 @@
 
                         </tr>
                     </thead>
-                    <thead id="restemp_head" class="">
+                    <thead id="restemp_head" >
                         <tr
                             class=" [&>th]:border [&>th]:border-black [&>th]:py-0 text-md font-semibold text-center [&>th]:font-bold">
 
