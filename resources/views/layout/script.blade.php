@@ -21,24 +21,34 @@
 
 <script src="{{asset('assets/js/main.js')}}"></script>
 
-<script>
-    function toggleInputBox() {
-    const radioSelection = document.querySelector('input[name="emb_list"]:checked').value;
-    const inputNew = document.getElementById('candidate');
-    const inputCancel = document.getElementById('cancelInput');
-
-    if (radioSelection === 'New') {
-        inputNew.style.display = 'block';
-        inputCancel.style.display = 'none';
-        console.log("new selected")
-        // document.getElementById('candidate').setAttribute('onchange', 'getdata()');
-    } else (radioSelection === 'Cancel')
-        inputNew.style.display = 'none';
-        inputCancel.style.display = 'block';
-        console.log("cancel selected")
+ <script>
+        function toggleInputBox() {
+        const radioSelection = document.querySelector('input[name="emb_list"]:checked').value;
+        const inputNew = document.getElementById('candidate');
+        const inputCancel = document.getElementById('cancelInput');
+        const restepInput = document.getElementById('restepInput');
         
-}
-</script>
+        if (radioSelection === 'New') {
+            inputNew.style.display = 'block';
+            inputCancel.style.display = 'none';
+            restepInput.style.display = 'none';
+            console.log("new selected")
+            // document.getElementById('candidate').setAttribute('onchange', 'getdata()');
+        }
+        else if(radioSelection === 'Re-step'){
+            inputNew.style.display = 'none';
+            inputCancel.style.display = 'none';
+            restepInput.style.display = 'block';
+            console.log('restemp select');
+        }
+        else (radioSelection === 'Cancel')
+            inputNew.style.display = 'none';
+            restepInput.style.display = 'none';
+            inputCancel.style.display = 'block';
+            console.log("cancel selected")
+            
+    }
+    </script>
 <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -59,3 +69,4 @@
 
 
 
+    
