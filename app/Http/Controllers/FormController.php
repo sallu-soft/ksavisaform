@@ -50,24 +50,44 @@ class FormController extends Controller
       }
   
       // Method for Contract
-      public function contract()
-      {
-        if(Session::get('user')){
-          $candidates = DB::table('candidates')
-                    ->leftJoin('manpower', 'candidates.id', '=', 'manpower.candidate_id')
-                    ->select('candidates.*', 'manpower.*')
-                    ->where('candidates.agency', '=', Session::get('user'))
-                    ->get();
-        // dd($candidates);
-          $user = DB::table('user')->select('*')->where('email', '=', Session::get('user'))->first();
-          // dd($user);
-          return view('forms/employementcontract', compact('user', 'candidates'));  // Return a view named 'note-sheet.blade.php'
-        }
-        else{
-          return view('welcome');
-        }
-      }
+      // public function contract()
+      // {
+      //   if(Session::get('user')){
+      //     $candidates = DB::table('candidates')
+      //               ->leftJoin('manpower', 'candidates.id', '=', 'manpower.candidate_id')
+      //               ->select('candidates.*', 'manpower.*')
+      //               ->where('candidates.agency', '=', Session::get('user'))
+      //               ->get();
+      //   // dd($candidates);
+      //     $user = DB::table('user')->select('*')->where('email', '=', Session::get('user'))->first();
+      //     // dd($user);
+      //     return view('forms/employementcontract', compact('user', 'candidates'));  // Return a view named 'note-sheet.blade.php'
+      //   }
+      //   else{
+      //     return view('welcome');
+      //   }
+      // }
       
+      public function contract()
+{
+    if (Session::get('user')) {
+        $candidates = DB::table('candidates')
+            
+            ->leftJoin('visas', 'candidates.id', '=', 'visas.candidate_id') // <-- Join visas table here
+            ->select('candidates.*', 'visas.*') // <-- Select visa fields too
+            ->where('candidates.agency', '=', Session::get('user'))
+            ->get();
+
+        $user = DB::table('user')
+            ->select('*')
+            ->where('email', '=', Session::get('user'))
+            ->first();
+
+        return view('forms/employementcontract', compact('user', 'candidates'));
+    } else {
+        return view('welcome');
+    }
+}
   
       // Method for stemp_paper
       public function stemp_paper()

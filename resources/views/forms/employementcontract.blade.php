@@ -30,7 +30,7 @@
             </datalist> --}}
             <datalist id="candidates">
               @foreach ($candidates as $candidate)
-                  @if (!$candidate->manpower_id)
+                  @if (!$candidate->visa_no)
                       @continue
                   @endif
                   <option data-id="{{ $candidate->candidate_id }}">
@@ -194,52 +194,85 @@
         var rowsData = [];
 
 
-        function getdata() {
+        // function getdata() {
             
-            let input = document.getElementById('candidate');
-                let selectedOption = getSelectedOption(input);
+        //     let input = document.getElementById('candidate');
+        //         let selectedOption = getSelectedOption(input);
 
-               if(selectedOption){
-                    let candidateId = selectedOption.getAttribute('data-id');
-                    console.log(candidateId);
-            // Define the routes to fetch
-            const embassyRoute = '/user/embassy/' + candidateId;
-            const manpowerRoute = '/user/manpower/' + candidateId;
+        //        if(selectedOption){
+        //             let candidateId = selectedOption.getAttribute('data-id');
+        //             console.log(candidateId);
+        //     // Define the routes to fetch
+        //     const embassyRoute = '/user/embassy/' + candidateId;
+        //     const manpowerRoute = '/user/manpower/' + candidateId;
 
-            // Fetch both routes concurrently
-            Promise.all([
-                fetch(embassyRoute, {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' }
-                }),
-                fetch(manpowerRoute, {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' }
-                })
-            ])
-            .then(responses => Promise.all(responses.map(response => response.json())))
-            .then(data => {
-                // Handle the data from both responses
-                const embassyData = data[0];
-                const manpowerData = data[1];
+        //     // Fetch both routes concurrently
+        //     Promise.all([
+        //         fetch(embassyRoute, {
+        //             method: 'GET',
+        //             headers: { 'Content-Type': 'application/json' }
+        //         }),
+        //         fetch(manpowerRoute, {
+        //             method: 'GET',
+        //             headers: { 'Content-Type': 'application/json' }
+        //         })
+        //     ])
+        //     .then(responses => Promise.all(responses.map(response => response.json())))
+        //     .then(data => {
+        //         // Handle the data from both responses
+        //         const embassyData = data[0];
+        //         const manpowerData = data[1];
 
-                 // Merge the two objects
-                const mergedData = { ...embassyData[0], ...manpowerData[0] };
-                console.log(mergedData);
-                $('#first-party').html(mergedData.spon_name_english);
-                $('#second-party').html(mergedData.name);
-                $('#passport_no').html(mergedData.passport_number);
-                $('#profession').html(mergedData.prof_name_arabic);
+        //          // Merge the two objects
+        //         const mergedData = { ...embassyData[0], ...manpowerData[0] };
+        //         console.log(mergedData);
+        //         $('#first-party').html(mergedData.spon_name_english);
+        //         $('#second-party').html(mergedData.name);
+        //         $('#passport_no').html(mergedData.passport_number);
+        //         $('#profession').html(mergedData.prof_name_arabic);
 
-                // Clear the input field
-                document.getElementById('candidate').value = null;
+        //         // Clear the input field
+        //         document.getElementById('candidate').value = null;
 
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });}
-        }
+        //     })
+        //     .catch(error => {
+        //         console.error('Error fetching data:', error);
+        //     });}
+        // }
+        function getdata() {
+    let input = document.getElementById('candidate');
+    let selectedOption = getSelectedOption(input);
 
+    if (selectedOption) {
+        let candidateId = selectedOption.getAttribute('data-id');
+        console.log(candidateId);
+
+        // Only fetch from embassy
+        const embassyRoute = '/user/embassy/' + candidateId;
+
+        fetch(embassyRoute, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const embassyData = data[0]; // assuming your response is an array
+            console.log(embassyData);
+
+            // Update the UI
+            $('#first-party').html(embassyData.spon_name_english);
+            $('#second-party').html(embassyData.name);
+            $('#passport_no').html(embassyData.passport_number);
+            $('#profession').html(embassyData.prof_name_arabic);
+
+            // Clear the input field
+            document.getElementById('candidate').value = null;
+        })
+        .catch(error => {
+            console.error('Error fetching embassy data:', error);
+        });
+    }
+}
         function getSelectedOption(inputElement) {
                 let options = inputElement.list.options; // Get all options in the datalist
                 for (let option of options) {
